@@ -189,7 +189,7 @@
         .side-panel { height: 100%; overflow: hidden; }
         
         .presets-container { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px; flex-shrink: 0; }
-        .presets-header { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
+        .presets-header { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0; letter-spacing: 1px; }
         .presets-inputs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
         .presets-input { background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 10px 12px; font-size: 12px; font-weight: 600; outline: none; transition: 0.2s; width: 100%; }
         .presets-input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); }
@@ -202,10 +202,8 @@
         .btn-preset.danger { color: var(--danger); border-color: rgba(255,0,85,0.3); }
         .btn-preset.danger:hover { background: rgba(255,0,85,0.1); border-color: var(--danger); box-shadow: 0 0 10px rgba(255,0,85,0.2); }
 
-        .total-pct { font-size: 58px; font-weight: 900; margin-bottom: 10px; text-align: center; color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); line-height: 1; flex-shrink: 0; }
+        .total-pct { font-size: 58px; font-weight: 900; margin-bottom: 15px; text-align: center; color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); line-height: 1; flex-shrink: 0; }
         
-        .export-bar { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; flex-shrink: 0; }
-
         .selected-list, .panel-content { overflow-y: auto; padding-right: 8px; flex: 1; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: var(--border-active); border-radius: 10px; }
@@ -320,7 +318,10 @@
                 <div class="categories" id="manual-container"></div>
                 <aside class="summary-panel">
                     <div class="presets-container">
-                        <div class="presets-header" id="t-presets">Presets</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <div class="presets-header" id="t-presets" style="margin: 0;">Presets</div>
+                            <button class="btn-preset" id="btn-download-txt-manual" style="padding: 6px 12px; font-size: 10px;">⬇ TXT</button>
+                        </div>
                         <div class="presets-inputs">
                             <input type="text" id="preset-name" class="presets-input" placeholder="Name to save...">
                             <select id="preset-select" class="presets-input">
@@ -334,10 +335,6 @@
                         </div>
                     </div>
                     <div class="total-pct" id="total-pct">0%</div>
-                    <div class="export-bar">
-                        <button class="btn-preset" id="btn-export-text-manual" title="Copy to Clipboard">📋 TXT</button>
-                        <button class="btn-preset" id="btn-export-json-manual" title="Download JSON">💾 JSON</button>
-                    </div>
                     <div class="selected-list" id="manual-selected-list"></div>
                 </aside>
             </div>
@@ -372,10 +369,7 @@
                 <aside class="side-panel right-panel">
                     <div class="panel-header">
                         <h3 id="t-inventory">Rolled Modifiers</h3>
-                        <div style="display:flex; gap: 5px;">
-                            <button class="btn-preset" style="padding: 6px 10px;" id="btn-export-text-rolled" title="Copy to Clipboard">📋</button>
-                            <button class="btn-preset" style="padding: 6px 10px;" id="btn-export-json-rolled" title="Download JSON">💾</button>
-                        </div>
+                        <button class="btn-preset" id="btn-download-txt-rolled" style="padding: 6px 12px; font-size: 10px;">⬇ TXT</button>
                     </div>
                     <div class="panel-content" id="rolled-list"></div>
                 </aside>
@@ -407,8 +401,7 @@
                 btnActionAdd: "Добавить", btnSpin: "Крутить дальше", btnReset: "Сброс",
                 tPresets: "Пресеты", tSelectPreset: "Выбрать", btnSave: "Сохранить",
                 btnLoad: "Загрузить", btnDelete: "Удалить", tPlaceholder: "Имя пресета...",
-                titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет",
-                titleExpTxt: "Скопировать в буфер обмена", titleExpJson: "Скачать как JSON", msgCopied: "Скопировано в буфер обмена!",
+                titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет", titleDownloadTxt: "Скачать как TXT",
                 themes: { cyber: "Киберпанк", light: "Светлая", mid: "Полночь", forest: "Лес", blood: "Кровавая Луна" },
                 cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
             },
@@ -419,8 +412,7 @@
                 btnActionAdd: "Add to list", btnSpin: "Spin again", btnReset: "Reset",
                 tPresets: "Presets", tSelectPreset: "Select", btnSave: "Save",
                 btnLoad: "Load", btnDelete: "Delete", tPlaceholder: "Preset name...",
-                titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset",
-                titleExpTxt: "Copy to Clipboard", titleExpJson: "Download JSON", msgCopied: "Copied to clipboard!",
+                titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset", titleDownloadTxt: "Download as TXT",
                 themes: { cyber: "Cyberpunk", light: "Light Mode", mid: "Midnight", forest: "Forest", blood: "Blood Moon" },
                 cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
             }
@@ -659,7 +651,7 @@
             renderPresets();
         });
 
-        function exportText(source) {
+        function downloadTXT(source) {
             const items = source === 'manual' ? Array.from(state.manualSelected.values()) : state.rolled;
             if (items.length === 0) return;
             
@@ -681,28 +673,17 @@
                 text += `\n`;
             }
             
-            navigator.clipboard.writeText(text.trim()).then(() => {
-                alert(t.msgCopied);
-            });
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `modifiers_${source}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
         }
 
-        function exportJSON(source) {
-            const items = source === 'manual' ? Array.from(state.manualSelected.values()) : state.rolled;
-            if (items.length === 0) return;
-            
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(items, null, 2));
-            const downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", `modifiers_${source}.json`);
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-        }
-
-        document.getElementById('btn-export-text-manual').addEventListener('click', () => exportText('manual'));
-        document.getElementById('btn-export-json-manual').addEventListener('click', () => exportJSON('manual'));
-        document.getElementById('btn-export-text-rolled').addEventListener('click', () => exportText('rolled'));
-        document.getElementById('btn-export-json-rolled').addEventListener('click', () => exportJSON('rolled'));
+        document.getElementById('btn-download-txt-manual').addEventListener('click', () => downloadTXT('manual'));
+        document.getElementById('btn-download-txt-rolled').addEventListener('click', () => downloadTXT('rolled'));
 
         function renderPresets() {
             const select = document.getElementById('preset-select');
@@ -745,10 +726,8 @@
             document.getElementById('btn-del-preset').title = t.titleDelete;
             document.getElementById('preset-name').placeholder = t.tPlaceholder;
             
-            document.getElementById('btn-export-text-manual').title = t.titleExpTxt;
-            document.getElementById('btn-export-json-manual').title = t.titleExpJson;
-            document.getElementById('btn-export-text-rolled').title = t.titleExpTxt;
-            document.getElementById('btn-export-json-rolled').title = t.titleExpJson;
+            document.getElementById('btn-download-txt-manual').title = t.titleDownloadTxt;
+            document.getElementById('btn-download-txt-rolled').title = t.titleDownloadTxt;
 
             document.getElementById('th-cyber').textContent = t.themes.cyber;
             document.getElementById('th-light').textContent = t.themes.light;
