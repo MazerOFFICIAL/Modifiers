@@ -195,15 +195,17 @@
         .presets-input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); }
         .presets-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         
-        .btn-preset { background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
+        .btn-preset { background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-preset:hover { background: var(--surface-hover); border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
         .btn-preset.save { color: var(--success); border-color: rgba(0,255,136,0.3); }
         .btn-preset.save:hover { background: rgba(0,255,136,0.1); border-color: var(--success); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
         .btn-preset.danger { color: var(--danger); border-color: rgba(255,0,85,0.3); }
         .btn-preset.danger:hover { background: rgba(255,0,85,0.1); border-color: var(--danger); box-shadow: 0 0 10px rgba(255,0,85,0.2); }
 
-        .total-pct { font-size: 58px; font-weight: 900; margin-bottom: 25px; text-align: center; color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); line-height: 1; flex-shrink: 0; }
+        .total-pct { font-size: 58px; font-weight: 900; margin-bottom: 10px; text-align: center; color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); line-height: 1; flex-shrink: 0; }
         
+        .export-bar { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; flex-shrink: 0; }
+
         .selected-list, .panel-content { overflow-y: auto; padding-right: 8px; flex: 1; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: var(--border-active); border-radius: 10px; }
@@ -224,7 +226,7 @@
         .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-shrink: 0; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
         .panel-header h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-main); margin: 0; font-weight: 900; }
         
-        .btn-reset { background: rgba(255,0,85,0.1); color: var(--danger); border: 1px solid var(--danger); border-radius: 10px; padding: 8px 16px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-reset { background: rgba(255,0,85,0.1); color: var(--danger); border: 1px solid var(--danger); border-radius: 10px; padding: 8px 16px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-reset:hover { background: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(255,0,85,0.4); transform: translateY(-2px); }
 
         .pool-cat-group { margin-bottom: 15px; flex-shrink: 0; }
@@ -326,12 +328,16 @@
                             </select>
                         </div>
                         <div class="presets-actions">
-                            <button class="btn-preset save" id="btn-save-preset" title="Save preset">Save</button>
-                            <button class="btn-preset" id="btn-load-preset" title="Load preset">Load</button>
-                            <button class="btn-preset danger" id="btn-del-preset" title="Delete preset">Del</button>
+                            <button class="btn-preset save" id="btn-save-preset">💾 <span id="t-btn-save">Save</span></button>
+                            <button class="btn-preset" id="btn-load-preset">📂 <span id="t-btn-load">Load</span></button>
+                            <button class="btn-preset danger" id="btn-del-preset">✖ <span id="t-btn-del">Del</span></button>
                         </div>
                     </div>
                     <div class="total-pct" id="total-pct">0%</div>
+                    <div class="export-bar">
+                        <button class="btn-preset" id="btn-export-text-manual" title="Copy to Clipboard">📋 TXT</button>
+                        <button class="btn-preset" id="btn-export-json-manual" title="Download JSON">💾 JSON</button>
+                    </div>
                     <div class="selected-list" id="manual-selected-list"></div>
                 </aside>
             </div>
@@ -342,7 +348,7 @@
                 <aside class="side-panel left-panel">
                     <div class="panel-header">
                         <h3 id="t-pool">Wheel Pool</h3>
-                        <button class="btn-reset" id="btn-reset-pool"></button>
+                        <button class="btn-reset" id="btn-reset-pool">✖ <span id="t-btn-reset">Reset</span></button>
                     </div>
                     <div class="panel-content" id="pool-list"></div>
                 </aside>
@@ -366,6 +372,10 @@
                 <aside class="side-panel right-panel">
                     <div class="panel-header">
                         <h3 id="t-inventory">Rolled Modifiers</h3>
+                        <div style="display:flex; gap: 5px;">
+                            <button class="btn-preset" style="padding: 6px 10px;" id="btn-export-text-rolled" title="Copy to Clipboard">📋</button>
+                            <button class="btn-preset" style="padding: 6px 10px;" id="btn-export-json-rolled" title="Download JSON">💾</button>
+                        </div>
                     </div>
                     <div class="panel-content" id="rolled-list"></div>
                 </aside>
@@ -398,6 +408,7 @@
                 tPresets: "Пресеты", tSelectPreset: "Выбрать", btnSave: "Сохранить",
                 btnLoad: "Загрузить", btnDelete: "Удалить", tPlaceholder: "Имя пресета...",
                 titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет",
+                titleExpTxt: "Скопировать в буфер обмена", titleExpJson: "Скачать как JSON", msgCopied: "Скопировано в буфер обмена!",
                 themes: { cyber: "Киберпанк", light: "Светлая", mid: "Полночь", forest: "Лес", blood: "Кровавая Луна" },
                 cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
             },
@@ -409,6 +420,7 @@
                 tPresets: "Presets", tSelectPreset: "Select", btnSave: "Save",
                 btnLoad: "Load", btnDelete: "Delete", tPlaceholder: "Preset name...",
                 titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset",
+                titleExpTxt: "Copy to Clipboard", titleExpJson: "Download JSON", msgCopied: "Copied to clipboard!",
                 themes: { cyber: "Cyberpunk", light: "Light Mode", mid: "Midnight", forest: "Forest", blood: "Blood Moon" },
                 cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
             }
@@ -606,6 +618,10 @@
             document.getElementById('preset-select').value = name;
         });
 
+        document.getElementById('preset-select').addEventListener('change', () => {
+            document.getElementById('preset-name').value = '';
+        });
+
         document.getElementById('btn-load-preset').addEventListener('click', () => {
             const select = document.getElementById('preset-select');
             const name = select.value;
@@ -643,9 +659,50 @@
             renderPresets();
         });
 
-        document.getElementById('preset-select').addEventListener('change', () => {
-            document.getElementById('preset-name').value = '';
-        });
+        function exportText(source) {
+            const items = source === 'manual' ? Array.from(state.manualSelected.values()) : state.rolled;
+            if (items.length === 0) return;
+            
+            let total = items.reduce((sum, item) => sum + item.pct, 0);
+            let t = i18n[state.lang];
+            let text = `🎮 ${source === 'manual' ? t.title : t.tInventory} (Total: ${total}%)\n\n`;
+            
+            let grouped = {};
+            items.forEach(item => {
+                if(!grouped[item.catKey]) grouped[item.catKey] = [];
+                grouped[item.catKey].push(item);
+            });
+            
+            for (let cat in grouped) {
+                text += `[ ${t.cats[cat]} ]\n`;
+                grouped[cat].forEach(item => {
+                    text += `- ${item.icon} ${item[state.lang].n} (${item.pct}%) | ${item[state.lang].d}\n`;
+                });
+                text += `\n`;
+            }
+            
+            navigator.clipboard.writeText(text.trim()).then(() => {
+                alert(t.msgCopied);
+            });
+        }
+
+        function exportJSON(source) {
+            const items = source === 'manual' ? Array.from(state.manualSelected.values()) : state.rolled;
+            if (items.length === 0) return;
+            
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(items, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", `modifiers_${source}.json`);
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        document.getElementById('btn-export-text-manual').addEventListener('click', () => exportText('manual'));
+        document.getElementById('btn-export-json-manual').addEventListener('click', () => exportJSON('manual'));
+        document.getElementById('btn-export-text-rolled').addEventListener('click', () => exportText('rolled'));
+        document.getElementById('btn-export-json-rolled').addEventListener('click', () => exportJSON('rolled'));
 
         function renderPresets() {
             const select = document.getElementById('preset-select');
@@ -675,17 +732,23 @@
             els.spinBtn.textContent = t.spinBtn;
             document.getElementById('btn-action-add').textContent = t.btnActionAdd;
             document.getElementById('btn-spin-again').textContent = t.btnSpin;
-            els.btnResetPool.textContent = t.btnReset;
+            
+            document.getElementById('t-btn-reset').textContent = t.btnReset;
+            document.getElementById('t-btn-save').textContent = t.btnSave;
+            document.getElementById('t-btn-load').textContent = t.btnLoad;
+            document.getElementById('t-btn-del').textContent = t.btnDelete;
             
             document.getElementById('t-presets').textContent = t.tPresets;
-            document.getElementById('btn-save-preset').textContent = t.btnSave;
-            document.getElementById('btn-load-preset').textContent = t.btnLoad;
-            document.getElementById('btn-del-preset').textContent = t.btnDelete;
             
             document.getElementById('btn-save-preset').title = t.titleSave;
             document.getElementById('btn-load-preset').title = t.titleLoad;
             document.getElementById('btn-del-preset').title = t.titleDelete;
             document.getElementById('preset-name').placeholder = t.tPlaceholder;
+            
+            document.getElementById('btn-export-text-manual').title = t.titleExpTxt;
+            document.getElementById('btn-export-json-manual').title = t.titleExpJson;
+            document.getElementById('btn-export-text-rolled').title = t.titleExpTxt;
+            document.getElementById('btn-export-json-rolled').title = t.titleExpJson;
 
             document.getElementById('th-cyber').textContent = t.themes.cyber;
             document.getElementById('th-light').textContent = t.themes.light;
