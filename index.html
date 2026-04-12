@@ -199,9 +199,9 @@
 
         .mod-info { display: flex; align-items: center; gap: 14px; flex: 1; }
         .mod-icon { font-size: 24px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-        .mod-name { font-weight: 800; font-size: 13px; color: var(--text-main); }
-        .mod-desc { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; line-height: 1.4; font-weight: 600; }
-        .mod-pct { background: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 900; border: 1px solid var(--border); color: var(--accent); }
+        .mod-name { font-weight: 800; font-size: 13px; color: var(--text-main); word-break: break-word; }
+        .mod-desc { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; line-height: 1.4; font-weight: 600; word-break: break-word; }
+        .mod-pct { background: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 900; border: 1px solid var(--border); color: var(--accent); flex-shrink: 0; }
 
         .summary-panel, .side-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; backdrop-filter: blur(20px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
         .summary-panel { position: sticky; top: 100px; height: calc(100vh - 120px); overflow: hidden; }
@@ -209,11 +209,11 @@
         
         .presets-container { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px; flex-shrink: 0; }
         .presets-inputs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-        .presets-input { background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 10px 12px; font-size: 12px; font-weight: 600; outline: none; transition: 0.2s; width: 100%; }
+        .presets-input { background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 10px 12px; font-size: 12px; font-weight: 600; outline: none; transition: 0.2s; width: 100%; box-sizing: border-box;}
         .presets-input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); }
-        .presets-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         
-        .btn-preset { background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .presets-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }
+        .btn-preset { flex: 1 1 30%; min-width: 80px; background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border); border-radius: 10px; padding: 8px 5px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; box-sizing: border-box; }
         .btn-preset:hover { background: var(--surface-hover); border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
         .btn-preset.save { color: var(--success); border-color: rgba(0,255,136,0.3); }
         .btn-preset.save:hover { background: rgba(0,255,136,0.1); border-color: var(--success); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
@@ -229,12 +229,12 @@
         
         .selected-item { padding: 14px; border-radius: 14px; background: var(--bg-color); border: 1px solid var(--border); border-left: 4px solid var(--cat-color); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         .selected-item:hover { border-color: var(--border-active); }
-        .selected-item-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-        .selected-item-name { font-size: 13px; font-weight: 800; }
-        .selected-item-desc { font-size: 11px; color: var(--text-muted); font-weight: 600; }
-        .selected-item-pct { font-weight: 900; font-size: 14px; color: var(--accent); }
+        .selected-item-info { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+        .selected-item-name { font-size: 13px; font-weight: 800; word-break: break-word; }
+        .selected-item-desc { font-size: 11px; color: var(--text-muted); font-weight: 600; word-break: break-word; }
+        .selected-item-pct { font-weight: 900; font-size: 14px; color: var(--accent); flex-shrink: 0; }
 
-        .manual-item-del, .rolled-item-del { background: rgba(255,0,85,0.1); border: 1px solid var(--danger); border-radius: 8px; color: var(--danger); cursor: pointer; font-size: 14px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 12px; }
+        .manual-item-del, .rolled-item-del { background: rgba(255,0,85,0.1); border: 1px solid var(--danger); border-radius: 8px; color: var(--danger); cursor: pointer; font-size: 14px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 12px; flex-shrink: 0; }
         .manual-item-del:hover, .rolled-item-del:hover { background: var(--danger); color: #fff; transform: scale(1.1); box-shadow: 0 0 15px rgba(255,0,85,0.4); }
 
         .roulette-layout { display: grid; grid-template-columns: 320px 1fr 340px; gap: 30px; height: calc(100vh - 140px); }
@@ -242,16 +242,16 @@
         .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-shrink: 0; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
         .panel-header h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-main); margin: 0; font-weight: 900; }
         
-        .btn-reset { background: rgba(255,0,85,0.1); color: var(--danger); border: 1px solid var(--danger); border-radius: 10px; padding: 8px 16px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-reset { flex: 0 0 auto; background: rgba(255,0,85,0.1); color: var(--danger); border: 1px solid var(--danger); border-radius: 10px; padding: 8px 12px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-reset:hover { background: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(255,0,85,0.4); transform: translateY(-2px); }
 
         .pool-cat-group { margin-bottom: 15px; flex-shrink: 0; }
         .pool-cat-title { font-size: 12px; font-weight: 800; color: var(--cat-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-color); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; cursor: pointer; }
         .toggle-row:hover { border-color: var(--border-active); }
-        .toggle-name { font-size: 12px; font-weight: 700; flex: 1; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
+        .toggle-name { font-size: 12px; font-weight: 700; flex: 1; display: flex; align-items: center; gap: 8px; color: var(--text-main); word-break: break-word;}
         
-        .switch { position: relative; display: inline-block; width: 38px; height: 22px; }
+        .switch { position: relative; display: inline-block; width: 38px; height: 22px; flex-shrink: 0; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-active); border-radius: 20px; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
@@ -306,7 +306,6 @@
             .side-panel { height: 450px; }
             .manual-layout { grid-template-columns: 1fr; }
             .summary-panel { position: static; height: auto; min-height: 500px; }
-            .modal-actions { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -352,7 +351,6 @@
                             <div class="presets-header" id="t-presets" style="margin: 0;">Presets</div>
                             <div style="display: flex; gap: 5px;">
                                 <button class="btn-preset" id="btn-download-txt-manual" style="padding: 6px 12px; font-size: 10px;">⬇ TXT</button>
-                                <button class="btn-preset" id="btn-download-json-manual" style="padding: 6px 12px; font-size: 10px;">⬇ JSON</button>
                             </div>
                         </div>
                         <div class="presets-inputs">
@@ -404,7 +402,6 @@
                         <h3 id="t-inventory">Rolled Modifiers</h3>
                         <div style="display:flex; gap: 5px;">
                             <button class="btn-preset" id="btn-download-txt-rolled" style="padding: 6px 12px; font-size: 10px;">⬇ TXT</button>
-                            <button class="btn-preset" id="btn-download-json-rolled" style="padding: 6px 12px; font-size: 10px;">⬇ JSON</button>
                         </div>
                     </div>
                     <div class="panel-content" id="rolled-list"></div>
@@ -437,7 +434,7 @@
                 btnActionAdd: "Добавить", btnSpin: "Крутить дальше", btnReset: "Сброс",
                 tPresets: "Пресеты", tSelectPreset: "Выбрать", btnSave: "Сохранить",
                 btnLoad: "Загрузить", btnDelete: "Удалить", tPlaceholder: "Имя пресета...",
-                titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет", titleDownloadTxt: "Скачать как TXT", titleDownloadJson: "Скачать как JSON", msgCopied: "Скопировано в буфер обмена!",
+                titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет", titleDownloadTxt: "Скачать как TXT", msgCopied: "Скопировано в буфер обмена!",
                 msgExists: (n) => `Пресет "${n}" уже существует. Перезаписать?`, msgDel: (n) => `Удалить пресет "${n}"?`,
                 themes: { cyber: "Киберпанк", light: "Светлая", mid: "Полночь", forest: "Лес", blood: "Кровавая Луна", ocean: "Океан", sunset: "Закат", matrix: "Матрица", synth: "Синтвейв", mono: "Монохром" },
                 cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
@@ -449,7 +446,7 @@
                 btnActionAdd: "Add to list", btnSpin: "Spin again", btnReset: "Reset",
                 tPresets: "Presets", tSelectPreset: "Select", btnSave: "Save",
                 btnLoad: "Load", btnDelete: "Delete", tPlaceholder: "Preset name...",
-                titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset", titleDownloadTxt: "Download as TXT", titleDownloadJson: "Download as JSON", msgCopied: "Copied to clipboard!",
+                titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset", titleDownloadTxt: "Download as TXT", msgCopied: "Copied to clipboard!",
                 msgExists: (n) => `Preset "${n}" already exists. Overwrite?`, msgDel: (n) => `Delete preset "${n}"?`,
                 themes: { cyber: "Cyberpunk", light: "Light Mode", mid: "Midnight", forest: "Forest", blood: "Blood Moon", ocean: "Ocean", sunset: "Sunset", matrix: "Matrix", synth: "Synthwave", mono: "Monochrome" },
                 cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
@@ -461,7 +458,7 @@
                 btnActionAdd: "Añadir", btnSpin: "Girar de nuevo", btnReset: "Reiniciar",
                 tPresets: "Preajustes", tSelectPreset: "Seleccionar", btnSave: "Guardar",
                 btnLoad: "Cargar", btnDelete: "Borrar", tPlaceholder: "Nombre del preajuste...",
-                titleSave: "Guardar selección", titleLoad: "Cargar preajuste", titleDelete: "Borrar preajuste", titleDownloadTxt: "Descargar TXT", titleDownloadJson: "Descargar JSON", msgCopied: "¡Copiado!",
+                titleSave: "Guardar selección", titleLoad: "Cargar preajuste", titleDelete: "Borrar preajuste", titleDownloadTxt: "Descargar TXT", msgCopied: "¡Copiado!",
                 msgExists: (n) => `El preajuste "${n}" ya existe. ¿Sobrescribir?`, msgDel: (n) => `¿Borrar preajuste "${n}"?`,
                 themes: { cyber: "Ciberpunk", light: "Modo Claro", mid: "Medianoche", forest: "Bosque", blood: "Luna de Sangre", ocean: "Océano", sunset: "Atardecer", matrix: "Matrix", synth: "Synthwave", mono: "Monocromo" },
                 cats: { player: "Jugador", inventory: "Inventario", rules: "Reglas", effects: "Efectos", spawn: "Tasa de Spawn", settings: "Ajustes", other: "Otros" }
@@ -473,7 +470,7 @@
                 btnActionAdd: "Hinzufügen", btnSpin: "Nochmal drehen", btnReset: "Zurücksetzen",
                 tPresets: "Voreinstellungen", tSelectPreset: "Auswählen", btnSave: "Speichern",
                 btnLoad: "Laden", btnDelete: "Löschen", tPlaceholder: "Voreinstellungsname...",
-                titleSave: "Auswahl speichern", titleLoad: "Voreinstellung laden", titleDelete: "Voreinstellung löschen", titleDownloadTxt: "Als TXT herunterladen", titleDownloadJson: "Als JSON herunterladen", msgCopied: "Kopiert!",
+                titleSave: "Auswahl speichern", titleLoad: "Voreinstellung laden", titleDelete: "Voreinstellung löschen", titleDownloadTxt: "Als TXT herunterladen", msgCopied: "Kopiert!",
                 msgExists: (n) => `Voreinstellung "${n}" existiert bereits. Überschreiben?`, msgDel: (n) => `Voreinstellung "${n}" löschen?`,
                 themes: { cyber: "Cyberpunk", light: "Heller Modus", mid: "Mitternacht", forest: "Wald", blood: "Blutmond", ocean: "Ozean", sunset: "Sonnenuntergang", matrix: "Matrix", synth: "Synthwave", mono: "Monochrom" },
                 cats: { player: "Spieler", inventory: "Inventar", rules: "Spielregeln", effects: "Effekte", spawn: "Spawnrate", settings: "Einstellungen", other: "Andere" }
@@ -485,7 +482,7 @@
                 btnActionAdd: "Ajouter", btnSpin: "Tourner à nouveau", btnReset: "Réinitialiser",
                 tPresets: "Préréglages", tSelectPreset: "Sélectionner", btnSave: "Sauvegarder",
                 btnLoad: "Charger", btnDelete: "Supprimer", tPlaceholder: "Nom du préréglage...",
-                titleSave: "Sauvegarder la sélection", titleLoad: "Charger le préréglage", titleDelete: "Supprimer le préréglage", titleDownloadTxt: "Télécharger TXT", titleDownloadJson: "Télécharger JSON", msgCopied: "Copié !",
+                titleSave: "Sauvegarder la sélection", titleLoad: "Charger le préréglage", titleDelete: "Supprimer le préréglage", titleDownloadTxt: "Télécharger TXT", msgCopied: "Copié !",
                 msgExists: (n) => `Le préréglage "${n}" existe déjà. Écraser ?`, msgDel: (n) => `Supprimer le préréglage "${n}" ?`,
                 themes: { cyber: "Cyberpunk", light: "Mode Clair", mid: "Minuit", forest: "Forêt", blood: "Lune de Sang", ocean: "Océan", sunset: "Coucher de soleil", matrix: "Matrix", synth: "Synthwave", mono: "Monochrome" },
                 cats: { player: "Joueur", inventory: "Inventaire", rules: "Règles", effects: "Effets", spawn: "Taux de Spawn", settings: "Paramètres", other: "Autres" }
@@ -497,7 +494,7 @@
                 btnActionAdd: "Додати", btnSpin: "Крутити далі", btnReset: "Скинути",
                 tPresets: "Пресети", tSelectPreset: "Обрати", btnSave: "Зберегти",
                 btnLoad: "Завантажити", btnDelete: "Видалити", tPlaceholder: "Ім'я пресету...",
-                titleSave: "Зберегти поточну збірку", titleLoad: "Завантажити обраний пресет", titleDelete: "Видалити обраний пресет", titleDownloadTxt: "Завантажити як TXT", titleDownloadJson: "Завантажити як JSON", msgCopied: "Скопійовано!",
+                titleSave: "Зберегти поточну збірку", titleLoad: "Завантажити обраний пресет", titleDelete: "Видалити обраний пресет", titleDownloadTxt: "Завантажити як TXT", msgCopied: "Скопійовано!",
                 msgExists: (n) => `Пресет "${n}" вже існує. Перезаписати?`, msgDel: (n) => `Видалити пресет "${n}"?`,
                 themes: { cyber: "Кіберпанк", light: "Світла", mid: "Північ", forest: "Ліс", blood: "Кривава Місяць", ocean: "Океан", sunset: "Захід", matrix: "Матриця", synth: "Сінтвейв", mono: "Монохром" },
                 cats: { player: "Гравець", inventory: "Інвентар", rules: "Правила Гри", effects: "Ефекти", spawn: "Спавнрейт", settings: "Налаштування", other: "Інше" }
