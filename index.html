@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifiers PRO</title>
+    <title>Modifiers Twilight Forest</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -83,7 +83,6 @@
         .section { display: none; opacity: 0; transform: translateY(20px); transition: 0.4s; flex: 1; }
         .section.active { display: block; opacity: 1; transform: translateY(0); }
 
-        /* --- MANUAL LAYOUT --- */
         .manual-layout { display: grid; grid-template-columns: 1fr 350px; gap: 30px; align-items: start; height: 100%; }
         
         .categories {
@@ -135,12 +134,16 @@
         .selected-item-desc { font-size: 11px; color: var(--text-muted); font-weight: 600; }
         .selected-item-pct { font-weight: 900; font-size: 14px; color: var(--accent); }
 
-        /* --- ROULETTE TABS --- */
         .roulette-layout { display: grid; grid-template-columns: 320px 1fr 340px; gap: 30px; height: calc(100vh - 140px); }
         
         .side-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; overflow: hidden; height: 100%; }
-        .side-panel h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 15px; text-align: center; flex-shrink: 0; }
         
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; }
+        .panel-header h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 0; }
+        
+        .btn-reset { background: rgba(255,0,85,0.1); color: var(--danger); border: 1px solid var(--danger); border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; text-transform: uppercase; }
+        .btn-reset:hover { background: var(--danger); color: #fff; box-shadow: 0 0 10px rgba(255,0,85,0.4); }
+
         .panel-content { flex: 1; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
         .panel-content::-webkit-scrollbar { width: 4px; }
         .panel-content::-webkit-scrollbar-thumb { background: var(--border-active); border-radius: 10px; }
@@ -158,8 +161,8 @@
         input:checked + .slider { background-color: var(--accent); }
         input:checked + .slider:before { transform: translateX(14px); }
 
-        .rolled-item-del { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 18px; opacity: 0.6; transition: 0.2s; padding: 5px; margin-left: 10px; }
-        .rolled-item-del:hover { opacity: 1; transform: scale(1.2) rotate(90deg); }
+        .rolled-item-del, .manual-item-del { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 18px; opacity: 0.6; transition: 0.2s; padding: 5px; margin-left: 10px; }
+        .rolled-item-del:hover, .manual-item-del:hover { opacity: 1; transform: scale(1.2) rotate(90deg); }
 
         .center-stage { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
         
@@ -170,7 +173,6 @@
         
         .wheel-wrapper { position: relative; width: var(--wheel-size); height: var(--wheel-size); border-radius: 50%; background: #000; box-shadow: 0 0 0 10px rgba(255,255,255,0.05), 0 30px 60px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; overflow: hidden; }
         
-        /* CSS АНИМАЦИЯ РУЛЕТКИ (ПЛАВНАЯ) */
         .wheel-inner { width: 100%; height: 100%; border-radius: 50%; transform-origin: center; transition: transform cubic-bezier(0.1, 0.9, 0.2, 1); will-change: transform; }
         #wheel { width: 100%; height: 100%; border-radius: 50%; }
         
@@ -184,7 +186,6 @@
         .spin-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px var(--accent-glow); }
         .spin-btn:disabled { background: var(--surface-hover); color: var(--text-muted); box-shadow: none; cursor: not-allowed; transform: none; }
 
-        /* --- MODAL --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.4s; }
         .modal-overlay.show { opacity: 1; visibility: visible; }
         .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 40px; text-align: center; max-width: 450px; width: 90%; transform: scale(0.9) translateY(20px); transition: 0.4s; position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
@@ -246,7 +247,10 @@
         <section id="roulette" class="section">
             <div class="roulette-layout">
                 <aside class="side-panel left-panel">
-                    <h3 id="t-pool">Wheel Pool</h3>
+                    <div class="panel-header">
+                        <h3 id="t-pool">Wheel Pool</h3>
+                        <button class="btn-reset" id="btn-reset-pool"></button>
+                    </div>
                     <div class="panel-content" id="pool-list"></div>
                 </aside>
 
@@ -267,7 +271,9 @@
                 </div>
 
                 <aside class="side-panel right-panel">
-                    <h3 id="t-inventory">Rolled Modifiers</h3>
+                    <div class="panel-header">
+                        <h3 id="t-inventory">Rolled Modifiers</h3>
+                    </div>
                     <div class="panel-content" id="rolled-list"></div>
                 </aside>
             </div>
@@ -295,14 +301,14 @@
                 title: "Modifiers", tabManual: "Ручной Выбор", tabRoulette: "Рулетка",
                 tPool: "Настройка Рулетки", tInventory: "Инвентарь Рулетки", tTime: "Время крутки (сек):",
                 spinBtn: "Крутить Колесо", chance: "Шанс выпадения:",
-                btnActionAdd: "Добавить", btnSpin: "Крутить дальше",
+                btnActionAdd: "Добавить", btnSpin: "Крутить дальше", btnReset: "Сброс",
                 cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
             },
             en: {
                 title: "Modifiers", tabManual: "Manual", tabRoulette: "Roulette",
                 tPool: "Wheel Settings", tInventory: "Rolled Modifiers", tTime: "Spin Time (sec):",
                 spinBtn: "Spin Wheel", chance: "Drop Chance:",
-                btnActionAdd: "Add to list", btnSpin: "Spin again",
+                btnActionAdd: "Add to list", btnSpin: "Spin again", btnReset: "Reset",
                 cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
             }
         };
@@ -370,7 +376,6 @@
             currentWinner: null
         };
 
-        // Инициализация данных
         rawData.forEach(cat => {
             cat.items.forEach(item => {
                 const fullItem = { ...item, catKey: cat.key, catColor: cat.color, catHex: cat.hex };
@@ -389,39 +394,11 @@
             canvas: document.getElementById('wheel'),
             ctx: document.getElementById('wheel').getContext('2d'),
             modal: document.getElementById('result-modal'),
-            timeInput: document.getElementById('spin-time-input')
+            timeInput: document.getElementById('spin-time-input'),
+            btnResetPool: document.getElementById('btn-reset-pool')
         };
         const size = 1000;
         els.canvas.width = size; els.canvas.height = size;
-
-        // Звуковой синтезатор (Web Audio API)
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
-
-        function playSound(type) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            if (type === 'select') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            } else if (type === 'deselect') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            }
-        }
 
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -439,6 +416,15 @@
             drawWheel();
         });
 
+        els.btnResetPool.addEventListener('click', () => {
+            state.rolled = [];
+            state.wheelPool.clear();
+            state.flatMods.forEach((_, id) => state.wheelPool.add(id));
+            renderRolledTab();
+            renderPoolTab();
+            drawWheel();
+        });
+
         function updateAllUI() {
             const t = i18n[state.lang];
             document.getElementById('app-title').textContent = t.title;
@@ -450,6 +436,7 @@
             els.spinBtn.textContent = t.spinBtn;
             document.getElementById('btn-action-add').textContent = t.btnActionAdd;
             document.getElementById('btn-spin-again').textContent = t.btnSpin;
+            els.btnResetPool.textContent = t.btnReset;
 
             renderManualTab();
             renderPoolTab();
@@ -489,7 +476,6 @@
                         if(state.manualSelected.has(item.id)) { 
                             state.manualSelected.delete(item.id); 
                             el.classList.remove('selected'); 
-                            playSound('deselect');
                         } else {
                             if(item.group) {
                                 for(let [sid, sitem] of state.manualSelected) {
@@ -501,7 +487,6 @@
                             }
                             state.manualSelected.set(item.id, state.flatMods.get(item.id));
                             el.classList.add('selected');
-                            playSound('select');
                         }
                         updateManualSummary();
                         checkManualConflicts();
@@ -530,17 +515,34 @@
             for(let item of state.manualSelected.values()) {
                 total += item.pct;
                 const d = item[state.lang];
-                els.manualSelected.innerHTML += `
-                    <div class="selected-item" style="--cat-color: ${item.catColor}">
-                        <div class="selected-item-info">
-                            <div class="selected-item-name">${item.icon} ${d.n}</div>
-                            <div class="selected-item-desc">${d.d}</div>
-                        </div>
+                
+                const el = document.createElement('div');
+                el.className = 'selected-item';
+                el.style.setProperty('--cat-color', item.catColor);
+                
+                el.innerHTML = `
+                    <div class="selected-item-info">
+                        <div class="selected-item-name">${item.icon} ${d.n}</div>
+                        <div class="selected-item-desc">${d.d}</div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
                         <div class="selected-item-pct">${item.pct}%</div>
+                        <button class="manual-item-del" data-id="${item.id}">✖</button>
                     </div>
                 `;
+                els.manualSelected.appendChild(el);
             }
             document.getElementById('total-pct').textContent = `${total}%`;
+
+            document.querySelectorAll('.manual-item-del').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.dataset.id;
+                    state.manualSelected.delete(id);
+                    document.querySelector(`.modifier-item[data-id="${id}"]`)?.classList.remove('selected');
+                    updateManualSummary();
+                    checkManualConflicts();
+                });
+            });
         }
 
         function renderPoolTab() {
@@ -607,7 +609,6 @@
             });
         }
 
-        // Логика Рулетки (Оптимизировано через CSS Transform)
         let currentRotation = 0;
         
         function drawWheel() {
@@ -627,7 +628,6 @@
             
             for(let i=0; i<poolArr.length; i++) {
                 const mod = poolArr[i];
-                // Рисуем начиная с 0, крутить будем сам контейнер
                 const start = i*slice;
                 const end = start + slice;
 
@@ -656,7 +656,7 @@
             const timeInput = parseFloat(els.timeInput.value);
             const spinSeconds = (isNaN(timeInput) || timeInput < 1 ? 5 : timeInput);
             
-            const extraSpins = Math.floor(Math.random() * 5) + 5; // 5-10 оборотов
+            const extraSpins = Math.floor(Math.random() * 5) + 5;
             const randomDegrees = Math.floor(Math.random() * 360);
             
             currentRotation += (extraSpins * 360) + randomDegrees;
@@ -674,9 +674,7 @@
             const poolArr = Array.from(state.wheelPool).map(id => state.flatMods.get(id));
             const sliceDegrees = 360 / poolArr.length;
             
-            // Вычисление результата на основе финального угла
             const normalizedRotation = currentRotation % 360;
-            // Стрелка находится на 0 градусах по CSS (справа)
             let winAngle = (360 - normalizedRotation) % 360;
             let winIndex = Math.floor(winAngle / sliceDegrees);
             
@@ -706,10 +704,8 @@
         document.getElementById('btn-action-add').addEventListener('click', () => {
             state.rolled.push(state.currentWinner);
             
-            // Удаляем сам выигранный мод
             state.wheelPool.delete(state.currentWinner.id);
 
-            // Удаляем ВСЕ остальные моды из этой же группы
             if (state.currentWinner.group) {
                 for (let id of state.wheelPool) {
                     const mod = state.flatMods.get(id);
