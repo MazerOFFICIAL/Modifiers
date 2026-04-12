@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifiers</title>
+    <title>Modifiers PRO</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root, [data-theme="cyberpunk"] {
@@ -188,6 +188,16 @@
         .summary-panel { position: sticky; top: 100px; height: calc(100vh - 120px); overflow: hidden; }
         .side-panel { height: 100%; overflow: hidden; }
         
+        .presets-container { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px; flex-shrink: 0; }
+        .presets-header { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
+        .presets-controls { display: flex; gap: 8px; margin-bottom: 10px; }
+        #preset-select { flex: 1; background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 8px 12px; font-size: 12px; font-weight: 600; outline: none; }
+        .icon-btn-small { background: var(--surface-hover); border: 1px solid var(--border); border-radius: 10px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); font-size: 14px; }
+        .icon-btn-small:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 0 10px var(--accent-glow); }
+        .presets-save { display: flex; gap: 8px; }
+        #preset-name { flex: 1; background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 8px 12px; font-size: 12px; font-weight: 600; outline: none; }
+        #preset-name:focus { border-color: var(--accent); }
+
         .total-pct { font-size: 58px; font-weight: 900; margin-bottom: 25px; text-align: center; color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); line-height: 1; flex-shrink: 0; }
         
         .selected-list, .panel-content { overflow-y: auto; padding-right: 8px; flex: 1; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
@@ -202,7 +212,7 @@
         .selected-item-desc { font-size: 11px; color: var(--text-muted); font-weight: 600; }
         .selected-item-pct { font-weight: 900; font-size: 14px; color: var(--accent); }
 
-        .manual-item-del, .rolled-item-del { background: rgba(255,0,85,0.1); border: 1px solid var(--danger); border-radius: 8px; color: var(--danger); cursor: pointer; font-size: 14px; transition: 0.2s; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 12px; }
+        .manual-item-del, .rolled-item-del { background: rgba(255,0,85,0.1); border: 1px solid var(--danger); border-radius: 8px; color: var(--danger); cursor: pointer; font-size: 14px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 12px; }
         .manual-item-del:hover, .rolled-item-del:hover { background: var(--danger); color: #fff; transform: scale(1.1); box-shadow: 0 0 15px rgba(255,0,85,0.4); }
 
         .roulette-layout { display: grid; grid-template-columns: 320px 1fr 340px; gap: 30px; height: calc(100vh - 140px); }
@@ -210,8 +220,10 @@
         .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-shrink: 0; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
         .panel-header h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-main); margin: 0; font-weight: 900; }
         
-        .btn-reset { background: rgba(255,0,85,0.1); color: var(--danger); border: 1px solid var(--danger); border-radius: 8px; padding: 8px 16px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-reset { background: rgba(255,0,85,0.1); color: var(--danger); border: 1px solid var(--danger); border-radius: 10px; padding: 8px 16px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .btn-reset:hover { background: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(255,0,85,0.4); transform: translateY(-2px); }
+        .btn-save { background: rgba(0,255,136,0.1); color: var(--success); border: 1px solid var(--success); border-radius: 10px; padding: 8px 16px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-save:hover { background: var(--success); color: #000; box-shadow: 0 0 15px rgba(0,255,136,0.4); transform: translateY(-2px); }
 
         .pool-cat-group { margin-bottom: 15px; flex-shrink: 0; }
         .pool-cat-title { font-size: 12px; font-weight: 800; color: var(--cat-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
@@ -230,7 +242,7 @@
         
         .spin-input-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 15px 25px; display: inline-flex; align-items: center; gap: 15px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
         .spin-input-wrapper label { font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        .spin-input-wrapper input { background: var(--bg-color); border: 1px solid var(--border-active); color: var(--text-main); width: 80px; padding: 10px; border-radius: 10px; text-align: center; font-weight: 900; font-size: 16px; outline: none; transition: 0.2s; }
+        .spin-input-wrapper input { background: var(--bg-color); border: 1px solid var(--border-active); color: var(--text-main); width: 80px; padding: 10px; border-radius: 10px; text-align: center; font-weight: 900; font-size: 16px; outline: none; }
         .spin-input-wrapper input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
         
         .wheel-wrapper { position: relative; width: var(--wheel-size); height: var(--wheel-size); border-radius: 50%; background: var(--bg-color); box-shadow: 0 0 0 12px var(--surface), 0 30px 60px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -273,7 +285,7 @@
             .roulette-layout { grid-template-columns: 1fr; height: auto; }
             .side-panel { height: 450px; }
             .manual-layout { grid-template-columns: 1fr; }
-            .summary-panel { position: static; height: 500px; }
+            .summary-panel { position: static; height: auto; min-height: 500px; }
             .modal-actions { grid-template-columns: 1fr; }
         }
     </style>
@@ -303,6 +315,20 @@
             <div class="manual-layout">
                 <div class="categories" id="manual-container"></div>
                 <aside class="summary-panel">
+                    <div class="presets-container">
+                        <div class="presets-header" id="t-presets">Presets</div>
+                        <div class="presets-controls">
+                            <select id="preset-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <button class="icon-btn-small" id="btn-load-preset">📂</button>
+                            <button class="icon-btn-small" id="btn-del-preset" style="color: var(--danger); border-color: var(--danger);">✖</button>
+                        </div>
+                        <div class="presets-save">
+                            <input type="text" id="preset-name" placeholder="Name...">
+                            <button class="btn-save" id="btn-save-preset">Save</button>
+                        </div>
+                    </div>
                     <div class="total-pct" id="total-pct">0%</div>
                     <div class="selected-list" id="manual-selected-list"></div>
                 </aside>
@@ -367,6 +393,7 @@
                 tPool: "Настройка Рулетки", tInventory: "Инвентарь Рулетки", tTime: "Время крутки (сек):",
                 spinBtn: "Крутить Колесо", chance: "Шанс выпадения:",
                 btnActionAdd: "Добавить", btnSpin: "Крутить дальше", btnReset: "Сброс",
+                tPresets: "Пресеты", tSelectPreset: "Выбрать", btnSave: "Сохранить",
                 themes: { cyber: "Киберпанк", light: "Светлая", mid: "Полночь", forest: "Лес", blood: "Кровавая Луна" },
                 cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
             },
@@ -375,6 +402,7 @@
                 tPool: "Wheel Settings", tInventory: "Rolled Modifiers", tTime: "Spin Time (sec):",
                 spinBtn: "Spin Wheel", chance: "Drop Chance:",
                 btnActionAdd: "Add to list", btnSpin: "Spin again", btnReset: "Reset",
+                tPresets: "Presets", tSelectPreset: "Select", btnSave: "Save",
                 themes: { cyber: "Cyberpunk", light: "Light Mode", mid: "Midnight", forest: "Forest", blood: "Blood Moon" },
                 cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
             }
@@ -423,7 +451,9 @@
                 { id: 'st7', icon: '🎞️', pct: 5, group: 'fps', ru: { n: 'Пентиум', d: 'FPS 30' }, en: { n: 'Pentium', d: 'FPS 30' } },
                 { id: 'st8', icon: '🎞️', pct: 10, group: 'fps', ru: { n: 'Микроволновка', d: 'FPS 20' }, en: { n: 'Microwave', d: 'FPS 20' } },
                 { id: 'st9', icon: '🎞️', pct: 20, group: 'fps', ru: { n: 'Картошка', d: 'FPS 10' }, en: { n: 'Potato', d: 'FPS 10' } },
-                { id: 'st10', icon: '🐭', pct: 25, group: null, ru: { n: 'Ломка', d: 'Инверсия Мыши' }, en: { n: 'Withdrawal', d: 'Inverted Mouse' } }
+                { id: 'st10', icon: '🐭', pct: 25, group: null, ru: { n: 'Ломка', d: 'Инверсия Мыши' }, en: { n: 'Withdrawal', d: 'Inverted Mouse' } },
+                { id: 'st11', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж От Дамдома 1', d: 'Минимальная Чувствительность' }, en: { n: 'Challenge By Damdom 1', d: 'Minimum Sensitivity' } },
+                { id: 'st12', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж От Дамдома 2', d: 'Максимальная Чувствительность' }, en: { n: 'Challenge By Damdom 2', d: 'Maximum Sensitivity' } }
             ]},
             { id: 'cat_oth', key: 'other', color: 'var(--cat-other)', hex: '#eccc68', items: [
                 { id: 'o1', icon: '⏳', pct: 30, group: null, ru: { n: 'Поторопимся', d: 'Спидран 1.5ч' }, en: { n: 'Hurry Up', d: 'Speedrun 1.5h' } },
@@ -440,7 +470,8 @@
             wheelPool: new Set(),
             rolled: [],
             flatMods: new Map(),
-            currentWinner: null
+            currentWinner: null,
+            presets: {}
         };
 
         try {
@@ -448,6 +479,8 @@
             if (savedTheme) state.theme = savedTheme;
             const savedLang = localStorage.getItem('modifiers_lang');
             if (savedLang) state.lang = savedLang;
+            const savedPresets = localStorage.getItem('modifiers_presets');
+            if (savedPresets) state.presets = JSON.parse(savedPresets);
         } catch(e) {}
 
         rawData.forEach(cat => {
@@ -496,15 +529,15 @@
             
             if (type === 'select') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, now);
-                osc.frequency.exponentialRampToValueAtTime(100, now + 0.05);
-                gain.gain.setValueAtTime(0.2, now);
+                osc.frequency.setValueAtTime(1200, now);
+                osc.frequency.exponentialRampToValueAtTime(1800, now + 0.05);
+                gain.gain.setValueAtTime(0.1, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
                 osc.start(now); osc.stop(now + 0.05);
             } else if (type === 'deselect') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(300, now);
-                osc.frequency.exponentialRampToValueAtTime(50, now + 0.05);
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(400, now + 0.05);
                 gain.gain.setValueAtTime(0.1, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
                 osc.start(now); osc.stop(now + 0.05);
@@ -542,6 +575,54 @@
             drawWheel();
         });
 
+        document.getElementById('btn-save-preset').addEventListener('click', () => {
+            const nameInput = document.getElementById('preset-name');
+            const name = nameInput.value.trim();
+            if (!name) return;
+            const ids = Array.from(state.manualSelected.keys());
+            state.presets[name] = ids;
+            try { localStorage.setItem('modifiers_presets', JSON.stringify(state.presets)); } catch(e){}
+            nameInput.value = '';
+            renderPresets();
+        });
+
+        document.getElementById('btn-load-preset').addEventListener('click', () => {
+            const name = document.getElementById('preset-select').value;
+            if (!name || !state.presets[name]) return;
+            state.manualSelected.clear();
+            state.presets[name].forEach(id => {
+                const mod = state.flatMods.get(id);
+                if (mod) state.manualSelected.set(id, mod);
+            });
+            document.querySelectorAll('.modifier-item').forEach(el => el.classList.remove('selected'));
+            state.manualSelected.forEach((_, id) => {
+                document.querySelector(`.modifier-item[data-id="${id}"]`)?.classList.add('selected');
+            });
+            playSound('select');
+            updateManualSummary();
+            checkManualConflicts();
+        });
+
+        document.getElementById('btn-del-preset').addEventListener('click', () => {
+            const name = document.getElementById('preset-select').value;
+            if (!name || !state.presets[name]) return;
+            delete state.presets[name];
+            try { localStorage.setItem('modifiers_presets', JSON.stringify(state.presets)); } catch(e){}
+            renderPresets();
+        });
+
+        function renderPresets() {
+            const select = document.getElementById('preset-select');
+            const t = i18n[state.lang];
+            select.innerHTML = `<option value="">-- ${t.tSelectPreset} --</option>`;
+            for (let name in state.presets) {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                select.appendChild(opt);
+            }
+        }
+
         function updateAllUI() {
             const t = i18n[state.lang];
             document.getElementById('app-title').textContent = t.title;
@@ -554,6 +635,8 @@
             document.getElementById('btn-action-add').textContent = t.btnActionAdd;
             document.getElementById('btn-spin-again').textContent = t.btnSpin;
             els.btnResetPool.textContent = t.btnReset;
+            document.getElementById('t-presets').textContent = t.tPresets;
+            document.getElementById('btn-save-preset').textContent = t.btnSave;
 
             document.getElementById('th-cyber').textContent = t.themes.cyber;
             document.getElementById('th-light').textContent = t.themes.light;
@@ -564,6 +647,7 @@
             document.body.setAttribute('data-theme', state.theme);
             els.themeSelect.value = state.theme;
 
+            renderPresets();
             renderManualTab();
             renderPoolTab();
             renderRolledTab();
