@@ -188,7 +188,6 @@
         .summary-panel { position: sticky; top: 100px; height: calc(100vh - 120px); overflow: hidden; }
         .side-panel { height: 100%; overflow: hidden; }
         
-        /* --- ПРЕСЕТЫ УЛУЧШЕННЫЕ --- */
         .presets-container { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px; flex-shrink: 0; }
         .presets-header { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
         .presets-inputs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
@@ -584,42 +583,73 @@
 
         document.getElementById('btn-save-preset').addEventListener('click', () => {
             const nameInput = document.getElementById('preset-name');
-            const name = nameInput.value.trim();
+            const select = document.getElementById('preset-select');
+            let name = nameInput.value.trim();
+            
+            if (!name && select.value) {
+                name = select.value;
+            }
+            
             if (!name) return;
+
+            if (state.presets[name]) {
+                const msg = state.lang === 'ru' ? `Пресет "${name}" уже существует. Перезаписать?` : `Preset "${name}" already exists. Overwrite?`;
+                if (!confirm(msg)) return;
+            }
+
             const ids = Array.from(state.manualSelected.keys());
             state.presets[name] = ids;
             try { localStorage.setItem('modifiers_presets', JSON.stringify(state.presets)); } catch(e){}
+            
             nameInput.value = '';
             renderPresets();
+            document.getElementById('preset-select').value = name;
         });
 
         document.getElementById('btn-load-preset').addEventListener('click', () => {
-            const name = document.getElementById('preset-select').value;
+            const select = document.getElementById('preset-select');
+            const name = select.value;
             if (!name || !state.presets[name]) return;
+            
             state.manualSelected.clear();
             state.presets[name].forEach(id => {
                 const mod = state.flatMods.get(id);
                 if (mod) state.manualSelected.set(id, mod);
             });
+            
             document.querySelectorAll('.modifier-item').forEach(el => el.classList.remove('selected'));
             state.manualSelected.forEach((_, id) => {
                 document.querySelector(`.modifier-item[data-id="${id}"]`)?.classList.add('selected');
             });
+            
             playSound('select');
             updateManualSummary();
             checkManualConflicts();
+            document.getElementById('preset-name').value = '';
         });
 
         document.getElementById('btn-del-preset').addEventListener('click', () => {
-            const name = document.getElementById('preset-select').value;
+            const select = document.getElementById('preset-select');
+            const name = select.value;
             if (!name || !state.presets[name]) return;
+            
+            const msg = state.lang === 'ru' ? `Удалить пресет "${name}"?` : `Delete preset "${name}"?`;
+            if (!confirm(msg)) return;
+
             delete state.presets[name];
             try { localStorage.setItem('modifiers_presets', JSON.stringify(state.presets)); } catch(e){}
+            
+            document.getElementById('preset-name').value = '';
             renderPresets();
+        });
+
+        document.getElementById('preset-select').addEventListener('change', () => {
+            document.getElementById('preset-name').value = '';
         });
 
         function renderPresets() {
             const select = document.getElementById('preset-select');
+            const currentVal = select.value;
             const t = i18n[state.lang];
             select.innerHTML = `<option value="">-- ${t.tSelectPreset} --</option>`;
             for (let name in state.presets) {
@@ -627,6 +657,9 @@
                 opt.value = name;
                 opt.textContent = name;
                 select.appendChild(opt);
+            }
+            if (state.presets[currentVal]) {
+                select.value = currentVal;
             }
         }
 
