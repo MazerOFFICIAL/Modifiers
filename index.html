@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifiers PRO</title>
+    <title>Modifiers</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        /* === THEMES === */
         :root, [data-theme="cyberpunk"] {
             --bg-color: #0a0a0c;
             --surface: rgba(20, 20, 25, 0.7);
@@ -106,7 +105,6 @@
             overflow-x: hidden;
         }
 
-        /* --- HEADER & CONTROLS --- */
         header {
             background: var(--surface);
             backdrop-filter: blur(20px);
@@ -156,7 +154,6 @@
         .section { display: none; opacity: 0; transform: translateY(15px); transition: opacity 0.4s, transform 0.4s; flex: 1; }
         .section.active { display: block; opacity: 1; transform: translateY(0); }
 
-        /* --- MANUAL LAYOUT & CARDS --- */
         .manual-layout { display: grid; grid-template-columns: 1fr 350px; gap: 30px; align-items: start; height: 100%; }
         
         .categories { column-count: 3; column-gap: 20px; width: 100%; }
@@ -184,7 +181,6 @@
         .mod-desc { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; line-height: 1.4; font-weight: 600; }
         .mod-pct { background: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 900; border: 1px solid var(--border); color: var(--accent); }
 
-        /* --- PANELS --- */
         .summary-panel, .side-panel { 
             background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; 
             backdrop-filter: blur(20px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; 
@@ -209,7 +205,6 @@
         .manual-item-del, .rolled-item-del { background: rgba(255,0,85,0.1); border: 1px solid var(--danger); border-radius: 8px; color: var(--danger); cursor: pointer; font-size: 14px; transition: 0.2s; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 12px; }
         .manual-item-del:hover, .rolled-item-del:hover { background: var(--danger); color: #fff; transform: scale(1.1); box-shadow: 0 0 15px rgba(255,0,85,0.4); }
 
-        /* --- ROULETTE --- */
         .roulette-layout { display: grid; grid-template-columns: 320px 1fr 340px; gap: 30px; height: calc(100vh - 140px); }
         
         .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-shrink: 0; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
@@ -252,7 +247,6 @@
         .spin-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px var(--accent-glow); }
         .spin-btn:disabled { background: var(--surface-hover); color: var(--text-muted); box-shadow: none; cursor: not-allowed; transform: none; }
 
-        /* --- MODAL --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; }
         .modal-overlay.show { opacity: 1; visibility: visible; }
         .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 50px; text-align: center; max-width: 500px; width: 90%; transform: scale(0.9) translateY(20px); position: relative; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
@@ -482,30 +476,38 @@
         els.canvas.width = size; els.canvas.height = size;
 
         const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
 
         function playSound(type) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            initAudio();
+            if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             
+            const now = audioCtx.currentTime;
+            
             if (type === 'select') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(100, now + 0.05);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
             } else if (type === 'deselect') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(50, now + 0.05);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
             }
         }
 
@@ -597,6 +599,7 @@
                     `;
                     
                     el.addEventListener('click', () => {
+                        initAudio();
                         if(state.manualSelected.has(item.id)) { 
                             state.manualSelected.delete(item.id); 
                             el.classList.remove('selected'); 
