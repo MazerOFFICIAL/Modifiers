@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifiers Manager PRO</title>
+    <title>Modifiers</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -83,72 +83,76 @@
         .section { display: none; opacity: 0; transform: translateY(20px); transition: 0.4s; }
         .section.active { display: block; opacity: 1; transform: translateY(0); }
 
-        /* --- РУЧНОЙ ВЫБОР (МАНУАЛ) --- */
         .manual-layout { display: grid; grid-template-columns: 1fr 350px; gap: 30px; align-items: start; }
-        .categories { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; align-items: start; }
+        .categories { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; align-items: start; }
         
-        .category-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; backdrop-filter: blur(10px); }
-        .category-title { font-size: 16px; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
-        .category-title::before { content: ''; display: block; width: 12px; height: 12px; border-radius: 3px; background-color: var(--cat-color); box-shadow: 0 0 10px var(--cat-color); transform: rotate(45deg); }
+        .category-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 15px; backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 6px; }
+        .category-title { font-size: 14px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+        .category-title::before { content: ''; display: block; width: 10px; height: 10px; border-radius: 3px; background-color: var(--cat-color); box-shadow: 0 0 10px var(--cat-color); transform: rotate(45deg); }
 
-        .modifier-item { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
+        .modifier-item { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 10px; cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
         [data-theme="light"] .modifier-item { background: rgba(255,255,255,0.5); }
         .modifier-item:hover { background: var(--surface-hover); transform: translateX(4px); }
         .modifier-item.selected { border-color: var(--cat-color); background: linear-gradient(90deg, rgba(255,255,255,0.05), transparent); box-shadow: inset 4px 0 0 var(--cat-color); }
-        
-        /* Изменение: Убрали pointer-events: none, чтобы можно было кликать на серые */
         .modifier-item.disabled { opacity: 0.4; filter: grayscale(1); }
 
         .mod-info { display: flex; align-items: center; gap: 10px; }
-        .mod-name { font-weight: 700; font-size: 13px; }
-        .mod-desc { font-size: 10px; color: var(--text-muted); display: block; margin-top: 2px; }
-        .mod-pct { background: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 900; color: var(--cat-color); border: 1px solid rgba(255,255,255,0.05); }
+        .mod-name { font-weight: 700; font-size: 12px; }
+        .mod-desc { font-size: 9px; color: var(--text-muted); display: block; margin-top: 2px; }
+        .mod-pct { background: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 900; border: 1px solid rgba(255,255,255,0.05); }
 
         .summary-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; position: sticky; top: 100px; backdrop-filter: blur(20px); max-height: calc(100vh - 120px); display: flex; flex-direction: column; }
-        .total-pct { font-size: 54px; font-weight: 900; margin-bottom: 20px; text-align: center; color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); line-height: 1; }
-        .selected-list { overflow-y: auto; padding-right: 5px; flex: 1; }
+        .total-pct { font-size: 54px; font-weight: 900; margin-bottom: 20px; text-align: center; text-shadow: 0 0 20px rgba(0,0,0,0.5); line-height: 1; transition: color 0.3s; }
+        .selected-list { overflow-y: auto; padding-right: 5px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
         .selected-list::-webkit-scrollbar { width: 4px; }
         .selected-list::-webkit-scrollbar-thumb { background: var(--border-active); border-radius: 10px; }
         
-        .selected-item { font-size: 13px; padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; font-weight: 600; }
+        .selected-item { padding: 10px; border-radius: 10px; background: rgba(0,0,0,0.2); border-left: 3px solid var(--cat-color); display: flex; justify-content: space-between; align-items: center; }
+        .selected-item-info { display: flex; flex-direction: column; gap: 2px; }
+        .selected-item-name { font-size: 12px; font-weight: 700; }
+        .selected-item-desc { font-size: 9px; color: var(--text-muted); }
+        .selected-item-pct { font-weight: 900; font-size: 14px; }
 
-        /* --- РУЛЕТКА --- */
         .roulette-layout { display: grid; grid-template-columns: 320px 1fr 320px; gap: 30px; height: calc(100vh - 140px); }
         
         .side-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; overflow: hidden; }
         .side-panel h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 15px; text-align: center; }
-        .panel-content { flex: 1; overflow-y: auto; padding-right: 5px; }
+        .panel-content { flex: 1; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 8px; }
         .panel-content::-webkit-scrollbar { width: 4px; }
         .panel-content::-webkit-scrollbar-thumb { background: var(--border-active); border-radius: 10px; }
 
-        .pool-cat-group { margin-bottom: 15px; }
-        .pool-cat-title { font-size: 12px; font-weight: 800; color: var(--cat-color); margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-        .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 5px; cursor: pointer; transition: 0.2s; }
+        .pool-cat-group { margin-bottom: 10px; }
+        .pool-cat-title { font-size: 11px; font-weight: 800; color: var(--cat-color); margin-bottom: 6px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+        .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 4px; cursor: pointer; transition: 0.2s; }
         .toggle-row:hover { background: rgba(255,255,255,0.05); }
-        .toggle-row.disabled { opacity: 0.5; }
-        .toggle-name { font-size: 12px; font-weight: 600; flex: 1; }
+        .toggle-name { font-size: 11px; font-weight: 600; flex: 1; }
         
-        .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+        .switch { position: relative; display: inline-block; width: 30px; height: 18px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(14px); }
+        input:checked + .slider:before { transform: translateX(12px); }
 
-        .rolled-item { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid var(--cat-color); animation: slideIn 0.3s ease; }
+        .rolled-item { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; border-left: 3px solid var(--cat-color); animation: slideIn 0.3s ease; }
         .rolled-item-del { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px; opacity: 0.7; transition: 0.2s; padding: 0 5px; }
         .rolled-item-del:hover { opacity: 1; transform: scale(1.2); }
 
         .center-stage { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
         
-        .spin-settings { background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 10px 20px; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(10px); }
-        .spin-settings input { background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: #fff; width: 60px; padding: 5px; border-radius: 6px; text-align: center; font-weight: 800; font-family: var(--font-main); }
+        .spin-control-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 15px 25px; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; gap: 10px; backdrop-filter: blur(10px); min-width: 250px; }
+        .spin-header { display: flex; justify-content: space-between; width: 100%; font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+        .spin-val-display { font-size: 16px; font-weight: 900; color: var(--accent); }
+        
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: var(--accent); cursor: pointer; margin-top: -6px; box-shadow: 0 0 10px var(--accent-glow); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 10px; }
         
         .wheel-wrapper { position: relative; width: var(--wheel-size); height: var(--wheel-size); border-radius: 50%; background: #000; box-shadow: 0 0 0 8px rgba(255,255,255,0.05), 0 20px 50px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
         #wheel { width: 100%; height: 100%; border-radius: 50%; }
         
-        .wheel-center { position: absolute; width: 60px; height: 60px; background: var(--bg-color); border-radius: 50%; z-index: 10; border: 4px solid var(--border-active); box-shadow: 0 0 20px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
-        .wheel-center::after { content: ''; width: 20px; height: 20px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
+        .wheel-center { position: absolute; width: 50px; height: 50px; background: var(--bg-color); border-radius: 50%; z-index: 10; border: 4px solid var(--border-active); box-shadow: 0 0 20px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
+        .wheel-center::after { content: ''; width: 16px; height: 16px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
 
         .pointer-wrapper { position: absolute; top: 50%; right: -25px; transform: translateY(-50%); z-index: 20; filter: drop-shadow(-5px 0 10px rgba(0,0,0,0.6)); }
         .pointer { width: 50px; height: 40px; background: var(--text-main); clip-path: polygon(100% 0, 0 50%, 100% 100%); }
@@ -157,7 +161,6 @@
         .spin-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px var(--accent-glow); }
         .spin-btn:disabled { background: var(--surface-hover); color: var(--text-muted); box-shadow: none; cursor: not-allowed; transform: none; }
 
-        /* --- МОДАЛЬНОЕ ОКНО --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.4s; }
         .modal-overlay.show { opacity: 1; visibility: visible; }
         .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 40px; text-align: center; max-width: 450px; width: 90%; transform: scale(0.9) translateY(20px); transition: 0.4s; position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
@@ -167,9 +170,7 @@
         .modal-name { font-size: 28px; font-weight: 900; margin-top: 10px; margin-bottom: 5px; }
         .modal-cat { font-size: 14px; font-weight: 700; color: var(--modal-color); margin-bottom: 20px; text-transform: uppercase; }
         
-        /* 2 Кнопки */
         .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        
         .m-btn { padding: 14px 20px; border-radius: 12px; font-weight: 800; cursor: pointer; border: none; font-size: 14px; transition: 0.2s; text-transform: uppercase; }
         .btn-add { background: var(--success); color: #000; }
         .btn-add:hover { box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); transform: translateY(-2px); }
@@ -194,7 +195,7 @@
 <body>
 
     <header>
-        <div class="logo-area"><h1 id="app-title">Modifiers PRO</h1></div>
+        <div class="logo-area"><h1 id="app-title">Modifiers</h1></div>
         <div class="tabs" id="nav-tabs">
             <button class="tab-btn active" data-target="manual" id="tab-manual">Manual</button>
             <button class="tab-btn" data-target="roulette" id="tab-roulette">Roulette</button>
@@ -224,10 +225,14 @@
                 </aside>
 
                 <div class="center-stage">
-                    <div class="spin-settings">
-                        <label id="t-time">Time (sec):</label>
-                        <input type="number" id="spin-time-input" value="5" min="1" max="15">
+                    <div class="spin-control-panel">
+                        <div class="spin-header">
+                            <span id="t-time">Time:</span>
+                            <span class="spin-val-display" id="time-val-display">5s</span>
+                        </div>
+                        <input type="range" id="spin-time-input" min="1" max="15" value="5" step="1">
                     </div>
+                    
                     <div class="wheel-wrapper">
                         <canvas id="wheel"></canvas>
                         <div class="wheel-center"></div>
@@ -261,15 +266,15 @@
     <script>
         const i18n = {
             ru: {
-                title: "Modifiers PRO", tabManual: "Ручной Выбор", tabRoulette: "Рулетка",
-                tPool: "Настройка Рулетки", tInventory: "Выбито с рулетки", tTime: "Время крутки (сек):",
+                title: "Modifiers", tabManual: "Ручной Выбор", tabRoulette: "Рулетка",
+                tPool: "Настройка Рулетки", tInventory: "Выбито с рулетки", tTime: "Время крутки:",
                 spinBtn: "Крутить Колесо", chance: "Шанс",
                 btnActionAdd: "Добавить", btnSpin: "Крутить дальше",
                 cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
             },
             en: {
-                title: "Modifiers PRO", tabManual: "Manual", tabRoulette: "Roulette",
-                tPool: "Wheel Settings", tInventory: "Rolled Modifiers", tTime: "Spin Time (sec):",
+                title: "Modifiers", tabManual: "Manual", tabRoulette: "Roulette",
+                tPool: "Wheel Settings", tInventory: "Rolled Modifiers", tTime: "Spin Time:",
                 spinBtn: "Spin Wheel", chance: "Chance",
                 btnActionAdd: "Add to list", btnSpin: "Spin again",
                 cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
@@ -355,10 +360,22 @@
             spinBtn: document.getElementById('spin-btn'),
             canvas: document.getElementById('wheel'),
             ctx: document.getElementById('wheel').getContext('2d'),
-            modal: document.getElementById('result-modal')
+            modal: document.getElementById('result-modal'),
+            timeInput: document.getElementById('spin-time-input'),
+            timeDisplay: document.getElementById('time-val-display')
         };
         const size = 1000;
         els.canvas.width = size; els.canvas.height = size;
+
+        function getPctColor(pct) {
+            let p = Math.min(Math.max(pct, 0), 50);
+            let hue = 120 - (p / 50) * 120;
+            return `hsl(${hue}, 100%, 50%)`;
+        }
+
+        els.timeInput.addEventListener('input', (e) => {
+            els.timeDisplay.textContent = e.target.value + 's';
+        });
 
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -411,9 +428,10 @@
                     el.dataset.group = item.group || '';
                     
                     const d = item[state.lang];
+                    const color = getPctColor(item.pct);
                     el.innerHTML = `
-                        <div class="mod-info"><span style="font-size: 20px">${item.icon}</span><div><div class="mod-name">${d.n}</div><span class="mod-desc">${d.d}</span></div></div>
-                        <span class="mod-pct">${item.pct}%</span>
+                        <div class="mod-info"><span style="font-size: 18px">${item.icon}</span><div><div class="mod-name">${d.n}</div><span class="mod-desc">${d.d}</span></div></div>
+                        <span class="mod-pct" style="color: ${color}">${item.pct}%</span>
                     `;
                     el.addEventListener('click', () => {
                         if(state.manualSelected.has(item.id)) { 
@@ -457,9 +475,20 @@
             let total = 0; els.manualSelected.innerHTML = '';
             for(let item of state.manualSelected.values()) {
                 total += item.pct;
-                els.manualSelected.innerHTML += `<div class="selected-item"><span style="color:${item.catColor}">${item.icon} ${item[state.lang].n}</span><span>${item.pct}%</span></div>`;
+                const d = item[state.lang];
+                const c = getPctColor(item.pct);
+                els.manualSelected.innerHTML += `
+                    <div class="selected-item" style="--cat-color: ${item.catColor}">
+                        <div class="selected-item-info">
+                            <div class="selected-item-name">${item.icon} ${d.n}</div>
+                            <div class="selected-item-desc">${d.d}</div>
+                        </div>
+                        <div class="selected-item-pct" style="color: ${c}">${item.pct}%</div>
+                    </div>
+                `;
             }
             document.getElementById('total-pct').textContent = `${total}%`;
+            document.getElementById('total-pct').style.color = getPctColor(total);
         }
 
         function renderPoolTab() {
@@ -503,9 +532,12 @@
                 const el = document.createElement('div');
                 el.className = 'rolled-item';
                 el.style.setProperty('--cat-color', item.catColor);
+                const d = item[state.lang];
+                const c = getPctColor(item.pct);
                 el.innerHTML = `
-                    <div style="font-size:12px; font-weight:700;">
-                        ${item.icon} ${item[state.lang].n} <span style="color:${item.catColor}">(${item.pct}%)</span>
+                    <div class="selected-item-info">
+                        <div class="selected-item-name">${item.icon} ${d.n} <span style="color: ${c}">(${item.pct}%)</span></div>
+                        <div class="selected-item-desc">${d.d}</div>
                     </div>
                     <button class="rolled-item-del" data-index="${index}">✖</button>
                 `;
@@ -571,7 +603,7 @@
             if (isSpinning || state.wheelPool.size === 0) return;
             isSpinning = true; els.spinBtn.disabled = true;
             
-            const timeInput = parseFloat(document.getElementById('spin-time-input').value);
+            const timeInput = parseFloat(els.timeInput.value);
             spinDuration = (isNaN(timeInput) || timeInput < 1 ? 5 : timeInput) * 1000;
             
             spinStart = performance.now();
@@ -584,19 +616,18 @@
         }
 
         function animateWheel(time) {
-            let elapsed = time - spinStart;
-            if(elapsed >= spinDuration) {
-                currentAngle = targetAngle % (Math.PI * 2);
-                drawWheel();
-                finishSpin();
-                return;
-            }
+            let elapsed = Math.min(time - spinStart, spinDuration);
             let t = elapsed / spinDuration;
             let ease = 1 - Math.pow(1 - t, 4);
             currentAngle = startAngleStore + (targetAngle - startAngleStore) * ease;
             
             drawWheel();
-            requestAnimationFrame(animateWheel);
+            
+            if(elapsed < spinDuration) {
+                requestAnimationFrame(animateWheel);
+            } else {
+                finishSpin();
+            }
         }
 
         function finishSpin() {
@@ -617,7 +648,10 @@
             const t = i18n[state.lang];
             
             document.getElementById('res-icon').textContent = mod.icon;
-            document.getElementById('res-name').textContent = mod[state.lang].n + ` (${mod.pct}%)`;
+            document.getElementById('res-name').textContent = mod[state.lang].n;
+            document.getElementById('res-name').style.color = getPctColor(mod.pct);
+            document.getElementById('res-name').innerHTML += ` (${mod.pct}%)`;
+            
             document.getElementById('res-cat').textContent = t.cats[mod.catKey];
             document.getElementById('res-cat').style.color = mod.catHex;
             document.getElementById('res-desc').textContent = mod[state.lang].d;
@@ -631,10 +665,8 @@
         document.getElementById('btn-action-add').addEventListener('click', () => {
             state.rolled.push(state.currentWinner);
             
-            // Удаляем сам выигранный мод
             state.wheelPool.delete(state.currentWinner.id);
 
-            // Удаляем ВСЕ остальные моды из этой же группы
             if (state.currentWinner.group) {
                 for (let id of state.wheelPool) {
                     const mod = state.flatMods.get(id);
