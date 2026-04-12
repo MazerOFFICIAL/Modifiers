@@ -81,6 +81,81 @@
             --grad-bg: radial-gradient(circle at 50% 0%, rgba(239, 68, 68, 0.08), transparent 40%);
         }
 
+        [data-theme="ocean"] {
+            --bg-color: #001220;
+            --surface: rgba(0, 29, 54, 0.7);
+            --surface-hover: rgba(0, 45, 80, 0.9);
+            --border: rgba(255, 255, 255, 0.05);
+            --border-active: rgba(14, 165, 233, 0.4);
+            --text-main: #f0f9ff;
+            --text-muted: #bae6fd;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            --danger: #ef4444;
+            --success: #10b981;
+            --grad-bg: radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.08), transparent 30%), radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.05), transparent 25%);
+        }
+
+        [data-theme="sunset"] {
+            --bg-color: #1a0815;
+            --surface: rgba(45, 12, 30, 0.7);
+            --surface-hover: rgba(65, 20, 45, 0.9);
+            --border: rgba(255, 255, 255, 0.05);
+            --border-active: rgba(244, 63, 94, 0.4);
+            --text-main: #fff1f2;
+            --text-muted: #fecdd3;
+            --accent: #fb923c;
+            --accent-glow: rgba(251, 146, 60, 0.4);
+            --danger: #e11d48;
+            --success: #34d399;
+            --grad-bg: radial-gradient(circle at 15% 50%, rgba(244, 63, 94, 0.08), transparent 30%), radial-gradient(circle at 85% 30%, rgba(251, 146, 60, 0.05), transparent 25%);
+        }
+
+        [data-theme="matrix"] {
+            --bg-color: #000000;
+            --surface: rgba(0, 20, 0, 0.7);
+            --surface-hover: rgba(0, 40, 0, 0.9);
+            --border: rgba(0, 255, 0, 0.1);
+            --border-active: rgba(0, 255, 0, 0.5);
+            --text-main: #4ade80;
+            --text-muted: #22c55e;
+            --accent: #22c55e;
+            --accent-glow: rgba(34, 197, 94, 0.4);
+            --danger: #ef4444;
+            --success: #16a34a;
+            --grad-bg: radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.05), transparent 50%);
+        }
+
+        [data-theme="synthwave"] {
+            --bg-color: #10051f;
+            --surface: rgba(35, 15, 60, 0.7);
+            --surface-hover: rgba(50, 25, 80, 0.9);
+            --border: rgba(255, 255, 255, 0.05);
+            --border-active: rgba(217, 70, 239, 0.5);
+            --text-main: #fae8ff;
+            --text-muted: #f5d0fe;
+            --accent: #f0abfc;
+            --accent-glow: rgba(240, 171, 252, 0.4);
+            --danger: #f43f5e;
+            --success: #2dd4bf;
+            --grad-bg: radial-gradient(circle at 15% 50%, rgba(217, 70, 239, 0.08), transparent 30%), radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.05), transparent 25%);
+        }
+
+        [data-theme="monochrome"] {
+            --bg-color: #000000;
+            --surface: rgba(20, 20, 20, 0.8);
+            --surface-hover: rgba(35, 35, 35, 1);
+            --border: rgba(255, 255, 255, 0.15);
+            --border-active: rgba(255, 255, 255, 0.6);
+            --text-main: #ffffff;
+            --text-muted: #a3a3a3;
+            --accent: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.3);
+            --danger: #737373;
+            --success: #d4d4d4;
+            --grad-bg: none;
+        }
+
         :root {
             --cat-player: #ff4757;
             --cat-inventory: #ffa502;
@@ -95,55 +170,18 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); user-select: none; transition: background-color 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s; }
 
-        body {
-            background-color: var(--bg-color);
-            background-image: var(--grad-bg);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-
-        header {
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
-        }
-
+        body { background-color: var(--bg-color); background-image: var(--grad-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+        header { background: var(--surface); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
         .logo-area h1 { font-weight: 900; font-size: 22px; text-transform: uppercase; background: linear-gradient(45deg, var(--text-main), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1.5px; }
-        
         .controls-area { display: flex; gap: 12px; align-items: center; }
         
-        .theme-select {
-            background: var(--surface-hover);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 8px 30px 8px 15px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            appearance: none;
+        .theme-select, .lang-select {
+            background: var(--surface-hover); color: var(--text-main); border: 1px solid var(--border); padding: 8px 30px 8px 15px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; appearance: none; outline: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%238a8a93%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px top 50%;
-            background-size: 10px auto;
-            outline: none;
+            background-repeat: no-repeat; background-position: right 10px top 50%; background-size: 10px auto;
         }
-        .theme-select:hover { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
-        .theme-select option { background: var(--bg-color); color: var(--text-main); }
-
-        .icon-btn { background: var(--surface-hover); border: 1px solid var(--border); color: var(--text-main); width: 38px; height: 38px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-        .icon-btn:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 0 10px var(--accent-glow); }
+        .theme-select:hover, .lang-select:hover { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+        .theme-select option, .lang-select option { background: var(--bg-color); color: var(--text-main); }
 
         .tabs { display: flex; background: rgba(0,0,0,0.15); padding: 5px; border-radius: 14px; border: 1px solid var(--border); }
         [data-theme="light"] .tabs { background: rgba(0,0,0,0.05); }
@@ -155,18 +193,12 @@
         .section.active { display: block; opacity: 1; transform: translateY(0); }
 
         .manual-layout { display: grid; grid-template-columns: 1fr 350px; gap: 30px; align-items: start; height: 100%; }
-        
         .categories { column-count: 3; column-gap: 20px; width: 100%; }
         @media (max-width: 1200px) { .categories { column-count: 2; } }
         @media (max-width: 800px) { .categories { column-count: 1; } }
 
-        .category-card { 
-            background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px; 
-            backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 10px; 
-            break-inside: avoid; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+        .category-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px; backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 10px; break-inside: avoid; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .category-card:hover { border-color: var(--border-active); transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
-        
         .category-title { font-size: 14px; font-weight: 900; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-main); }
         .category-title::before { content: ''; display: block; width: 12px; height: 12px; border-radius: 4px; background-color: var(--cat-color); box-shadow: 0 0 12px var(--cat-color); transform: rotate(45deg); }
 
@@ -181,15 +213,11 @@
         .mod-desc { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; line-height: 1.4; font-weight: 600; }
         .mod-pct { background: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 900; border: 1px solid var(--border); color: var(--accent); }
 
-        .summary-panel, .side-panel { 
-            background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; 
-            backdrop-filter: blur(20px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; 
-        }
+        .summary-panel, .side-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; backdrop-filter: blur(20px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
         .summary-panel { position: sticky; top: 100px; height: calc(100vh - 120px); overflow: hidden; }
         .side-panel { height: 100%; overflow: hidden; }
         
         .presets-container { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px; flex-shrink: 0; }
-        .presets-header { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0; letter-spacing: 1px; }
         .presets-inputs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
         .presets-input { background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 10px 12px; font-size: 12px; font-weight: 600; outline: none; transition: 0.2s; width: 100%; }
         .presets-input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); }
@@ -307,8 +335,20 @@
                 <option value="midnight" id="th-mid">Midnight</option>
                 <option value="forest" id="th-forest">Forest</option>
                 <option value="bloodmoon" id="th-blood">Blood Moon</option>
+                <option value="ocean" id="th-ocean">Ocean</option>
+                <option value="sunset" id="th-sunset">Sunset</option>
+                <option value="matrix" id="th-matrix">Matrix</option>
+                <option value="synthwave" id="th-synth">Synthwave</option>
+                <option value="monochrome" id="th-mono">Monochrome</option>
             </select>
-            <button class="icon-btn" id="lang-toggle">🌐</button>
+            <select class="lang-select" id="lang-select">
+                <option value="ru">🇷🇺 RU</option>
+                <option value="en">🇬🇧 EN</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="de">🇩🇪 DE</option>
+                <option value="fr">🇫🇷 FR</option>
+                <option value="uk">🇺🇦 UK</option>
+            </select>
         </div>
     </header>
 
@@ -320,7 +360,10 @@
                     <div class="presets-container">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                             <div class="presets-header" id="t-presets" style="margin: 0;">Presets</div>
-                            <button class="btn-preset" id="btn-download-txt-manual" style="padding: 6px 12px; font-size: 10px;">⬇ TXT</button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-preset" id="btn-download-txt-manual" style="padding: 6px 12px; font-size: 10px;">⬇ TXT</button>
+                                <button class="btn-preset" id="btn-download-json-manual" style="padding: 6px 12px; font-size: 10px;">⬇ JSON</button>
+                            </div>
                         </div>
                         <div class="presets-inputs">
                             <input type="text" id="preset-name" class="presets-input" placeholder="Name to save...">
@@ -369,7 +412,10 @@
                 <aside class="side-panel right-panel">
                     <div class="panel-header">
                         <h3 id="t-inventory">Rolled Modifiers</h3>
-                        <button class="btn-preset" id="btn-download-txt-rolled" style="padding: 6px 12px; font-size: 10px;">⬇ TXT</button>
+                        <div style="display:flex; gap: 5px;">
+                            <button class="btn-preset" id="btn-download-txt-rolled" style="padding: 6px 12px; font-size: 10px;">⬇ TXT</button>
+                            <button class="btn-preset" id="btn-download-json-rolled" style="padding: 6px 12px; font-size: 10px;">⬇ JSON</button>
+                        </div>
                     </div>
                     <div class="panel-content" id="rolled-list"></div>
                 </aside>
@@ -401,8 +447,9 @@
                 btnActionAdd: "Добавить", btnSpin: "Крутить дальше", btnReset: "Сброс",
                 tPresets: "Пресеты", tSelectPreset: "Выбрать", btnSave: "Сохранить",
                 btnLoad: "Загрузить", btnDelete: "Удалить", tPlaceholder: "Имя пресета...",
-                titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет", titleDownloadTxt: "Скачать как TXT",
-                themes: { cyber: "Киберпанк", light: "Светлая", mid: "Полночь", forest: "Лес", blood: "Кровавая Луна" },
+                titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет", titleDownloadTxt: "Скачать как TXT", titleDownloadJson: "Скачать как JSON", msgCopied: "Скопировано в буфер обмена!",
+                msgExists: (n) => `Пресет "${n}" уже существует. Перезаписать?`, msgDel: (n) => `Удалить пресет "${n}"?`,
+                themes: { cyber: "Киберпанк", light: "Светлая", mid: "Полночь", forest: "Лес", blood: "Кровавая Луна", ocean: "Океан", sunset: "Закат", matrix: "Матрица", synth: "Синтвейв", mono: "Монохром" },
                 cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
             },
             en: {
@@ -412,64 +459,113 @@
                 btnActionAdd: "Add to list", btnSpin: "Spin again", btnReset: "Reset",
                 tPresets: "Presets", tSelectPreset: "Select", btnSave: "Save",
                 btnLoad: "Load", btnDelete: "Delete", tPlaceholder: "Preset name...",
-                titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset", titleDownloadTxt: "Download as TXT",
-                themes: { cyber: "Cyberpunk", light: "Light Mode", mid: "Midnight", forest: "Forest", blood: "Blood Moon" },
+                titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset", titleDownloadTxt: "Download as TXT", titleDownloadJson: "Download as JSON", msgCopied: "Copied to clipboard!",
+                msgExists: (n) => `Preset "${n}" already exists. Overwrite?`, msgDel: (n) => `Delete preset "${n}"?`,
+                themes: { cyber: "Cyberpunk", light: "Light Mode", mid: "Midnight", forest: "Forest", blood: "Blood Moon", ocean: "Ocean", sunset: "Sunset", matrix: "Matrix", synth: "Synthwave", mono: "Monochrome" },
                 cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
+            },
+            es: {
+                title: "Modificadores", tabManual: "Manual", tabRoulette: "Ruleta",
+                tPool: "Ajustes de Ruleta", tInventory: "Inventario de Ruleta", tTime: "Tiempo de Giro (seg):",
+                spinBtn: "Girar Ruleta", chance: "Probabilidad:",
+                btnActionAdd: "Añadir", btnSpin: "Girar de nuevo", btnReset: "Reiniciar",
+                tPresets: "Preajustes", tSelectPreset: "Seleccionar", btnSave: "Guardar",
+                btnLoad: "Cargar", btnDelete: "Borrar", tPlaceholder: "Nombre del preajuste...",
+                titleSave: "Guardar selección", titleLoad: "Cargar preajuste", titleDelete: "Borrar preajuste", titleDownloadTxt: "Descargar TXT", titleDownloadJson: "Descargar JSON", msgCopied: "¡Copiado!",
+                msgExists: (n) => `El preajuste "${n}" ya existe. ¿Sobrescribir?`, msgDel: (n) => `¿Borrar preajuste "${n}"?`,
+                themes: { cyber: "Ciberpunk", light: "Modo Claro", mid: "Medianoche", forest: "Bosque", blood: "Luna de Sangre", ocean: "Océano", sunset: "Atardecer", matrix: "Matrix", synth: "Synthwave", mono: "Monocromo" },
+                cats: { player: "Jugador", inventory: "Inventario", rules: "Reglas", effects: "Efectos", spawn: "Tasa de Spawn", settings: "Ajustes", other: "Otros" }
+            },
+            de: {
+                title: "Modifikatoren", tabManual: "Manuell", tabRoulette: "Roulette",
+                tPool: "Roulette-Einstellungen", tInventory: "Roulette-Inventar", tTime: "Drehzeit (Sek):",
+                spinBtn: "Rad Drehen", chance: "Chance:",
+                btnActionAdd: "Hinzufügen", btnSpin: "Nochmal drehen", btnReset: "Zurücksetzen",
+                tPresets: "Voreinstellungen", tSelectPreset: "Auswählen", btnSave: "Speichern",
+                btnLoad: "Laden", btnDelete: "Löschen", tPlaceholder: "Voreinstellungsname...",
+                titleSave: "Auswahl speichern", titleLoad: "Voreinstellung laden", titleDelete: "Voreinstellung löschen", titleDownloadTxt: "Als TXT herunterladen", titleDownloadJson: "Als JSON herunterladen", msgCopied: "Kopiert!",
+                msgExists: (n) => `Voreinstellung "${n}" existiert bereits. Überschreiben?`, msgDel: (n) => `Voreinstellung "${n}" löschen?`,
+                themes: { cyber: "Cyberpunk", light: "Heller Modus", mid: "Mitternacht", forest: "Wald", blood: "Blutmond", ocean: "Ozean", sunset: "Sonnenuntergang", matrix: "Matrix", synth: "Synthwave", mono: "Monochrom" },
+                cats: { player: "Spieler", inventory: "Inventar", rules: "Spielregeln", effects: "Effekte", spawn: "Spawnrate", settings: "Einstellungen", other: "Andere" }
+            },
+            fr: {
+                title: "Modificateurs", tabManual: "Manuel", tabRoulette: "Roulette",
+                tPool: "Paramètres de Roulette", tInventory: "Inventaire de Roulette", tTime: "Temps de Rotation (sec):",
+                spinBtn: "Tourner la Roue", chance: "Chance:",
+                btnActionAdd: "Ajouter", btnSpin: "Tourner à nouveau", btnReset: "Réinitialiser",
+                tPresets: "Préréglages", tSelectPreset: "Sélectionner", btnSave: "Sauvegarder",
+                btnLoad: "Charger", btnDelete: "Supprimer", tPlaceholder: "Nom du préréglage...",
+                titleSave: "Sauvegarder la sélection", titleLoad: "Charger le préréglage", titleDelete: "Supprimer le préréglage", titleDownloadTxt: "Télécharger TXT", titleDownloadJson: "Télécharger JSON", msgCopied: "Copié !",
+                msgExists: (n) => `Le préréglage "${n}" existe déjà. Écraser ?`, msgDel: (n) => `Supprimer le préréglage "${n}" ?`,
+                themes: { cyber: "Cyberpunk", light: "Mode Clair", mid: "Minuit", forest: "Forêt", blood: "Lune de Sang", ocean: "Océan", sunset: "Coucher de soleil", matrix: "Matrix", synth: "Synthwave", mono: "Monochrome" },
+                cats: { player: "Joueur", inventory: "Inventaire", rules: "Règles", effects: "Effets", spawn: "Taux de Spawn", settings: "Paramètres", other: "Autres" }
+            },
+            uk: {
+                title: "Модифікатори", tabManual: "Ручний Вибір", tabRoulette: "Рулетка",
+                tPool: "Налаштування Рулетки", tInventory: "Інвентар Рулетки", tTime: "Час крутіння (сек):",
+                spinBtn: "Крутити Колесо", chance: "Шанс випадіння:",
+                btnActionAdd: "Додати", btnSpin: "Крутити далі", btnReset: "Скинути",
+                tPresets: "Пресети", tSelectPreset: "Обрати", btnSave: "Зберегти",
+                btnLoad: "Завантажити", btnDelete: "Видалити", tPlaceholder: "Ім'я пресету...",
+                titleSave: "Зберегти поточну збірку", titleLoad: "Завантажити обраний пресет", titleDelete: "Видалити обраний пресет", titleDownloadTxt: "Завантажити як TXT", titleDownloadJson: "Завантажити як JSON", msgCopied: "Скопійовано!",
+                msgExists: (n) => `Пресет "${n}" вже існує. Перезаписати?`, msgDel: (n) => `Видалити пресет "${n}"?`,
+                themes: { cyber: "Кіберпанк", light: "Світла", mid: "Північ", forest: "Ліс", blood: "Кривава Місяць", ocean: "Океан", sunset: "Захід", matrix: "Матриця", synth: "Сінтвейв", mono: "Монохром" },
+                cats: { player: "Гравець", inventory: "Інвентар", rules: "Правила Гри", effects: "Ефекти", spawn: "Спавнрейт", settings: "Налаштування", other: "Інше" }
             }
         };
 
         const rawData = [
             { id: 'cat_player', key: 'player', color: 'var(--cat-player)', hex: '#ff4757', items: [
-                { id: 'p1', icon: '🛡️', pct: 25, group: null, ru: { n: 'Безащитный', d: 'Без Брони' }, en: { n: 'Defenseless', d: 'No Armor' } },
-                { id: 'p2', icon: '⚔️', pct: 30, group: null, ru: { n: 'Доброе Сердце', d: 'Без Оружия' }, en: { n: 'Kind Heart', d: 'No Weapons' } },
-                { id: 'p3', icon: '🛠️', pct: 50, group: null, ru: { n: 'Неуч', d: 'Без Крафта' }, en: { n: 'Ignorant', d: 'No Crafting' } }
+                { id: 'p1', icon: '🛡️', pct: 25, group: null, ru: { n: 'Безащитный', d: 'Без Брони' }, en: { n: 'Defenseless', d: 'No Armor' }, es: { n: 'Indefenso', d: 'Sin armadura' }, de: { n: 'Wehrlos', d: 'Keine Rüstung' }, fr: { n: 'Sans défense', d: 'Sans armure' }, uk: { n: 'Беззахисний', d: 'Без броні' } },
+                { id: 'p2', icon: '⚔️', pct: 30, group: null, ru: { n: 'Доброе Сердце', d: 'Без Оружия' }, en: { n: 'Kind Heart', d: 'No Weapons' }, es: { n: 'Buen Corazón', d: 'Sin armas' }, de: { n: 'Gutes Herz', d: 'Keine Waffen' }, fr: { n: 'Bon Cœur', d: 'Sans armes' }, uk: { n: 'Добре Серце', d: 'Без зброї' } },
+                { id: 'p3', icon: '🛠️', pct: 50, group: null, ru: { n: 'Неуч', d: 'Без Крафта' }, en: { n: 'Ignorant', d: 'No Crafting' }, es: { n: 'Ignorante', d: 'Sin crafteo' }, de: { n: 'Unwissend', d: 'Kein Crafting' }, fr: { n: 'Ignorant', d: 'Sans craft' }, uk: { n: 'Неук', d: 'Без крафту' } }
             ]},
             { id: 'cat_inv', key: 'inventory', color: 'var(--cat-inventory)', hex: '#ffa502', items: [
-                { id: 'i1', icon: '📦', pct: 10, group: 'inv_slots', ru: { n: 'Склад', d: 'Свободных Слотов 18' }, en: { n: 'Storage', d: '18 Free Slots' } },
-                { id: 'i2', icon: '🎒', pct: 20, group: 'inv_slots', ru: { n: 'Пора В Школу', d: 'Свободных Слотов 9' }, en: { n: 'Back to School', d: '9 Free Slots' } },
-                { id: 'i3', icon: '🙌', pct: 35, group: 'inv_slots', ru: { n: 'Только 2 Руки', d: 'Свободных Слотов 2' }, en: { n: 'Only 2 Hands', d: '2 Free Slots' } },
-                { id: 'i4', icon: '🖐️', pct: 50, group: 'inv_slots', ru: { n: 'Однорукий', d: 'Свободных Слотов 1' }, en: { n: 'One-Armed', d: '1 Free Slot' } }
+                { id: 'i1', icon: '📦', pct: 10, group: 'inv_slots', ru: { n: 'Склад', d: '18 слотов' }, en: { n: 'Storage', d: '18 Slots' }, es: { n: 'Almacén', d: '18 ranuras' }, de: { n: 'Lager', d: '18 Plätze' }, fr: { n: 'Stockage', d: '18 emplacements' }, uk: { n: 'Склад', d: '18 слотів' } },
+                { id: 'i2', icon: '🎒', pct: 20, group: 'inv_slots', ru: { n: 'Пора В Школу', d: '9 слотов' }, en: { n: 'Back to School', d: '9 Slots' }, es: { n: 'Vuelta al cole', d: '9 ranuras' }, de: { n: 'Zurück zur Schule', d: '9 Plätze' }, fr: { n: 'Retour à l\'école', d: '9 emplacements' }, uk: { n: 'Час До Школи', d: '9 слотів' } },
+                { id: 'i3', icon: '🙌', pct: 35, group: 'inv_slots', ru: { n: 'Только 2 Руки', d: '2 слота' }, en: { n: 'Only 2 Hands', d: '2 Slots' }, es: { n: 'Solo 2 manos', d: '2 ranuras' }, de: { n: 'Nur 2 Hände', d: '2 Plätze' }, fr: { n: 'Seulement 2 mains', d: '2 emplacements' }, uk: { n: 'Тільки 2 Руки', d: '2 слоти' } },
+                { id: 'i4', icon: '🖐️', pct: 50, group: 'inv_slots', ru: { n: 'Однорукий', d: '1 слот' }, en: { n: 'One-Armed', d: '1 Slot' }, es: { n: 'Manco', d: '1 ranura' }, de: { n: 'Einarmig', d: '1 Platz' }, fr: { n: 'Manchot', d: '1 emplacement' }, uk: { n: 'Однорукий', d: '1 слот' } }
             ]},
             { id: 'cat_rules', key: 'rules', color: 'var(--cat-rules)', hex: '#9b59b6', items: [
-                { id: 'r1', icon: '❌', pct: 15, group: null, ru: { n: 'Ванила На То И Ванила', d: 'Без Сохранения Инвентаря' }, en: { n: 'Vanilla is Vanilla', d: 'Keep Inventory Off' } },
-                { id: 'r2', icon: '🍔', pct: 30, group: null, ru: { n: 'Ранимый', d: 'Без Натуральной Регенерации' }, en: { n: 'Vulnerable', d: 'No Natural Regen' } },
-                { id: 'r3', icon: '❤️', pct: 30, group: null, ru: { n: 'Последний Шанс', d: 'На Хардкоре' }, en: { n: 'Last Chance', d: 'Hardcore Mode' } },
-                { id: 'r4', icon: '🎛️', pct: 15, group: null, ru: { n: 'Потеряшка', d: 'Без ф3 панели' }, en: { n: 'Lost', d: 'No F3 Screen' } },
-                { id: 'r5', icon: '📸', pct: 20, group: null, ru: { n: 'ГТА 67', d: 'Только От 3-го Лица' }, en: { n: 'GTA 67', d: '3rd Person Only' } }
+                { id: 'r1', icon: '❌', pct: 15, group: null, ru: { n: 'Ванила На То И Ванила', d: 'Без Сохранения Инвентаря' }, en: { n: 'Vanilla is Vanilla', d: 'Keep Inventory Off' }, es: { n: 'Vanilla es Vanilla', d: 'Sin Keep Inv' }, de: { n: 'Vanilla ist Vanilla', d: 'Kein Keep Inv' }, fr: { n: 'Vanilla c\'est Vanilla', d: 'Pas de Keep Inv' }, uk: { n: 'Ваніла Є Ваніла', d: 'Без Збереження Інвентарю' } },
+                { id: 'r2', icon: '🍔', pct: 30, group: null, ru: { n: 'Ранимый', d: 'Без Нат. Регенерации' }, en: { n: 'Vulnerable', d: 'No Nat. Regen' }, es: { n: 'Vulnerable', d: 'Sin regen nat.' }, de: { n: 'Verwundbar', d: 'Keine nat. Regen' }, fr: { n: 'Vulnérable', d: 'Pas de régen nat.' }, uk: { n: 'Вразливий', d: 'Без Нат. Регенерації' } },
+                { id: 'r3', icon: '❤️', pct: 30, group: null, ru: { n: 'Последний Шанс', d: 'На Хардкоре' }, en: { n: 'Last Chance', d: 'Hardcore Mode' }, es: { n: 'Última Oportunidad', d: 'Hardcore' }, de: { n: 'Letzte Chance', d: 'Hardcore' }, fr: { n: 'Dernière Chance', d: 'Hardcore' }, uk: { n: 'Останній Шанс', d: 'На Хардкорі' } },
+                { id: 'r4', icon: '🎛️', pct: 15, group: null, ru: { n: 'Потеряшка', d: 'Без ф3 панели' }, en: { n: 'Lost', d: 'No F3 Screen' }, es: { n: 'Perdido', d: 'Sin F3' }, de: { n: 'Verloren', d: 'Kein F3' }, fr: { n: 'Perdu', d: 'Sans F3' }, uk: { n: 'Загублений', d: 'Без F3' } },
+                { id: 'r5', icon: '📸', pct: 20, group: null, ru: { n: 'ГТА 67', d: 'Только От 3-го Лица' }, en: { n: 'GTA 67', d: '3rd Person Only' }, es: { n: 'GTA 67', d: '3ra Persona' }, de: { n: 'GTA 67', d: '3. Person' }, fr: { n: 'GTA 67', d: '3ème Personne' }, uk: { n: 'ГТА 67', d: 'Тільки Від 3-ї Особи' } }
             ]},
             { id: 'cat_effects', key: 'effects', color: 'var(--cat-effects)', hex: '#2ed573', items: [
-                { id: 'e1', icon: '👀', pct: 20, group: null, ru: { n: 'Крот', d: 'Постоянная Слепота' }, en: { n: 'Mole', d: 'Permanent Blindness' } },
-                { id: 'e2', icon: '📉', pct: 30, group: null, ru: { n: 'Пропускал День Качалочки', d: 'Постоянная Слабость' }, en: { n: 'Skipped Leg Day', d: 'Permanent Weakness' } },
-                { id: 'e3', icon: '🍽️', pct: 35, group: null, ru: { n: 'Литафом', d: 'Постоянный Голод' }, en: { n: 'Lithophage', d: 'Permanent Hunger' } },
-                { id: 'e4', icon: '🤮', pct: 20, group: null, ru: { n: 'Тошнотик', d: 'Постоянная Тошнота' }, en: { n: 'Nauseous', d: 'Permanent Nausea' } },
-                { id: 'e5', icon: '🐌', pct: 5, group: null, ru: { n: 'Улитка', d: 'Постоянная Минус Скорость' }, en: { n: 'Snail', d: 'Permanent Slowness' } },
-                { id: 'e6', icon: '🧦', pct: 10, group: null, ru: { n: 'Невесомость', d: 'Постоянное Плавное Падение' }, en: { n: 'Zero G', d: 'Permanent Slow Falling' } },
-                { id: 'e7', icon: '🌿', pct: 50, group: null, ru: { n: 'Постоянная Боль', d: 'Постоянное Отравление' }, en: { n: 'Constant Pain', d: 'Permanent Poison' } }
+                { id: 'e1', icon: '👀', pct: 20, group: null, ru: { n: 'Крот', d: 'Постоянная Слепота' }, en: { n: 'Mole', d: 'Permanent Blindness' }, es: { n: 'Topo', d: 'Ceguera' }, de: { n: 'Maulwurf', d: 'Blindheit' }, fr: { n: 'Taupe', d: 'Cécité' }, uk: { n: 'Кріт', d: 'Постійна Сліпота' } },
+                { id: 'e2', icon: '📉', pct: 30, group: null, ru: { n: 'Пропускал День Качалочки', d: 'Постоянная Слабость' }, en: { n: 'Skipped Leg Day', d: 'Permanent Weakness' }, es: { n: 'Día de piernas', d: 'Debilidad' }, de: { n: 'Leg Day übersprungen', d: 'Schwäche' }, fr: { n: 'Jour des jambes sauté', d: 'Faiblesse' }, uk: { n: 'Пропускав День Ніг', d: 'Слабкість' } },
+                { id: 'e3', icon: '🍽️', pct: 35, group: null, ru: { n: 'Литафом', d: 'Постоянный Голод' }, en: { n: 'Lithophage', d: 'Permanent Hunger' }, es: { n: 'Litófago', d: 'Hambre' }, de: { n: 'Lithophage', d: 'Hunger' }, fr: { n: 'Lithophage', d: 'Faim' }, uk: { n: 'Літафом', d: 'Голод' } },
+                { id: 'e4', icon: '🤮', pct: 20, group: null, ru: { n: 'Тошнотик', d: 'Постоянная Тошнота' }, en: { n: 'Nauseous', d: 'Permanent Nausea' }, es: { n: 'Nauseabundo', d: 'Náuseas' }, de: { n: 'Übel', d: 'Übelkeit' }, fr: { n: 'Nauséeux', d: 'Nausée' }, uk: { n: 'Нудотик', d: 'Нудота' } },
+                { id: 'e5', icon: '🐌', pct: 5, group: null, ru: { n: 'Улитка', d: 'Постоянная Минус Скорость' }, en: { n: 'Snail', d: 'Permanent Slowness' }, es: { n: 'Caracol', d: 'Lentitud' }, de: { n: 'Schnecke', d: 'Langsamkeit' }, fr: { n: 'Escargot', d: 'Lenteur' }, uk: { n: 'Равлик', d: 'Мінус Швидкість' } },
+                { id: 'e6', icon: '🧦', pct: 10, group: null, ru: { n: 'Невесомость', d: 'Постоянное Плавное Падение' }, en: { n: 'Zero G', d: 'Permanent Slow Falling' }, es: { n: 'Gravedad Cero', d: 'Caída Lenta' }, de: { n: 'Schwerelos', d: 'Sanfter Fall' }, fr: { n: 'Apesanteur', d: 'Chute Lente' }, uk: { n: 'Невагомість', d: 'Повільне Падіння' } },
+                { id: 'e7', icon: '🌿', pct: 50, group: null, ru: { n: 'Постоянная Боль', d: 'Постоянное Отравление' }, en: { n: 'Constant Pain', d: 'Permanent Poison' }, es: { n: 'Dolor Constante', d: 'Veneno' }, de: { n: 'Ständiger Schmerz', d: 'Gift' }, fr: { n: 'Douleur Constante', d: 'Poison' }, uk: { n: 'Постійний Біль', d: 'Отруєння' } }
             ]},
             { id: 'cat_spawn', key: 'spawn', color: 'var(--cat-spawn)', hex: '#ff6348', items: [
-                { id: 's1', icon: '💔', pct: 5, group: 'spawn', ru: { n: 'Митинг', d: 'Монстры x1' }, en: { n: 'Protest', d: 'Monster Spawn x1' } },
-                { id: 's2', icon: '💀', pct: 15, group: 'spawn', ru: { n: 'Армагедон', d: 'Монстры x3' }, en: { n: 'Armageddon', d: 'Monster Spawn x3' } },
-                { id: 's3', icon: '☠️', pct: 25, group: 'spawn', ru: { n: 'Апокалипсис', d: 'Монстры x5' }, en: { n: 'Apocalypse', d: 'Monster Spawn x5' } }
+                { id: 's1', icon: '💔', pct: 5, group: 'spawn', ru: { n: 'Митинг', d: 'Монстры x1' }, en: { n: 'Protest', d: 'Monster Spawn x1' }, es: { n: 'Protesta', d: 'Monstruos x1' }, de: { n: 'Protest', d: 'Monster x1' }, fr: { n: 'Manifestation', d: 'Monstres x1' }, uk: { n: 'Мітинг', d: 'Монстри x1' } },
+                { id: 's2', icon: '💀', pct: 15, group: 'spawn', ru: { n: 'Армагедон', d: 'Монстры x3' }, en: { n: 'Armageddon', d: 'Monster Spawn x3' }, es: { n: 'Armagedón', d: 'Monstruos x3' }, de: { n: 'Armageddon', d: 'Monster x3' }, fr: { n: 'Armageddon', d: 'Monstres x3' }, uk: { n: 'Армагеддон', d: 'Монстри x3' } },
+                { id: 's3', icon: '☠️', pct: 25, group: 'spawn', ru: { n: 'Апокалипсис', d: 'Монстры x5' }, en: { n: 'Apocalypse', d: 'Monster Spawn x5' }, es: { n: 'Apocalipsis', d: 'Monstruos x5' }, de: { n: 'Apokalypse', d: 'Monster x5' }, fr: { n: 'Apocalypse', d: 'Monstres x5' }, uk: { n: 'Апокаліпсис', d: 'Монстри x5' } }
             ]},
             { id: 'cat_set', key: 'settings', color: 'var(--cat-settings)', hex: '#1e90ff', items: [
-                { id: 'st1', icon: '👁️', pct: 5, group: 'fov', ru: { n: 'Не Те Очки', d: 'FOV: 60' }, en: { n: 'Wrong Glasses', d: 'FOV: 60' } },
-                { id: 'st2', icon: '👁️', pct: 10, group: 'fov', ru: { n: 'Соколиный Глаз', d: 'FOV: 45' }, en: { n: 'Hawk Eye', d: 'FOV: 45' } },
-                { id: 'st3', icon: '👁️', pct: 15, group: 'fov', ru: { n: 'Шоколадный Глаз', d: 'FOV: 30' }, en: { n: 'Chocolate Eye', d: 'FOV: 30' } },
-                { id: 'st4', icon: '🧭', pct: 5, group: 'render', ru: { n: 'Гугл GPS', d: 'Чанки: 6' }, en: { n: 'Google GPS', d: 'Chunks: 6' } },
-                { id: 'st5', icon: '🧭', pct: 10, group: 'render', ru: { n: 'Карта', d: 'Чанки: 4' }, en: { n: 'Map', d: 'Chunks: 4' } },
-                { id: 'st6', icon: '🧭', pct: 15, group: 'render', ru: { n: 'Визитка', d: 'Чанки: 2' }, en: { n: 'Business Card', d: 'Chunks: 2' } },
-                { id: 'st7', icon: '🎞️', pct: 5, group: 'fps', ru: { n: 'Пентиум', d: 'FPS 30' }, en: { n: 'Pentium', d: 'FPS 30' } },
-                { id: 'st8', icon: '🎞️', pct: 10, group: 'fps', ru: { n: 'Микроволновка', d: 'FPS 20' }, en: { n: 'Microwave', d: 'FPS 20' } },
-                { id: 'st9', icon: '🎞️', pct: 20, group: 'fps', ru: { n: 'Картошка', d: 'FPS 10' }, en: { n: 'Potato', d: 'FPS 10' } },
-                { id: 'st10', icon: '🐭', pct: 25, group: null, ru: { n: 'Ломка', d: 'Инверсия Мыши' }, en: { n: 'Withdrawal', d: 'Inverted Mouse' } },
-                { id: 'st11', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж От Дамдома 1', d: 'Минимальная Чувствительность' }, en: { n: 'Challenge By Damdom 1', d: 'Minimum Sensitivity' } },
-                { id: 'st12', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж От Дамдома 2', d: 'Максимальная Чувствительность' }, en: { n: 'Challenge By Damdom 2', d: 'Maximum Sensitivity' } }
+                { id: 'st1', icon: '👁️', pct: 5, group: 'fov', ru: { n: 'Не Те Очки', d: 'FOV: 60' }, en: { n: 'Wrong Glasses', d: 'FOV: 60' }, es: { n: 'Gafas', d: 'FOV 60' }, de: { n: 'Falsche Brille', d: 'FOV 60' }, fr: { n: 'Mauvaises lunettes', d: 'FOV 60' }, uk: { n: 'Не Ті Окуляри', d: 'FOV 60' } },
+                { id: 'st2', icon: '👁️', pct: 10, group: 'fov', ru: { n: 'Соколиный Глаз', d: 'FOV: 45' }, en: { n: 'Hawk Eye', d: 'FOV: 45' }, es: { n: 'Ojo Halcón', d: 'FOV 45' }, de: { n: 'Falkenauge', d: 'FOV 45' }, fr: { n: 'Oeil de Faucon', d: 'FOV 45' }, uk: { n: 'Соколине Око', d: 'FOV 45' } },
+                { id: 'st3', icon: '👁️', pct: 15, group: 'fov', ru: { n: 'Шоколадный Глаз', d: 'FOV: 30' }, en: { n: 'Chocolate Eye', d: 'FOV: 30' }, es: { n: 'Ojo Chocolate', d: 'FOV 30' }, de: { n: 'Schokoauge', d: 'FOV 30' }, fr: { n: 'Oeil Chocolat', d: 'FOV 30' }, uk: { n: 'Шоколадне Око', d: 'FOV 30' } },
+                { id: 'st4', icon: '🧭', pct: 5, group: 'render', ru: { n: 'Гугл GPS', d: 'Чанки: 6' }, en: { n: 'Google GPS', d: 'Chunks: 6' }, es: { n: 'Google GPS', d: 'Chunks 6' }, de: { n: 'Google GPS', d: 'Chunks 6' }, fr: { n: 'Google GPS', d: 'Chunks 6' }, uk: { n: 'Гугл GPS', d: 'Чанки: 6' } },
+                { id: 'st5', icon: '🧭', pct: 10, group: 'render', ru: { n: 'Карта', d: 'Чанки: 4' }, en: { n: 'Map', d: 'Chunks: 4' }, es: { n: 'Mapa', d: 'Chunks 4' }, de: { n: 'Karte', d: 'Chunks 4' }, fr: { n: 'Carte', d: 'Chunks 4' }, uk: { n: 'Карта', d: 'Чанки: 4' } },
+                { id: 'st6', icon: '🧭', pct: 15, group: 'render', ru: { n: 'Визитка', d: 'Чанки: 2' }, en: { n: 'Business Card', d: 'Chunks: 2' }, es: { n: 'Tarjeta', d: 'Chunks 2' }, de: { n: 'Visitenkarte', d: 'Chunks 2' }, fr: { n: 'Carte Visite', d: 'Chunks 2' }, uk: { n: 'Візитка', d: 'Чанки: 2' } },
+                { id: 'st7', icon: '🎞️', pct: 5, group: 'fps', ru: { n: 'Пентиум', d: 'FPS 30' }, en: { n: 'Pentium', d: 'FPS 30' }, es: { n: 'Pentium', d: 'FPS 30' }, de: { n: 'Pentium', d: 'FPS 30' }, fr: { n: 'Pentium', d: 'FPS 30' }, uk: { n: 'Пентіум', d: 'FPS 30' } },
+                { id: 'st8', icon: '🎞️', pct: 10, group: 'fps', ru: { n: 'Микроволновка', d: 'FPS 20' }, en: { n: 'Microwave', d: 'FPS 20' }, es: { n: 'Microondas', d: 'FPS 20' }, de: { n: 'Mikrowelle', d: 'FPS 20' }, fr: { n: 'Micro-ondes', d: 'FPS 20' }, uk: { n: 'Мікрохвильовка', d: 'FPS 20' } },
+                { id: 'st9', icon: '🎞️', pct: 20, group: 'fps', ru: { n: 'Картошка', d: 'FPS 10' }, en: { n: 'Potato', d: 'FPS 10' }, es: { n: 'Patata', d: 'FPS 10' }, de: { n: 'Kartoffel', d: 'FPS 10' }, fr: { n: 'Patate', d: 'FPS 10' }, uk: { n: 'Картопля', d: 'FPS 10' } },
+                { id: 'st10', icon: '🐭', pct: 25, group: null, ru: { n: 'Ломка', d: 'Инверсия Мыши' }, en: { n: 'Withdrawal', d: 'Inverted Mouse' }, es: { n: 'Abstinencia', d: 'Ratón invertido' }, de: { n: 'Entzug', d: 'Maus invertiert' }, fr: { n: 'Sevrage', d: 'Souris Inversée' }, uk: { n: 'Ломка', d: 'Інверсія Миші' } },
+                { id: 'st11', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж Дамдома 1', d: 'Мин. Чувствительность' }, en: { n: 'Damdom 1', d: 'Min Sensitivity' }, es: { n: 'Damdom 1', d: 'Sens Min' }, de: { n: 'Damdom 1', d: 'Min Sens' }, fr: { n: 'Damdom 1', d: 'Sens Min' }, uk: { n: 'Челендж Дамдома 1', d: 'Мін. Чутливість' } },
+                { id: 'st12', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж Дамдома 2', d: 'Макс. Чувствительность' }, en: { n: 'Damdom 2', d: 'Max Sensitivity' }, es: { n: 'Damdom 2', d: 'Sens Max' }, de: { n: 'Damdom 2', d: 'Max Sens' }, fr: { n: 'Damdom 2', d: 'Sens Max' }, uk: { n: 'Челендж Дамдома 2', d: 'Макс. Чутливість' } }
             ]},
             { id: 'cat_oth', key: 'other', color: 'var(--cat-other)', hex: '#eccc68', items: [
-                { id: 'o1', icon: '⏳', pct: 30, group: null, ru: { n: 'Поторопимся', d: 'Спидран 1.5ч' }, en: { n: 'Hurry Up', d: 'Speedrun 1.5h' } },
-                { id: 'o2', icon: '📜', pct: 10, group: null, ru: { n: 'Кино', d: 'Боссы по порядку' }, en: { n: 'Movie', d: 'Bosses in Order' } },
-                { id: 'o3', icon: '🗺️', pct: 25, group: null, ru: { n: 'Олд Форест', d: 'Без Карты' }, en: { n: 'Old Forest', d: 'No Map' } },
-                { id: 'o4', icon: '☮️', pct: 30, group: null, ru: { n: 'Пацифист', d: 'Без Убийств' }, en: { n: 'Pacifist', d: 'No Kills' } }
+                { id: 'o1', icon: '⏳', pct: 30, group: null, ru: { n: 'Поторопимся', d: 'Спидран 1.5ч' }, en: { n: 'Hurry Up', d: 'Speedrun 1.5h' }, es: { n: 'Date Prisa', d: 'Speedrun 1.5h' }, de: { n: 'Beeil dich', d: 'Speedrun 1.5h' }, fr: { n: 'Dépêche-toi', d: 'Speedrun 1.5h' }, uk: { n: 'Поквапимося', d: 'Спідран 1.5г' } },
+                { id: 'o2', icon: '📜', pct: 10, group: null, ru: { n: 'Кино', d: 'Боссы по порядку' }, en: { n: 'Movie', d: 'Bosses in Order' }, es: { n: 'Película', d: 'Jefes en orden' }, de: { n: 'Film', d: 'Bosse nach Reihe' }, fr: { n: 'Film', d: 'Boss dans l\'ordre' }, uk: { n: 'Кіно', d: 'Боси за порядком' } },
+                { id: 'o3', icon: '🗺️', pct: 25, group: null, ru: { n: 'Олд Форест', d: 'Без Карты' }, en: { n: 'Old Forest', d: 'No Map' }, es: { n: 'Bosque Antiguo', d: 'Sin mapa' }, de: { n: 'Alter Wald', d: 'Keine Karte' }, fr: { n: 'Vieille Forêt', d: 'Sans Carte' }, uk: { n: 'Олд Форест', d: 'Без Карти' } },
+                { id: 'o4', icon: '☮️', pct: 30, group: null, ru: { n: 'Пацифист', d: 'Без Убийств' }, en: { n: 'Pacifist', d: 'No Kills' }, es: { n: 'Pacifista', d: 'Sin Bajas' }, de: { n: 'Pazifist', d: 'Keine Kills' }, fr: { n: 'Pacifiste', d: 'Sans Kills' }, uk: { n: 'Пацифіст', d: 'Без Вбивств' } }
             ]}
         ];
 
@@ -513,7 +609,8 @@
             modal: document.getElementById('result-modal'),
             timeInput: document.getElementById('spin-time-input'),
             btnResetPool: document.getElementById('btn-reset-pool'),
-            themeSelect: document.getElementById('theme-select')
+            themeSelect: document.getElementById('theme-select'),
+            langSelect: document.getElementById('lang-select')
         };
         const size = 1000;
         els.canvas.width = size; els.canvas.height = size;
@@ -563,8 +660,8 @@
             });
         });
 
-        document.getElementById('lang-toggle').addEventListener('click', () => { 
-            state.lang = state.lang === 'ru' ? 'en' : 'ru'; 
+        els.langSelect.addEventListener('change', (e) => { 
+            state.lang = e.target.value; 
             try { localStorage.setItem('modifiers_lang', state.lang); } catch(e){}
             updateAllUI(); 
         });
@@ -597,8 +694,7 @@
             if (!name) return;
 
             if (state.presets[name]) {
-                const msg = state.lang === 'ru' ? `Пресет "${name}" уже существует. Перезаписать?` : `Preset "${name}" already exists. Overwrite?`;
-                if (!confirm(msg)) return;
+                if (!confirm(i18n[state.lang].msgExists(name))) return;
             }
 
             const ids = Array.from(state.manualSelected.keys());
@@ -641,8 +737,7 @@
             const name = select.value;
             if (!name || !state.presets[name]) return;
             
-            const msg = state.lang === 'ru' ? `Удалить пресет "${name}"?` : `Delete preset "${name}"?`;
-            if (!confirm(msg)) return;
+            if (!confirm(i18n[state.lang].msgDel(name))) return;
 
             delete state.presets[name];
             try { localStorage.setItem('modifiers_presets', JSON.stringify(state.presets)); } catch(e){}
@@ -682,8 +777,23 @@
             URL.revokeObjectURL(url);
         }
 
+        function downloadJSON(source) {
+            const items = source === 'manual' ? Array.from(state.manualSelected.values()) : state.rolled;
+            if (items.length === 0) return;
+            
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(items, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", `modifiers_${source}.json`);
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
         document.getElementById('btn-download-txt-manual').addEventListener('click', () => downloadTXT('manual'));
+        document.getElementById('btn-download-json-manual').addEventListener('click', () => downloadJSON('manual'));
         document.getElementById('btn-download-txt-rolled').addEventListener('click', () => downloadTXT('rolled'));
+        document.getElementById('btn-download-json-rolled').addEventListener('click', () => downloadJSON('rolled'));
 
         function renderPresets() {
             const select = document.getElementById('preset-select');
@@ -727,16 +837,24 @@
             document.getElementById('preset-name').placeholder = t.tPlaceholder;
             
             document.getElementById('btn-download-txt-manual').title = t.titleDownloadTxt;
+            document.getElementById('btn-download-json-manual').title = t.titleDownloadJson;
             document.getElementById('btn-download-txt-rolled').title = t.titleDownloadTxt;
+            document.getElementById('btn-download-json-rolled').title = t.titleDownloadJson;
 
             document.getElementById('th-cyber').textContent = t.themes.cyber;
             document.getElementById('th-light').textContent = t.themes.light;
             document.getElementById('th-mid').textContent = t.themes.mid;
             document.getElementById('th-forest').textContent = t.themes.forest;
             document.getElementById('th-blood').textContent = t.themes.blood;
+            document.getElementById('th-ocean').textContent = t.themes.ocean;
+            document.getElementById('th-sunset').textContent = t.themes.sunset;
+            document.getElementById('th-matrix').textContent = t.themes.matrix;
+            document.getElementById('th-synth').textContent = t.themes.synth;
+            document.getElementById('th-mono').textContent = t.themes.mono;
 
             document.body.setAttribute('data-theme', state.theme);
             els.themeSelect.value = state.theme;
+            els.langSelect.value = state.lang;
 
             renderPresets();
             renderManualTab();
