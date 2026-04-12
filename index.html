@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление Модификаторами</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Modifiers Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f0f13;
-            --surface: rgba(30, 30, 36, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
+            --bg-color: #0a0a0c;
+            --surface: rgba(20, 20, 25, 0.6);
+            --surface-hover: rgba(40, 40, 50, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(255, 255, 255, 0.2);
             --text-main: #ffffff;
-            --text-muted: #a0a0a5;
-            --accent: #6c5ce7;
-            --accent-hover: #8172fa;
+            --text-muted: #8a8a93;
+            --accent: #00f0ff;
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --danger: #ff0055;
             
             --cat-player: #ff4757;
             --cat-inventory: #ffa502;
@@ -22,259 +25,327 @@
             --cat-spawn: #ff6348;
             --cat-settings: #1e90ff;
             --cat-other: #eccc68;
+
+            --font-main: 'Montserrat', sans-serif;
+            --wheel-size: 550px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f0f2f5;
+            --surface: rgba(255, 255, 255, 0.7);
+            --surface-hover: rgba(255, 255, 255, 0.9);
+            --border: rgba(0, 0, 0, 0.1);
+            --border-active: rgba(0, 0, 0, 0.3);
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --accent: #0055ff;
+            --accent-glow: rgba(0, 85, 255, 0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-main);
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 71, 87, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.05), transparent 25%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         header {
             background: var(--surface);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 20px;
-            text-align: center;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        h1 {
-            font-weight: 800;
-            font-size: 24px;
+        .logo-area h1 {
+            font-weight: 900;
+            font-size: 22px;
             letter-spacing: 1px;
-            margin-bottom: 15px;
             text-transform: uppercase;
+            background: linear-gradient(45deg, var(--text-main), var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls-area {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-active);
+            transform: translateY(-2px);
         }
 
         .tabs {
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            background: rgba(0,0,0,0.2);
+            padding: 5px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
         }
 
         .tab-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
+            background: transparent;
+            border: none;
             color: var(--text-muted);
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 8px 24px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tab-btn.active {
             background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(108, 92, 231, 0.4);
+            color: #000;
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         main {
             flex: 1;
-            padding: 30px;
-            max-width: 1400px;
+            padding: 40px 30px;
+            max-width: 1600px;
             margin: 0 auto;
             width: 100%;
         }
 
         .section {
             display: none;
-            animation: fadeIn 0.4s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .section.active {
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .manual-layout {
             display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 30px;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+            align-items: start;
         }
 
         .categories {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
         }
 
         .category-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 20px;
+            padding: 20px;
             backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category-card:hover {
+            border-color: var(--border-active);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .category-title {
             font-size: 18px;
             font-weight: 800;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            color: var(--text-main);
         }
 
         .category-title::before {
             content: '';
             display: block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
             background-color: var(--cat-color);
-            box-shadow: 0 0 10px var(--cat-color);
+            box-shadow: 0 0 15px var(--cat-color);
+            transform: rotate(45deg);
         }
 
         .modifier-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
             cursor: pointer;
             border: 1px solid transparent;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             position: relative;
         }
 
+        [data-theme="light"] .modifier-item {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
         .modifier-item:hover {
-            border-color: var(--border);
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--surface-hover);
+            transform: translateX(5px);
         }
 
         .modifier-item.selected {
             border-color: var(--cat-color);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+            background: linear-gradient(90deg, rgba(255,255,255,0.05), transparent);
+            box-shadow: inset 4px 0 0 var(--cat-color);
+        }
+
+        .modifier-item.disabled {
+            opacity: 0.4;
+            filter: grayscale(1);
+            pointer-events: none;
         }
 
         .mod-info {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex: 1;
+            gap: 12px;
         }
 
         .mod-icon {
-            font-size: 20px;
+            font-size: 22px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         .mod-name {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
         }
 
         .mod-pct {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 800;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 900;
             color: var(--cat-color);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .tooltip {
-            position: absolute;
-            bottom: 110%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2d3436;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s;
-            pointer-events: none;
-            z-index: 10;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-
-        .modifier-item:hover .tooltip {
-            opacity: 1;
-            visibility: visible;
-            bottom: 125%;
+        .mod-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: block;
+            font-weight: 600;
         }
 
         .summary-panel {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 24px;
+            padding: 30px;
             position: sticky;
             top: 100px;
-            height: fit-content;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 120px);
         }
 
         .summary-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
-            margin-bottom: 20px;
-            text-align: center;
-            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
         }
 
         .total-pct {
-            font-size: 48px;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        [data-theme="light"] .total-pct {
+            background: linear-gradient(135deg, #000, #555);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .selected-list {
-            max-height: 400px;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 10px;
+            flex: 1;
         }
 
         .selected-list::-webkit-scrollbar {
-            width: 5px;
+            width: 6px;
         }
         .selected-list::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 5px;
+            background: var(--border-active);
+            border-radius: 10px;
         }
 
         .selected-item {
-            font-size: 13px;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .roulette-container {
@@ -282,79 +353,142 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
+            padding: 20px 0;
         }
 
         .wheel-wrapper {
             position: relative;
-            width: 500px;
-            height: 500px;
-            filter: drop-shadow(0 0 30px rgba(0,0,0,0.5));
+            width: var(--wheel-size);
+            height: var(--wheel-size);
+            border-radius: 50%;
+            background: #000;
+            box-shadow: 
+                0 0 0 10px rgba(255,255,255,0.05),
+                0 0 50px rgba(0,0,0,0.5),
+                inset 0 0 30px rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        [data-theme="light"] .wheel-wrapper {
+            background: #fff;
+            box-shadow: 
+                0 0 0 10px rgba(0,0,0,0.05),
+                0 20px 50px rgba(0,0,0,0.2);
         }
 
         #wheel {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            transform: rotate(-90deg); 
+            transition: transform 0.1s;
+        }
+
+        .wheel-center {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--bg-color);
+            border-radius: 50%;
+            z-index: 10;
+            border: 4px solid var(--border-active);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wheel-center::after {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .pointer-wrapper {
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            transform: translateY(-50%);
+            z-index: 20;
+            filter: drop-shadow(-5px 0 10px rgba(0,0,0,0.5));
         }
 
         .pointer {
-            position: absolute;
-            top: 50%;
-            right: -20px;
-            transform: translateY(-50%);
-            width: 40px;
+            width: 60px;
             height: 40px;
-            background: white;
-            clip-path: polygon(100% 50%, 0 0, 0 100%);
-            z-index: 10;
-            filter: drop-shadow(-2px 0 5px rgba(0,0,0,0.5));
+            background: var(--text-main);
+            clip-path: polygon(100% 50%, 0 0, 15% 50%, 0 100%);
+        }
+
+        .spin-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
 
         .spin-btn {
             background: var(--accent);
-            color: white;
+            color: #000;
             border: none;
-            padding: 15px 40px;
+            padding: 18px 50px;
             font-size: 20px;
-            font-weight: 800;
-            border-radius: 30px;
+            font-weight: 900;
+            border-radius: 100px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.4);
-            transition: all 0.2s;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px var(--accent-glow);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spin-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            opacity: 0;
         }
 
         .spin-btn:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px rgba(108, 92, 231, 0.6);
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px var(--accent-glow);
         }
 
-        .spin-btn:active {
-            transform: translateY(2px);
+        .spin-btn:hover::after {
+            opacity: 1;
+            left: 100%;
         }
 
         .spin-btn:disabled {
-            background: #555;
-            cursor: not-allowed;
+            background: var(--surface-hover);
+            color: var(--text-muted);
             box-shadow: none;
+            cursor: not-allowed;
             transform: none;
         }
 
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s;
+            transition: 0.4s;
         }
 
         .modal-overlay.show {
@@ -365,70 +499,106 @@
         .modal {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px;
+            border-radius: 30px;
+            padding: 50px;
             text-align: center;
-            max-width: 400px;
+            max-width: 500px;
             width: 90%;
-            transform: scale(0.8);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: scale(0.9) translateY(30px);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
         }
 
         .modal-overlay.show .modal {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 5px;
+            background: var(--modal-color, var(--accent));
         }
 
         .modal-icon {
-            font-size: 60px;
-            margin-bottom: 10px;
+            font-size: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
         }
 
         .modal-name {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 5px;
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: var(--text-main);
         }
 
         .modal-pct {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: var(--modal-color, var(--accent));
+            background: rgba(0,0,0,0.2);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 100px;
         }
 
         .modal-desc {
             font-size: 16px;
+            font-weight: 600;
             color: var(--text-muted);
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            line-height: 1.5;
         }
 
         .modal-btn {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border: 1px solid var(--border);
-            padding: 10px 30px;
-            border-radius: 8px;
+            background: transparent;
+            color: var(--text-main);
+            border: 2px solid var(--border-active);
+            padding: 15px 40px;
+            font-size: 16px;
+            border-radius: 100px;
             cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
+            font-weight: 800;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .modal-btn:hover {
-            background: rgba(255,255,255,0.2);
+            background: var(--border-active);
         }
 
+        @media (max-width: 1024px) {
+            .manual-layout { grid-template-columns: 1fr; }
+            .summary-panel { position: static; max-height: none; }
+            :root { --wheel-size: 400px; }
+        }
+
+        @media (max-width: 600px) {
+            .categories { grid-template-columns: 1fr; }
+            :root { --wheel-size: 300px; }
+            .spin-btn { padding: 15px 30px; font-size: 16px; }
+            .modal { padding: 30px 20px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Управление Модификаторами</h1>
-        <div class="tabs">
-            <button class="tab-btn active" data-target="manual">Мануальный Выбор</button>
-            <button class="tab-btn" data-target="roulette">Рулетка</button>
+        <div class="logo-area">
+            <h1 id="app-title">Modifiers</h1>
+        </div>
+        <div class="tabs" id="nav-tabs">
+            <button class="tab-btn active" data-target="manual" id="tab-manual">Manual</button>
+            <button class="tab-btn" data-target="roulette" id="tab-roulette">Roulette</button>
+        </div>
+        <div class="controls-area">
+            <button class="icon-btn" id="lang-toggle">🌐</button>
+            <button class="icon-btn" id="theme-toggle">🌓</button>
         </div>
     </header>
 
@@ -437,7 +607,7 @@
             <div class="manual-layout">
                 <div class="categories" id="categories-container"></div>
                 <aside class="summary-panel">
-                    <div class="summary-title">Итоговая Сложность</div>
+                    <div class="summary-title" id="summary-title">Total Difficulty</div>
                     <div class="total-pct" id="total-pct">0%</div>
                     <div class="selected-list" id="selected-list"></div>
                 </aside>
@@ -447,10 +617,15 @@
         <section id="roulette" class="section">
             <div class="roulette-container">
                 <div class="wheel-wrapper">
-                    <canvas id="wheel" width="1000" height="1000"></canvas>
-                    <div class="pointer"></div>
+                    <canvas id="wheel"></canvas>
+                    <div class="wheel-center"></div>
+                    <div class="pointer-wrapper">
+                        <div class="pointer"></div>
+                    </div>
                 </div>
-                <button class="spin-btn" id="spin-btn">Крутить Колесо</button>
+                <div class="spin-controls">
+                    <button class="spin-btn" id="spin-btn">Spin Wheel</button>
+                </div>
             </div>
         </section>
     </main>
@@ -461,105 +636,245 @@
             <div class="modal-name" id="res-name"></div>
             <div class="modal-pct" id="res-pct"></div>
             <div class="modal-desc" id="res-desc"></div>
-            <button class="modal-btn" onclick="document.getElementById('result-modal').classList.remove('show')">Закрыть</button>
+            <button class="modal-btn" id="modal-close">Close</button>
         </div>
     </div>
 
     <script>
-        const categoriesData = [
-            {
-                name: "Игрок",
-                color: "var(--cat-player)",
-                colorHex: "#ff4757",
-                items: [
-                    { icon: "🛡️", name: "Безащитный", pct: 25, desc: "Без Брони" },
-                    { icon: "⚔️", name: "Доброе Сердце", pct: 30, desc: "Без Оружия" },
-                    { icon: "🛠️", name: "Неуч", pct: 50, desc: "Без Крафта" }
-                ]
+        const i18n = {
+            ru: {
+                title: "Модификаторы",
+                tabManual: "Ручной Выбор",
+                tabRoulette: "Рулетка",
+                summaryTitle: "Итоговая Сложность",
+                spinBtn: "Крутить Колесо",
+                closeBtn: "Закрыть",
+                chance: "Шанс",
+                cat: "Категория",
+                cats: {
+                    player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила",
+                    effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее"
+                }
             },
-            {
-                name: "Инвентарь",
-                color: "var(--cat-inventory)",
-                colorHex: "#ffa502",
-                items: [
-                    { icon: "📦", name: "Склад", pct: 10, desc: "Свободных Слотов 18" },
-                    { icon: "🎒", name: "Пора В Школу", pct: 20, desc: "Свободных Слотов 9" },
-                    { icon: "🙌", name: "Только 2 Руки", pct: 35, desc: "Свободных Слотов 2" },
-                    { icon: "🖐️", name: "Однорукий", pct: 50, desc: "Свободных Слотов 1" }
-                ]
-            },
-            {
-                name: "Игровые Правила",
-                color: "var(--cat-rules)",
-                colorHex: "#9b59b6",
-                items: [
-                    { icon: "❌", name: "Ванила На То И Ванила", pct: 15, desc: "Без Сохранения Инвентаря" },
-                    { icon: "🍔", name: "Ранимый", pct: 30, desc: "Без Натуральной Регенерации" },
-                    { icon: "❤️", name: "Последний Шанс", pct: 30, desc: "На Хардкоре" },
-                    { icon: "🎛️", name: "Потеряшка", pct: 15, desc: "Без ф3 панели" },
-                    { icon: "📸", name: "ГТА 67", pct: 20, desc: "Только От 3-го Лица" }
-                ]
-            },
-            {
-                name: "Эффекты",
-                color: "var(--cat-effects)",
-                colorHex: "#2ed573",
-                items: [
-                    { icon: "👀", name: "Крот", pct: 20, desc: "Постоянная Слепота" },
-                    { icon: "📉", name: "Пропускал День Качалочкее", pct: 30, desc: "Постоянная Слабость" },
-                    { icon: "🍽️", name: "Литафом", pct: 35, desc: "Постоянный Голод" },
-                    { icon: "🤮", name: "Тошнотик", pct: 20, desc: "Постоянная Тошнота" },
-                    { icon: "🐌", name: "Улитка", pct: 5, desc: "Постоянная Минусовая Скорость" },
-                    { icon: "🧦", name: "Невесомость", pct: 10, desc: "Постоянное Плавное Падение" },
-                    { icon: "🌿", name: "Постоянная Боль", pct: 50, desc: "Постоянное Отравление" }
-                ]
-            },
-            {
-                name: "Спавнрейт",
-                color: "var(--cat-spawn)",
-                colorHex: "#ff6348",
-                items: [
-                    { icon: "💔", name: "Митинг", pct: 5, desc: "Частота Появления Монстров 1" },
-                    { icon: "💀", name: "Армагедон", pct: 15, desc: "Частота Появления Монстров 3" },
-                    { icon: "☠️", name: "Апокалипсис", pct: 25, desc: "Частота Появления Монстров 5" }
-                ]
-            },
-            {
-                name: "Настройки Майнкрафта",
-                color: "var(--cat-settings)",
-                colorHex: "#1e90ff",
-                items: [
-                    { icon: "👁️", name: "Не Те Очки", pct: 5, desc: "Поле Зрения: 60" },
-                    { icon: "👁️", name: "Соколиный Глаз", pct: 10, desc: "Поле Зрения: 45" },
-                    { icon: "👁️", name: "Шоколадный Глаз", pct: 15, desc: "Поле Зрения: 30" },
-                    { icon: "🧭", name: "Гугл GPS", pct: 5, desc: "Прорисовка 6 Чанка" },
-                    { icon: "🧭", name: "Карта", pct: 10, desc: "Прорисовка 4 Чанка" },
-                    { icon: "🧭", name: "Визитка", pct: 15, desc: "Прорисовка 2 Чанка" },
-                    { icon: "🎞️", name: "Пентиум", pct: 5, desc: "Фпс 30" },
-                    { icon: "🎞️", name: "Микроволновка", pct: 10, desc: "Фпс 20" },
-                    { icon: "🎞️", name: "Картошка", pct: 20, desc: "Фпс 10" },
-                    { icon: "🐭", name: "Ломка", pct: 25, desc: "Инверсия Мыши" },
-                    { icon: "🖱️", name: "Челледж От Дамдома 1", pct: 15, desc: "Минимальная Чувствительность" },
-                    { icon: "🖱️", name: "Челледж От Дамдома 2", pct: 15, desc: "Максимальная Чувствительность" },
-                    { icon: "🔊", name: "БАССЫ", pct: 10, desc: "Максимальные Звуки" },
-                    { icon: "🔇", name: "Старушка", pct: 15, desc: "Без Звука" }
-                ]
-            },
-            {
-                name: "Прочее",
-                color: "var(--cat-other)",
-                colorHex: "#eccc68",
-                items: [
-                    { icon: "⏳", name: "Поторопимся", pct: 30, desc: "Спидранн (За 1.5 Часа)" },
-                    { icon: "📜", name: "Кино", pct: 10, desc: "Боссы Только Строго По Порядку" },
-                    { icon: "🗺️", name: "Олд Форест", pct: 25, desc: "Без Магической Карты" },
-                    { icon: "☮️", name: "Пацифист", pct: 30, desc: "Без Убийств" }
-                ]
+            en: {
+                title: "Modifiers",
+                tabManual: "Manual",
+                tabRoulette: "Roulette",
+                summaryTitle: "Total Difficulty",
+                spinBtn: "Spin Wheel",
+                closeBtn: "Close",
+                chance: "Chance",
+                cat: "Category",
+                cats: {
+                    player: "Player", inventory: "Inventory", rules: "Game Rules",
+                    effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other"
+                }
             }
+        };
+
+        const rawData = [
+            { id: 'cat_player', key: 'player', color: 'var(--cat-player)', hex: '#ff4757', items: [
+                { id: 'p1', icon: '🛡️', pct: 25, group: null, ru: { n: 'Безащитный', d: 'Без Брони' }, en: { n: 'Defenseless', d: 'No Armor' } },
+                { id: 'p2', icon: '⚔️', pct: 30, group: null, ru: { n: 'Доброе Сердце', d: 'Без Оружия' }, en: { n: 'Kind Heart', d: 'No Weapons' } },
+                { id: 'p3', icon: '🛠️', pct: 50, group: null, ru: { n: 'Неуч', d: 'Без Крафта' }, en: { n: 'Ignorant', d: 'No Crafting' } }
+            ]},
+            { id: 'cat_inv', key: 'inventory', color: 'var(--cat-inventory)', hex: '#ffa502', items: [
+                { id: 'i1', icon: '📦', pct: 10, group: 'inv_slots', ru: { n: 'Склад', d: 'Свободных Слотов 18' }, en: { n: 'Storage', d: '18 Free Slots' } },
+                { id: 'i2', icon: '🎒', pct: 20, group: 'inv_slots', ru: { n: 'Пора В Школу', d: 'Свободных Слотов 9' }, en: { n: 'Back to School', d: '9 Free Slots' } },
+                { id: 'i3', icon: '🙌', pct: 35, group: 'inv_slots', ru: { n: 'Только 2 Руки', d: 'Свободных Слотов 2' }, en: { n: 'Only 2 Hands', d: '2 Free Slots' } },
+                { id: 'i4', icon: '🖐️', pct: 50, group: 'inv_slots', ru: { n: 'Однорукий', d: 'Свободных Слотов 1' }, en: { n: 'One-Armed', d: '1 Free Slot' } }
+            ]},
+            { id: 'cat_rules', key: 'rules', color: 'var(--cat-rules)', hex: '#9b59b6', items: [
+                { id: 'r1', icon: '❌', pct: 15, group: null, ru: { n: 'Ванила На То И Ванила', d: 'Без Сохранения Инвентаря' }, en: { n: 'Vanilla is Vanilla', d: 'Keep Inventory Off' } },
+                { id: 'r2', icon: '🍔', pct: 30, group: null, ru: { n: 'Ранимый', d: 'Без Натуральной Регенерации' }, en: { n: 'Vulnerable', d: 'No Natural Regen' } },
+                { id: 'r3', icon: '❤️', pct: 30, group: null, ru: { n: 'Последний Шанс', d: 'На Хардкоре' }, en: { n: 'Last Chance', d: 'Hardcore Mode' } },
+                { id: 'r4', icon: '🎛️', pct: 15, group: null, ru: { n: 'Потеряшка', d: 'Без ф3 панели' }, en: { n: 'Lost', d: 'No F3 Screen' } },
+                { id: 'r5', icon: '📸', pct: 20, group: null, ru: { n: 'ГТА 67', d: 'Только От 3-го Лица' }, en: { n: 'GTA 67', d: '3rd Person Only' } }
+            ]},
+            { id: 'cat_effects', key: 'effects', color: 'var(--cat-effects)', hex: '#2ed573', items: [
+                { id: 'e1', icon: '👀', pct: 20, group: null, ru: { n: 'Крот', d: 'Постоянная Слепота' }, en: { n: 'Mole', d: 'Permanent Blindness' } },
+                { id: 'e2', icon: '📉', pct: 30, group: null, ru: { n: 'Пропускал День Качалочки', d: 'Постоянная Слабость' }, en: { n: 'Skipped Leg Day', d: 'Permanent Weakness' } },
+                { id: 'e3', icon: '🍽️', pct: 35, group: null, ru: { n: 'Литафом', d: 'Постоянный Голод' }, en: { n: 'Lithophage', d: 'Permanent Hunger' } },
+                { id: 'e4', icon: '🤮', pct: 20, group: null, ru: { n: 'Тошнотик', d: 'Постоянная Тошнота' }, en: { n: 'Nauseous', d: 'Permanent Nausea' } },
+                { id: 'e5', icon: '🐌', pct: 5, group: null, ru: { n: 'Улитка', d: 'Постоянная Минусовая Скорость' }, en: { n: 'Snail', d: 'Permanent Slowness' } },
+                { id: 'e6', icon: '🧦', pct: 10, group: null, ru: { n: 'Невесомость', d: 'Постоянное Плавное Падение' }, en: { n: 'Zero G', d: 'Permanent Slow Falling' } },
+                { id: 'e7', icon: '🌿', pct: 50, group: null, ru: { n: 'Постоянная Боль', d: 'Постоянное Отравление' }, en: { n: 'Constant Pain', d: 'Permanent Poison' } }
+            ]},
+            { id: 'cat_spawn', key: 'spawn', color: 'var(--cat-spawn)', hex: '#ff6348', items: [
+                { id: 's1', icon: '💔', pct: 5, group: 'spawn', ru: { n: 'Митинг', d: 'Частота Появления Монстров 1' }, en: { n: 'Protest', d: 'Monster Spawn Rate 1' } },
+                { id: 's2', icon: '💀', pct: 15, group: 'spawn', ru: { n: 'Армагедон', d: 'Частота Появления Монстров 3' }, en: { n: 'Armageddon', d: 'Monster Spawn Rate 3' } },
+                { id: 's3', icon: '☠️', pct: 25, group: 'spawn', ru: { n: 'Апокалипсис', d: 'Частота Появления Монстров 5' }, en: { n: 'Apocalypse', d: 'Monster Spawn Rate 5' } }
+            ]},
+            { id: 'cat_set', key: 'settings', color: 'var(--cat-settings)', hex: '#1e90ff', items: [
+                { id: 'st1', icon: '👁️', pct: 5, group: 'fov', ru: { n: 'Не Те Очки', d: 'Поле Зрения: 60' }, en: { n: 'Wrong Glasses', d: 'FOV: 60' } },
+                { id: 'st2', icon: '👁️', pct: 10, group: 'fov', ru: { n: 'Соколиный Глаз', d: 'Поле Зрения: 45' }, en: { n: 'Hawk Eye', d: 'FOV: 45' } },
+                { id: 'st3', icon: '👁️', pct: 15, group: 'fov', ru: { n: 'Шоколадный Глаз', d: 'Поле Зрения: 30' }, en: { n: 'Chocolate Eye', d: 'FOV: 30' } },
+                { id: 'st4', icon: '🧭', pct: 5, group: 'render', ru: { n: 'Гугл GPS', d: 'Прорисовка 6 Чанков' }, en: { n: 'Google GPS', d: 'Render Distance 6' } },
+                { id: 'st5', icon: '🧭', pct: 10, group: 'render', ru: { n: 'Карта', d: 'Прорисовка 4 Чанка' }, en: { n: 'Map', d: 'Render Distance 4' } },
+                { id: 'st6', icon: '🧭', pct: 15, group: 'render', ru: { n: 'Визитка', d: 'Прорисовка 2 Чанка' }, en: { n: 'Business Card', d: 'Render Distance 2' } },
+                { id: 'st7', icon: '🎞️', pct: 5, group: 'fps', ru: { n: 'Пентиум', d: 'ФПС 30' }, en: { n: 'Pentium', d: 'FPS 30' } },
+                { id: 'st8', icon: '🎞️', pct: 10, group: 'fps', ru: { n: 'Микроволновка', d: 'ФПС 20' }, en: { n: 'Microwave', d: 'FPS 20' } },
+                { id: 'st9', icon: '🎞️', pct: 20, group: 'fps', ru: { n: 'Картошка', d: 'ФПС 10' }, en: { n: 'Potato', d: 'FPS 10' } },
+                { id: 'st10', icon: '🐭', pct: 25, group: null, ru: { n: 'Ломка', d: 'Инверсия Мыши' }, en: { n: 'Withdrawal', d: 'Inverted Mouse' } },
+                { id: 'st11', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж 1', d: 'Минимальная Чувствительность' }, en: { n: 'Challenge 1', d: 'Min Sensitivity' } },
+                { id: 'st12', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж 2', d: 'Максимальная Чувствительность' }, en: { n: 'Challenge 2', d: 'Max Sensitivity' } },
+                { id: 'st13', icon: '🔊', pct: 10, group: 'sound', ru: { n: 'БАССЫ', d: 'Максимальные Звуки' }, en: { n: 'BASS', d: 'Max Volume' } },
+                { id: 'st14', icon: '🔇', pct: 15, group: 'sound', ru: { n: 'Старушка', d: 'Без Звука' }, en: { n: 'Granny', d: 'No Sound' } }
+            ]},
+            { id: 'cat_oth', key: 'other', color: 'var(--cat-other)', hex: '#eccc68', items: [
+                { id: 'o1', icon: '⏳', pct: 30, group: null, ru: { n: 'Поторопимся', d: 'Спидран (За 1.5 Часа)' }, en: { n: 'Hurry Up', d: 'Speedrun (1.5 Hours)' } },
+                { id: 'o2', icon: '📜', pct: 10, group: null, ru: { n: 'Кино', d: 'Боссы Строго По Порядку' }, en: { n: 'Movie', d: 'Bosses in Strict Order' } },
+                { id: 'o3', icon: '🗺️', pct: 25, group: null, ru: { n: 'Олд Форест', d: 'Без Магической Карты' }, en: { n: 'Old Forest', d: 'No Magic Map' } },
+                { id: 'o4', icon: '☮️', pct: 30, group: null, ru: { n: 'Пацифист', d: 'Без Убийств' }, en: { n: 'Pacifist', d: 'No Kills' } }
+            ]}
         ];
 
-        let selectedItems = new Set();
-        const allModifiers = [];
+        let state = {
+            lang: 'ru',
+            theme: 'dark',
+            selected: new Map(),
+            flatMods: []
+        };
+
+        rawData.forEach(cat => {
+            cat.items.forEach(item => {
+                state.flatMods.push({ ...item, catKey: cat.key, catColor: cat.color, catHex: cat.hex });
+            });
+        });
+
+        const els = {
+            title: document.getElementById('app-title'),
+            tabManual: document.getElementById('tab-manual'),
+            tabRoulette: document.getElementById('tab-roulette'),
+            summaryTitle: document.getElementById('summary-title'),
+            totalPct: document.getElementById('total-pct'),
+            spinBtn: document.getElementById('spin-btn'),
+            modalClose: document.getElementById('modal-close'),
+            container: document.getElementById('categories-container'),
+            selList: document.getElementById('selected-list')
+        };
+
+        function updateUI() {
+            const t = i18n[state.lang];
+            els.title.textContent = t.title;
+            els.tabManual.textContent = t.tabManual;
+            els.tabRoulette.textContent = t.tabRoulette;
+            els.summaryTitle.textContent = t.summaryTitle;
+            els.spinBtn.textContent = t.spinBtn;
+            els.modalClose.textContent = t.closeBtn;
+
+            els.container.innerHTML = '';
+            rawData.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                card.style.setProperty('--cat-color', cat.color);
+
+                const title = document.createElement('div');
+                title.className = 'category-title';
+                title.textContent = t.cats[cat.key];
+                card.appendChild(title);
+
+                cat.items.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = `modifier-item ${state.selected.has(item.id) ? 'selected' : ''}`;
+                    el.dataset.id = item.id;
+                    el.dataset.group = item.group || '';
+                    
+                    const data = item[state.lang];
+                    el.innerHTML = `
+                        <div class="mod-info">
+                            <span class="mod-icon">${item.icon}</span>
+                            <div>
+                                <div class="mod-name">${data.n}</div>
+                                <span class="mod-desc">${data.d}</span>
+                            </div>
+                        </div>
+                        <span class="mod-pct">${item.pct}%</span>
+                    `;
+
+                    el.addEventListener('click', () => toggleMod(item, el));
+                    card.appendChild(el);
+                });
+                els.container.appendChild(card);
+            });
+            updateSummary();
+            checkMutuallyExclusiveUI();
+        }
+
+        function toggleMod(item, element) {
+            if (state.selected.has(item.id)) {
+                state.selected.delete(item.id);
+                element.classList.remove('selected');
+            } else {
+                if (item.group) {
+                    for (let [selId, selItem] of state.selected.entries()) {
+                        if (selItem.group === item.group) {
+                            state.selected.delete(selId);
+                            const oldEl = document.querySelector(`.modifier-item[data-id="${selId}"]`);
+                            if (oldEl) oldEl.classList.remove('selected');
+                        }
+                    }
+                }
+                state.selected.set(item.id, item);
+                element.classList.add('selected');
+            }
+            updateSummary();
+            checkMutuallyExclusiveUI();
+        }
+
+        function checkMutuallyExclusiveUI() {
+            const allEls = document.querySelectorAll('.modifier-item');
+            allEls.forEach(el => el.classList.remove('disabled'));
+            
+            const activeGroups = new Set();
+            for (let item of state.selected.values()) {
+                if (item.group) activeGroups.add(item.group);
+            }
+
+            allEls.forEach(el => {
+                const grp = el.dataset.group;
+                if (grp && activeGroups.has(grp) && !el.classList.contains('selected')) {
+                    el.classList.add('disabled');
+                }
+            });
+        }
+
+        function updateSummary() {
+            let total = 0;
+            els.selList.innerHTML = '';
+            
+            for (let item of state.selected.values()) {
+                total += item.pct;
+                const catInfo = rawData.find(c => c.items.some(i => i.id === item.id));
+                const data = item[state.lang];
+                
+                const d = document.createElement('div');
+                d.className = 'selected-item';
+                d.innerHTML = `
+                    <span style="color: ${catInfo.color}">
+                        ${item.icon} ${data.n}
+                    </span>
+                    <span style="color: var(--text-main); font-weight: 800;">${item.pct}%</span>
+                `;
+                els.selList.appendChild(d);
+            }
+            els.totalPct.textContent = `${total}%`;
+        }
+
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            state.lang = state.lang === 'ru' ? 'en' : 'ru';
+            updateUI();
+            drawWheel();
+        });
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            if (state.theme === 'light') {
+                document.body.setAttribute('data-theme', 'light');
+            } else {
+                document.body.removeAttribute('data-theme');
+            }
+        });
 
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -570,181 +885,120 @@
             });
         });
 
-        const container = document.getElementById('categories-container');
-        categoriesData.forEach((cat, catIndex) => {
-            const card = document.createElement('div');
-            card.className = 'category-card';
-            card.style.setProperty('--cat-color', cat.color);
-
-            const title = document.createElement('div');
-            title.className = 'category-title';
-            title.textContent = cat.name;
-            card.appendChild(title);
-
-            cat.items.forEach((item, itemIndex) => {
-                const uniqueId = `${catIndex}-${itemIndex}`;
-                allModifiers.push({ ...item, colorHex: cat.colorHex, catName: cat.name });
-
-                const modDiv = document.createElement('div');
-                modDiv.className = 'modifier-item';
-                modDiv.dataset.id = uniqueId;
-                
-                modDiv.innerHTML = `
-                    <div class="mod-info">
-                        <span class="mod-icon">${item.icon}</span>
-                        <span class="mod-name">${item.name}</span>
-                    </div>
-                    <span class="mod-pct">${item.pct}%</span>
-                    <div class="tooltip">${item.desc}</div>
-                `;
-
-                modDiv.addEventListener('click', () => {
-                    modDiv.classList.toggle('selected');
-                    if (modDiv.classList.contains('selected')) {
-                        selectedItems.add({ id: uniqueId, ...item, color: cat.color });
-                    } else {
-                        selectedItems.forEach(i => {
-                            if (i.id === uniqueId) selectedItems.delete(i);
-                        });
-                    }
-                    updateSummary();
-                });
-
-                card.appendChild(modDiv);
-            });
-
-            container.appendChild(card);
-        });
-
-        function updateSummary() {
-            let total = 0;
-            const list = document.getElementById('selected-list');
-            list.innerHTML = '';
-
-            selectedItems.forEach(item => {
-                total += item.pct;
-                const el = document.createElement('div');
-                el.className = 'selected-item';
-                el.innerHTML = `
-                    <span style="color: ${item.color}">${item.icon} ${item.name}</span>
-                    <span>${item.pct}%</span>
-                `;
-                list.appendChild(el);
-            });
-
-            document.getElementById('total-pct').textContent = `${total}%`;
-        }
-
         const canvas = document.getElementById('wheel');
         const ctx = canvas.getContext('2d');
-        const totalSlices = allModifiers.length;
-        const arc = Math.PI / (totalSlices / 2);
+        const size = 1000; 
+        canvas.width = size;
+        canvas.height = size;
+        
         let currentAngle = 0;
-        let spinTimeout = null;
-        let spinAngleStart = 0;
-        let spinTime = 0;
-        let spinTimeTotal = 0;
+        let isSpinning = false;
+        let angularVelocity = 0;
+        let spinRaf;
 
-        function drawRouletteWheel() {
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const outsideRadius = 480;
-            const textRadius = 380;
-            const insideRadius = 50;
+        function drawWheel() {
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const radius = size / 2 - 20;
+            const total = state.flatMods.length;
+            const sliceAngle = (2 * Math.PI) / total;
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, size, size);
 
-            ctx.lineWidth = 10;
-            ctx.strokeStyle = '#1e1e24';
+            for (let i = 0; i < total; i++) {
+                const mod = state.flatMods[i];
+                const startAngle = currentAngle + i * sliceAngle;
+                const endAngle = startAngle + sliceAngle;
 
-            for (let i = 0; i < totalSlices; i++) {
-                const angle = currentAngle + i * arc;
-                
-                ctx.fillStyle = allModifiers[i].colorHex;
                 ctx.beginPath();
-                ctx.arc(centerX, centerY, outsideRadius, angle, angle + arc, false);
-                ctx.arc(centerX, centerY, insideRadius, angle + arc, angle, true);
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.fillStyle = mod.catHex;
                 ctx.fill();
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = state.theme === 'light' ? '#ffffff' : '#000000';
                 ctx.stroke();
 
                 ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(startAngle + sliceAngle / 2);
+                ctx.textAlign = "right";
                 ctx.fillStyle = "#ffffff";
-                ctx.translate(
-                    centerX + Math.cos(angle + arc / 2) * textRadius,
-                    centerY + Math.sin(angle + arc / 2) * textRadius
-                );
-                ctx.rotate(angle + arc / 2 + Math.PI);
+                ctx.font = "bold 26px Montserrat";
+                ctx.shadowColor = "rgba(0,0,0,0.8)";
+                ctx.shadowBlur = 4;
                 
-                ctx.font = "bold 24px Inter";
-                ctx.textAlign = "left";
-                ctx.textBaseline = "middle";
-                ctx.fillText(`${allModifiers[i].icon} ${allModifiers[i].pct}%`, -40, 0);
-                
+                const textX = radius - 40;
+                ctx.fillText(`${mod.icon} ${mod.pct}%`, textX, 8);
                 ctx.restore();
             }
-
-            ctx.fillStyle = "#0f0f13";
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, insideRadius, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.stroke();
         }
 
-        document.getElementById('spin-btn').addEventListener('click', () => {
-            const btn = document.getElementById('spin-btn');
-            btn.disabled = true;
-            spinAngleStart = Math.random() * 10 + 10;
-            spinTime = 0;
-            spinTimeTotal = Math.random() * 3000 + 4000;
-            rotateWheel();
+        function physicsLoop() {
+            if (!isSpinning) return;
+            
+            currentAngle += angularVelocity;
+            angularVelocity *= 0.992; 
+
+            if (angularVelocity < 0.001) {
+                isSpinning = false;
+                angularVelocity = 0;
+                finishSpin();
+            } else {
+                drawWheel();
+                spinRaf = requestAnimationFrame(physicsLoop);
+            }
+        }
+
+        els.spinBtn.addEventListener('click', () => {
+            if (isSpinning) return;
+            isSpinning = true;
+            els.spinBtn.disabled = true;
+            angularVelocity = Math.random() * 0.2 + 0.3; 
+            physicsLoop();
         });
 
-        function rotateWheel() {
-            spinTime += 30;
-            if (spinTime >= spinTimeTotal) {
-                stopRotateWheel();
-                return;
-            }
-            const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-            currentAngle += (spinAngle * Math.PI / 180);
-            drawRouletteWheel();
-            spinTimeout = requestAnimationFrame(rotateWheel);
-        }
-
-        function stopRotateWheel() {
-            cancelAnimationFrame(spinTimeout);
-            const degrees = currentAngle * 180 / Math.PI + 90;
-            const arcd = arc * 180 / Math.PI;
-            const index = Math.floor((360 - degrees % 360) / arcd) % totalSlices;
+        function finishSpin() {
+            const total = state.flatMods.length;
+            const sliceAngle = (2 * Math.PI) / total;
+            let normalizedAngle = currentAngle % (2 * Math.PI);
+            if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
             
-            const result = allModifiers[index];
-            showResult(result);
-            document.getElementById('spin-btn').disabled = false;
+            let pointerAngle = 0; 
+            let relativeAngle = (pointerAngle - normalizedAngle + 2 * Math.PI) % (2 * Math.PI);
+            let winningIndex = Math.floor(relativeAngle / sliceAngle);
+            
+            winningIndex = (total - winningIndex) % total;
+            
+            const result = state.flatMods[winningIndex];
+            showResultModal(result);
+            els.spinBtn.disabled = false;
+            drawWheel(); 
         }
 
-        function easeOut(t, b, c, d) {
-            const ts = (t /= d) * t;
-            const tc = ts * t;
-            return b + c * (tc + -3 * ts + 3 * t);
-        }
-
-        function showResult(item) {
+        function showResultModal(item) {
+            const t = i18n[state.lang];
+            const data = item[state.lang];
+            
             document.getElementById('res-icon').textContent = item.icon;
-            document.getElementById('res-name').textContent = item.name;
+            document.getElementById('res-name').textContent = data.n;
+            document.getElementById('res-pct').textContent = `${t.chance}: ${item.pct}% | ${t.cat}: ${t.cats[item.catKey]}`;
+            document.getElementById('res-desc').textContent = data.d;
             
-            const pctEl = document.getElementById('res-pct');
-            pctEl.textContent = `Шанс: ${item.pct}% | Категория: ${item.catName}`;
-            pctEl.style.color = item.colorHex;
-
-            document.getElementById('res-desc').textContent = item.desc;
-            
-            document.getElementById('modal-content').style.borderColor = item.colorHex;
-            document.getElementById('modal-content').style.boxShadow = `0 20px 50px ${item.colorHex}40`;
+            const modal = document.getElementById('modal-content');
+            modal.style.setProperty('--modal-color', item.catHex);
+            modal.style.boxShadow = `0 30px 60px ${item.catHex}40`;
 
             document.getElementById('result-modal').classList.add('show');
         }
 
-        drawRouletteWheel();
+        els.modalClose.addEventListener('click', () => {
+            document.getElementById('result-modal').classList.remove('show');
+        });
+
+        updateUI();
+        drawWheel();
+
     </script>
 </body>
 </html>
