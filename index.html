@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifiers PRO</title>
+    <title>Modifiers</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root, [data-theme="cyberpunk"] {
@@ -188,15 +188,20 @@
         .summary-panel { position: sticky; top: 100px; height: calc(100vh - 120px); overflow: hidden; }
         .side-panel { height: 100%; overflow: hidden; }
         
+        /* --- ПРЕСЕТЫ УЛУЧШЕННЫЕ --- */
         .presets-container { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px; flex-shrink: 0; }
         .presets-header { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
-        .presets-controls { display: flex; gap: 8px; margin-bottom: 10px; }
-        #preset-select { flex: 1; background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 8px 12px; font-size: 12px; font-weight: 600; outline: none; }
-        .icon-btn-small { background: var(--surface-hover); border: 1px solid var(--border); border-radius: 10px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); font-size: 14px; }
-        .icon-btn-small:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 0 10px var(--accent-glow); }
-        .presets-save { display: flex; gap: 8px; }
-        #preset-name { flex: 1; background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 8px 12px; font-size: 12px; font-weight: 600; outline: none; }
-        #preset-name:focus { border-color: var(--accent); }
+        .presets-inputs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+        .presets-input { background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); border-radius: 10px; padding: 10px 12px; font-size: 12px; font-weight: 600; outline: none; transition: 0.2s; width: 100%; }
+        .presets-input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); }
+        .presets-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        
+        .btn-preset { background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
+        .btn-preset:hover { background: var(--surface-hover); border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+        .btn-preset.save { color: var(--success); border-color: rgba(0,255,136,0.3); }
+        .btn-preset.save:hover { background: rgba(0,255,136,0.1); border-color: var(--success); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
+        .btn-preset.danger { color: var(--danger); border-color: rgba(255,0,85,0.3); }
+        .btn-preset.danger:hover { background: rgba(255,0,85,0.1); border-color: var(--danger); box-shadow: 0 0 10px rgba(255,0,85,0.2); }
 
         .total-pct { font-size: 58px; font-weight: 900; margin-bottom: 25px; text-align: center; color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); line-height: 1; flex-shrink: 0; }
         
@@ -222,8 +227,6 @@
         
         .btn-reset { background: rgba(255,0,85,0.1); color: var(--danger); border: 1px solid var(--danger); border-radius: 10px; padding: 8px 16px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .btn-reset:hover { background: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(255,0,85,0.4); transform: translateY(-2px); }
-        .btn-save { background: rgba(0,255,136,0.1); color: var(--success); border: 1px solid var(--success); border-radius: 10px; padding: 8px 16px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-save:hover { background: var(--success); color: #000; box-shadow: 0 0 15px rgba(0,255,136,0.4); transform: translateY(-2px); }
 
         .pool-cat-group { margin-bottom: 15px; flex-shrink: 0; }
         .pool-cat-title { font-size: 12px; font-weight: 800; color: var(--cat-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
@@ -242,7 +245,7 @@
         
         .spin-input-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 15px 25px; display: inline-flex; align-items: center; gap: 15px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
         .spin-input-wrapper label { font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        .spin-input-wrapper input { background: var(--bg-color); border: 1px solid var(--border-active); color: var(--text-main); width: 80px; padding: 10px; border-radius: 10px; text-align: center; font-weight: 900; font-size: 16px; outline: none; }
+        .spin-input-wrapper input { background: var(--bg-color); border: 1px solid var(--border-active); color: var(--text-main); width: 80px; padding: 10px; border-radius: 10px; text-align: center; font-weight: 900; font-size: 16px; outline: none; transition: 0.2s; }
         .spin-input-wrapper input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
         
         .wheel-wrapper { position: relative; width: var(--wheel-size); height: var(--wheel-size); border-radius: 50%; background: var(--bg-color); box-shadow: 0 0 0 12px var(--surface), 0 30px 60px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -317,16 +320,16 @@
                 <aside class="summary-panel">
                     <div class="presets-container">
                         <div class="presets-header" id="t-presets">Presets</div>
-                        <div class="presets-controls">
-                            <select id="preset-select">
+                        <div class="presets-inputs">
+                            <input type="text" id="preset-name" class="presets-input" placeholder="Name to save...">
+                            <select id="preset-select" class="presets-input">
                                 <option value="">-- Select --</option>
                             </select>
-                            <button class="icon-btn-small" id="btn-load-preset">📂</button>
-                            <button class="icon-btn-small" id="btn-del-preset" style="color: var(--danger); border-color: var(--danger);">✖</button>
                         </div>
-                        <div class="presets-save">
-                            <input type="text" id="preset-name" placeholder="Name...">
-                            <button class="btn-save" id="btn-save-preset">Save</button>
+                        <div class="presets-actions">
+                            <button class="btn-preset save" id="btn-save-preset" title="Save preset">Save</button>
+                            <button class="btn-preset" id="btn-load-preset" title="Load preset">Load</button>
+                            <button class="btn-preset danger" id="btn-del-preset" title="Delete preset">Del</button>
                         </div>
                     </div>
                     <div class="total-pct" id="total-pct">0%</div>
@@ -394,6 +397,8 @@
                 spinBtn: "Крутить Колесо", chance: "Шанс выпадения:",
                 btnActionAdd: "Добавить", btnSpin: "Крутить дальше", btnReset: "Сброс",
                 tPresets: "Пресеты", tSelectPreset: "Выбрать", btnSave: "Сохранить",
+                btnLoad: "Загрузить", btnDelete: "Удалить", tPlaceholder: "Имя пресета...",
+                titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет",
                 themes: { cyber: "Киберпанк", light: "Светлая", mid: "Полночь", forest: "Лес", blood: "Кровавая Луна" },
                 cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
             },
@@ -403,6 +408,8 @@
                 spinBtn: "Spin Wheel", chance: "Drop Chance:",
                 btnActionAdd: "Add to list", btnSpin: "Spin again", btnReset: "Reset",
                 tPresets: "Presets", tSelectPreset: "Select", btnSave: "Save",
+                btnLoad: "Load", btnDelete: "Delete", tPlaceholder: "Preset name...",
+                titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset",
                 themes: { cyber: "Cyberpunk", light: "Light Mode", mid: "Midnight", forest: "Forest", blood: "Blood Moon" },
                 cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
             }
@@ -529,15 +536,15 @@
             
             if (type === 'select') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(1200, now);
-                osc.frequency.exponentialRampToValueAtTime(1800, now + 0.05);
-                gain.gain.setValueAtTime(0.1, now);
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(100, now + 0.05);
+                gain.gain.setValueAtTime(0.2, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
                 osc.start(now); osc.stop(now + 0.05);
             } else if (type === 'deselect') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, now);
-                osc.frequency.exponentialRampToValueAtTime(400, now + 0.05);
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(50, now + 0.05);
                 gain.gain.setValueAtTime(0.1, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
                 osc.start(now); osc.stop(now + 0.05);
@@ -625,6 +632,7 @@
 
         function updateAllUI() {
             const t = i18n[state.lang];
+            document.title = t.title;
             document.getElementById('app-title').textContent = t.title;
             document.getElementById('tab-manual').textContent = t.tabManual;
             document.getElementById('tab-roulette').textContent = t.tabRoulette;
@@ -635,8 +643,16 @@
             document.getElementById('btn-action-add').textContent = t.btnActionAdd;
             document.getElementById('btn-spin-again').textContent = t.btnSpin;
             els.btnResetPool.textContent = t.btnReset;
+            
             document.getElementById('t-presets').textContent = t.tPresets;
             document.getElementById('btn-save-preset').textContent = t.btnSave;
+            document.getElementById('btn-load-preset').textContent = t.btnLoad;
+            document.getElementById('btn-del-preset').textContent = t.btnDelete;
+            
+            document.getElementById('btn-save-preset').title = t.titleSave;
+            document.getElementById('btn-load-preset').title = t.titleLoad;
+            document.getElementById('btn-del-preset').title = t.titleDelete;
+            document.getElementById('preset-name').placeholder = t.tPlaceholder;
 
             document.getElementById('th-cyber').textContent = t.themes.cyber;
             document.getElementById('th-light').textContent = t.themes.light;
