@@ -155,13 +155,14 @@
             --cat-spawn: #ff6348;
             --cat-settings: #1e90ff;
             --cat-other: #eccc68;
+            --cat-health: #ff6b81;
             --font-main: 'Montserrat', sans-serif;
             --wheel-size: 500px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); user-select: none; transition: background-color 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s; }
         body { background-color: var(--bg-color); background-image: var(--grad-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
-        header { background: var(--surface); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
+        header { background: var(--surface); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: clamp(10px, 3vw, 15px) clamp(20px, 5vw, 30px); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
         .logo-area h1 { font-weight: 900; font-size: 22px; text-transform: uppercase; background: linear-gradient(45deg, var(--text-main), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1.5px; }
         
         .controls-area { display: flex; gap: 12px; align-items: center; }
@@ -178,7 +179,7 @@
         .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 8px 24px; border-radius: 10px; cursor: pointer; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
         .tab-btn.active { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent-glow); }
 
-        main { flex: 1; padding: 30px; width: 100%; max-width: 1600px; margin: 0 auto; display: flex; flex-direction: column; }
+        main { flex: 1; padding: clamp(15px, 5vw, 30px); width: 100%; max-width: 1600px; margin: 0 auto; display: flex; flex-direction: column; }
         .section { display: none; opacity: 0; transform: translateY(15px); transition: opacity 0.4s, transform 0.4s; flex: 1; }
         .section.active { display: block; opacity: 1; transform: translateY(0); }
 
@@ -199,8 +200,8 @@
 
         .mod-info { display: flex; align-items: center; gap: 14px; flex: 1; }
         .mod-icon { font-size: 24px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-        .mod-name { font-weight: 800; font-size: 13px; color: var(--text-main); word-break: break-word; }
-        .mod-desc { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; line-height: 1.4; font-weight: 600; word-break: break-word; }
+        .mod-name { font-weight: 800; font-size: clamp(11px, 2.5vw, 13px); color: var(--text-main); word-break: break-word; }
+        .mod-desc { font-size: clamp(9px, 2vw, 11px); color: var(--text-muted); display: block; margin-top: 4px; line-height: 1.4; font-weight: 600; word-break: break-word; }
         .mod-pct { background: var(--surface); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 900; border: 1px solid var(--border); color: var(--accent); flex-shrink: 0; }
 
         .summary-panel, .side-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; backdrop-filter: blur(20px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
@@ -281,12 +282,12 @@
 
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; }
         .modal-overlay.show { opacity: 1; visibility: visible; }
-        .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 50px; text-align: center; max-width: 500px; width: 90%; transform: scale(0.9) translateY(20px); position: relative; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
+        .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 50px; text-align: center; max-width: 500px; width: 90%; transform: scale(0.9) translateY(20px); position: relative; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); transition: transform 0.3s ease-out; }
         .modal-overlay.show .modal { transform: scale(1) translateY(0); }
         .modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px; background: var(--modal-color, var(--accent)); }
         
         .modal-name { font-size: 30px; font-weight: 900; margin-top: 15px; margin-bottom: 5px; color: var(--text-main); }
-        .modal-chance { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 15px; display: inline-block; background: var(--bg-color); padding: 6px 16px; border-radius: 12px; border: 1px solid var(--border); }
+        .modal-chance { display: none; }
         .modal-cat { font-size: 14px; font-weight: 800; color: var(--modal-color); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; }
         .modal-desc { font-size: 15px; color: var(--text-muted); margin-bottom: 10px; font-weight: 600; line-height: 1.6; }
         
@@ -436,8 +437,9 @@
                 btnLoad: "Загрузить", btnDelete: "Удалить", tPlaceholder: "Имя пресета...",
                 titleSave: "Сохранить текущую сборку", titleLoad: "Загрузить выбранный пресет", titleDelete: "Удалить выбранный пресет", titleDownloadTxt: "Скачать как TXT", msgCopied: "Скопировано в буфер обмена!",
                 msgExists: (n) => `Пресет "${n}" уже существует. Перезаписать?`, msgDel: (n) => `Удалить пресет "${n}"?`,
+                tCurrent: "Текущий",
                 themes: { cyber: "Киберпанк", light: "Светлая", mid: "Полночь", forest: "Лес", blood: "Кровавая Луна", ocean: "Океан", sunset: "Закат", matrix: "Матрица", synth: "Синтвейв", mono: "Монохром" },
-                cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
+                cats: { player: "Игрок", inventory: "Инвентарь", rules: "Игровые Правила", health: "Здоровье", effects: "Эффекты", spawn: "Спавнрейт", settings: "Настройки", other: "Прочее" }
             },
             en: {
                 title: "Modifiers", tabManual: "Manual", tabRoulette: "Roulette",
@@ -448,8 +450,10 @@
                 btnLoad: "Load", btnDelete: "Delete", tPlaceholder: "Preset name...",
                 titleSave: "Save current selection", titleLoad: "Load selected preset", titleDelete: "Delete selected preset", titleDownloadTxt: "Download as TXT", msgCopied: "Copied to clipboard!",
                 msgExists: (n) => `Preset "${n}" already exists. Overwrite?`, msgDel: (n) => `Delete preset "${n}"?`,
+                tCurrent: "Current",
+                tCurrent: "Current",
                 themes: { cyber: "Cyberpunk", light: "Light Mode", mid: "Midnight", forest: "Forest", blood: "Blood Moon", ocean: "Ocean", sunset: "Sunset", matrix: "Matrix", synth: "Synthwave", mono: "Monochrome" },
-                cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
+                cats: { player: "Player", inventory: "Inventory", rules: "Game Rules", health: "Health", effects: "Effects", spawn: "Spawnrate", settings: "Settings", other: "Other" }
             },
             es: {
                 title: "Modificadores", tabManual: "Manual", tabRoulette: "Ruleta",
@@ -460,8 +464,9 @@
                 btnLoad: "Cargar", btnDelete: "Borrar", tPlaceholder: "Nombre del preajuste...",
                 titleSave: "Guardar selección", titleLoad: "Cargar preajuste", titleDelete: "Borrar preajuste", titleDownloadTxt: "Descargar TXT", msgCopied: "¡Copiado!",
                 msgExists: (n) => `El preajuste "${n}" ya existe. ¿Sobrescribir?`, msgDel: (n) => `¿Borrar preajuste "${n}"?`,
+                tCurrent: "Actual",
                 themes: { cyber: "Ciberpunk", light: "Modo Claro", mid: "Medianoche", forest: "Bosque", blood: "Luna de Sangre", ocean: "Océano", sunset: "Atardecer", matrix: "Matrix", synth: "Synthwave", mono: "Monocromo" },
-                cats: { player: "Jugador", inventory: "Inventario", rules: "Reglas", effects: "Efectos", spawn: "Tasa de Spawn", settings: "Ajustes", other: "Otros" }
+                cats: { player: "Jugador", inventory: "Inventario", rules: "Reglas", health: "Salud", effects: "Efectos", spawn: "Tasa de Spawn", settings: "Ajustes", other: "Otros" }
             },
             de: {
                 title: "Modifikatoren", tabManual: "Manuell", tabRoulette: "Roulette",
@@ -472,8 +477,9 @@
                 btnLoad: "Laden", btnDelete: "Löschen", tPlaceholder: "Voreinstellungsname...",
                 titleSave: "Auswahl speichern", titleLoad: "Voreinstellung laden", titleDelete: "Voreinstellung löschen", titleDownloadTxt: "Als TXT herunterladen", msgCopied: "Kopiert!",
                 msgExists: (n) => `Voreinstellung "${n}" existiert bereits. Überschreiben?`, msgDel: (n) => `Voreinstellung "${n}" löschen?`,
+                tCurrent: "Aktuell",
                 themes: { cyber: "Cyberpunk", light: "Heller Modus", mid: "Mitternacht", forest: "Wald", blood: "Blutmond", ocean: "Ozean", sunset: "Sonnenuntergang", matrix: "Matrix", synth: "Synthwave", mono: "Monochrom" },
-                cats: { player: "Spieler", inventory: "Inventar", rules: "Spielregeln", effects: "Effekte", spawn: "Spawnrate", settings: "Einstellungen", other: "Andere" }
+                cats: { player: "Spieler", inventory: "Inventar", rules: "Spielregeln", health: "Gesundheit", effects: "Effekte", spawn: "Spawnrate", settings: "Einstellungen", other: "Andere" }
             },
             fr: {
                 title: "Modificateurs", tabManual: "Manuel", tabRoulette: "Roulette",
@@ -484,8 +490,9 @@
                 btnLoad: "Charger", btnDelete: "Supprimer", tPlaceholder: "Nom du préréglage...",
                 titleSave: "Sauvegarder la sélection", titleLoad: "Charger le préréglage", titleDelete: "Supprimer le préréglage", titleDownloadTxt: "Télécharger TXT", msgCopied: "Copié !",
                 msgExists: (n) => `Le préréglage "${n}" existe déjà. Écraser ?`, msgDel: (n) => `Supprimer le préréglage "${n}" ?`,
+                tCurrent: "Actuel",
                 themes: { cyber: "Cyberpunk", light: "Mode Clair", mid: "Minuit", forest: "Forêt", blood: "Lune de Sang", ocean: "Océan", sunset: "Coucher de soleil", matrix: "Matrix", synth: "Synthwave", mono: "Monochrome" },
-                cats: { player: "Joueur", inventory: "Inventaire", rules: "Règles", effects: "Effets", spawn: "Taux de Spawn", settings: "Paramètres", other: "Autres" }
+                cats: { player: "Joueur", inventory: "Inventaire", rules: "Règles", health: "Santé", effects: "Effets", spawn: "Taux de Spawn", settings: "Paramètres", other: "Autres" }
             },
             uk: {
                 title: "Модифікатори", tabManual: "Ручний Вибір", tabRoulette: "Рулетка",
@@ -496,8 +503,9 @@
                 btnLoad: "Завантажити", btnDelete: "Видалити", tPlaceholder: "Ім'я пресету...",
                 titleSave: "Зберегти поточну збірку", titleLoad: "Завантажити обраний пресет", titleDelete: "Видалити обраний пресет", titleDownloadTxt: "Завантажити як TXT", msgCopied: "Скопійовано!",
                 msgExists: (n) => `Пресет "${n}" вже існує. Перезаписати?`, msgDel: (n) => `Видалити пресет "${n}"?`,
+                tCurrent: "Поточний",
                 themes: { cyber: "Кіберпанк", light: "Світла", mid: "Північ", forest: "Ліс", blood: "Кривава Місяць", ocean: "Океан", sunset: "Захід", matrix: "Матриця", synth: "Сінтвейв", mono: "Монохром" },
-                cats: { player: "Гравець", inventory: "Інвентар", rules: "Правила Гри", effects: "Ефекти", spawn: "Спавнрейт", settings: "Налаштування", other: "Інше" }
+                cats: { player: "Гравець", inventory: "Інвентар", rules: "Правила Гри", health: "Здоров'я", effects: "Ефекти", spawn: "Спавнрейт", settings: "Налаштування", other: "Інше" }
             }
         };
 
@@ -518,21 +526,35 @@
                 { id: 'r2', icon: '🍔', pct: 30, group: null, ru: { n: 'Ранимый', d: 'Без Нат. Регенерации' }, en: { n: 'Vulnerable', d: 'No Nat. Regen' }, es: { n: 'Vulnerable', d: 'Sin regen nat.' }, de: { n: 'Verwundbar', d: 'Keine nat. Regen' }, fr: { n: 'Vulnérable', d: 'Pas de régen nat.' }, uk: { n: 'Вразливий', d: 'Без Нат. Регенерації' } },
                 { id: 'r3', icon: '❤️', pct: 30, group: null, ru: { n: 'Последний Шанс', d: 'На Хардкоре' }, en: { n: 'Last Chance', d: 'Hardcore Mode' }, es: { n: 'Última Oportunidad', d: 'Hardcore' }, de: { n: 'Letzte Chance', d: 'Hardcore' }, fr: { n: 'Dernière Chance', d: 'Hardcore' }, uk: { n: 'Останній Шанс', d: 'На Хардкорі' } },
                 { id: 'r4', icon: '🎛️', pct: 15, group: null, ru: { n: 'Потеряшка', d: 'Без ф3 панели' }, en: { n: 'Lost', d: 'No F3 Screen' }, es: { n: 'Perdido', d: 'Sin F3' }, de: { n: 'Verloren', d: 'Kein F3' }, fr: { n: 'Perdu', d: 'Sans F3' }, uk: { n: 'Загублений', d: 'Без F3' } },
-                { id: 'r5', icon: '📸', pct: 20, group: null, ru: { n: 'ГТА 67', d: 'Только От 3-го Лица' }, en: { n: 'GTA 67', d: '3rd Person Only' }, es: { n: 'GTA 67', d: '3ra Persona' }, de: { n: 'GTA 67', d: '3. Person' }, fr: { n: 'GTA 67', d: '3ème Personne' }, uk: { n: 'ГТА 67', d: 'Тільки Від 3-ї Особи' } }
+                { id: 'r5', icon: '📸', pct: 20, group: null, ru: { n: 'ГТА 67', d: 'Только От 3-го Лица' }, en: { n: 'GTA 67', d: '3rd Person Only' }, es: { n: 'GTA 67', d: '3ra Persona' }, de: { n: 'GTA 67', d: '3. Person' }, fr: { n: 'GTA 67', d: '3ème Personne' }, uk: { n: 'ГТА 67', d: 'Тільки Від 3-ї Особи' } },
+                { id: 'r6', icon: '⏰', pct: -50, group: null, ru: { n: 'Время Впядь', d: 'Игровое Время Увеличено В 100 Раз' }, en: { n: 'Time Warp', d: 'Game time x100' }, es: { n: 'Tiempo Atrás', d: 'Tiempo del juego x100' }, de: { n: 'Zeitfalle', d: 'Spielzeit x100' }, fr: { n: 'Retour dans le temps', d: 'Temps de jeu x100' }, uk: { n: 'Час у зворотньому напрямку', d: 'Ігровий час x100' } }
+            ]},
+            { id: 'cat_health', key: 'health', color: 'var(--cat-health)', hex: '#ff6b81', items: [
+                { id: 'h1', icon: '💕', pct: -50, group: 'health', ru: { n: 'Упитанный', d: 'Максимальное Здоровье Игрока 20 Сердец' }, en: { n: 'Well-Fed', d: 'Max Health 20 Hearts' }, es: { n: 'Bien Alimentado', d: 'Vida máxima 20 Corazones' }, de: { n: 'Gut genährt', d: 'Maximale Gesundheit 20 Herzen' }, fr: { n: 'Bien Nourri', d: 'Santé max 20 cœurs' }, uk: { n: 'Ситий', d: 'Максимальне здоров\'я 20 сердець' } },
+                { id: 'h2', icon: '💕', pct: 5, group: 'health', ru: { n: 'Надкусанный', d: 'Максимальное Здоровье Игрока 8 Сердец' }, en: { n: 'Nibbled', d: 'Max Health 8 Hearts' }, es: { n: 'Mordisqueado', d: 'Vida máxima 8 Corazones' }, de: { n: 'Angefressen', d: 'Maximale Gesundheit 8 Herzen' }, fr: { n: 'Mordu', d: 'Santé max 8 cœurs' }, uk: { n: 'Надкусаний', d: 'Максимальне здоров\'я 8 сердець' } },
+                { id: 'h3', icon: '💕', pct: 15, group: 'health', ru: { n: 'Перри', d: 'Максимальное Здоровье Игрока 5 Сердец' }, en: { n: 'Parry', d: 'Max Health 5 Hearts' }, es: { n: 'Parry', d: 'Vida máxima 5 Corazones' }, de: { n: 'Parade', d: 'Maximale Gesundheit 5 Herzen' }, fr: { n: 'Parade', d: 'Santé max 5 cœurs' }, uk: { n: 'Перрі', d: 'Максимальне здоров\'я 5 сердець' } },
+                { id: 'h4', icon: '💕', pct: 30, group: 'health', ru: { n: 'Террария', d: 'Максимальное Здоровье Игрока 3 Сердца' }, en: { n: 'Terraria', d: 'Max Health 3 Hearts' }, es: { n: 'Terraria', d: 'Vida máxima 3 Corazones' }, de: { n: 'Terraria', d: 'Maximale Gesundheit 3 Herzen' }, fr: { n: 'Terraria', d: 'Santé max 3 cœurs' }, uk: { n: 'Террарія', d: 'Максимальне здоров\'я 3 серця' } },
+                { id: 'h5', icon: '💕', pct: 50, group: 'health', ru: { n: 'Последний Вздох', d: 'Максимальное Здоровье Игрока 1 Сердце' }, en: { n: 'Last Breath', d: 'Max Health 1 Heart' }, es: { n: 'Último Aliento', d: 'Vida máxima 1 Corazón' }, de: { n: 'Letzter Atemzug', d: 'Maximale Gesundheit 1 Herz' }, fr: { n: 'Dernier Souffle', d: 'Santé max 1 cœur' }, uk: { n: 'Останній подих', d: 'Максимальне здоров\'я 1 серце' } },
+                { id: 'h6', icon: '💪', pct: -25, group: 'health', ru: { n: 'Сильный', d: 'Максимальное Здоровье Игрока 15 Сердец' }, en: { n: 'Strong', d: 'Max Health 15 Hearts' }, es: { n: 'Fuerte', d: 'Vida máxima 15 Corazones' }, de: { n: 'Stark', d: 'Maximale Gesundheit 15 Herzen' }, fr: { n: 'Fort', d: 'Santé max 15 cœurs' }, uk: { n: 'Сильний', d: 'Максимальне здоров\'я 15 сердець' } },
+                { id: 'h7', icon: '🏋️', pct: -10, group: 'health', ru: { n: 'Тренированный', d: 'Максимальное Здоровье Игрока 12 Сердец' }, en: { n: 'Trained', d: 'Max Health 12 Hearts' }, es: { n: 'Entrenado', d: 'Vida máxima 12 Corazones' }, de: { n: 'Trainiert', d: 'Maximale Gesundheit 12 Herzen' }, fr: { n: 'Entraîné', d: 'Santé max 12 cœurs' }, uk: { n: 'Тренований', d: 'Максимальне здоров\'я 12 сердець' } }
             ]},
             { id: 'cat_effects', key: 'effects', color: 'var(--cat-effects)', hex: '#2ed573', items: [
-                { id: 'e1', icon: '👀', pct: 20, group: null, ru: { n: 'Крот', d: 'Постоянная Слепота' }, en: { n: 'Mole', d: 'Permanent Blindness' }, es: { n: 'Topo', d: 'Ceguera' }, de: { n: 'Maulwurf', d: 'Blindheit' }, fr: { n: 'Taupe', d: 'Cécité' }, uk: { n: 'Кріт', d: 'Постійна Сліпота' } },
-                { id: 'e2', icon: '📉', pct: 30, group: null, ru: { n: 'Пропускал День Качалочки', d: 'Постоянная Слабость' }, en: { n: 'Skipped Leg Day', d: 'Permanent Weakness' }, es: { n: 'Día de piernas', d: 'Debilidad' }, de: { n: 'Leg Day übersprungen', d: 'Schwäche' }, fr: { n: 'Jour des jambes sauté', d: 'Faiblesse' }, uk: { n: 'Пропускав День Ніг', d: 'Слабкість' } },
-                { id: 'e3', icon: '🍽️', pct: 35, group: null, ru: { n: 'Литафом', d: 'Постоянный Голод' }, en: { n: 'Lithophage', d: 'Permanent Hunger' }, es: { n: 'Litófago', d: 'Hambre' }, de: { n: 'Lithophage', d: 'Hunger' }, fr: { n: 'Lithophage', d: 'Faim' }, uk: { n: 'Літафом', d: 'Голод' } },
-                { id: 'e4', icon: '🤮', pct: 20, group: null, ru: { n: 'Тошнотик', d: 'Постоянная Тошнота' }, en: { n: 'Nauseous', d: 'Permanent Nausea' }, es: { n: 'Nauseabundo', d: 'Náuseas' }, de: { n: 'Übel', d: 'Übelkeit' }, fr: { n: 'Nauséeux', d: 'Nausée' }, uk: { n: 'Нудотик', d: 'Нудота' } },
-                { id: 'e5', icon: '🐌', pct: 5, group: null, ru: { n: 'Улитка', d: 'Постоянная Минус Скорость' }, en: { n: 'Snail', d: 'Permanent Slowness' }, es: { n: 'Caracol', d: 'Lentitud' }, de: { n: 'Schnecke', d: 'Langsamkeit' }, fr: { n: 'Escargot', d: 'Lenteur' }, uk: { n: 'Равлик', d: 'Мінус Швидкість' } },
-                { id: 'e6', icon: '🧦', pct: 10, group: null, ru: { n: 'Невесомость', d: 'Постоянное Плавное Падение' }, en: { n: 'Zero G', d: 'Permanent Slow Falling' }, es: { n: 'Gravedad Cero', d: 'Caída Lenta' }, de: { n: 'Schwerelos', d: 'Sanfter Fall' }, fr: { n: 'Apesanteur', d: 'Chute Lente' }, uk: { n: 'Невагомість', d: 'Повільне Падіння' } },
-                { id: 'e7', icon: '🌿', pct: 50, group: null, ru: { n: 'Постоянная Боль', d: 'Постоянное Отравление' }, en: { n: 'Constant Pain', d: 'Permanent Poison' }, es: { n: 'Dolor Constante', d: 'Veneno' }, de: { n: 'Ständiger Schmerz', d: 'Gift' }, fr: { n: 'Douleur Constante', d: 'Poison' }, uk: { n: 'Постійний Біль', d: 'Отруєння' } }
+                { id: 'e1', icon: '👀', pct: 20, group: 'vision', ru: { n: 'Крот', d: 'Постоянная Слепота' }, en: { n: 'Mole', d: 'Permanent Blindness' }, es: { n: 'Topo', d: 'Ceguera' }, de: { n: 'Maulwurf', d: 'Blindheit' }, fr: { n: 'Taupe', d: 'Cécité' }, uk: { n: 'Кріт', d: 'Постійна Сліпота' } },
+                { id: 'e2', icon: '📉', pct: 30, group: 'strength', ru: { n: 'Пропускал День Качалочки', d: 'Постоянная Слабость' }, en: { n: 'Skipped Leg Day', d: 'Permanent Weakness' }, es: { n: 'Día de piernas', d: 'Debilidad' }, de: { n: 'Leg Day übersprungen', d: 'Schwäche' }, fr: { n: 'Jour des jambes sauté', d: 'Faiblesse' }, uk: { n: 'Пропускав День Ніг', d: 'Слабкість' } },
+                { id: 'e3', icon: '🍽️', pct: 35, group: 'hunger', ru: { n: 'Литафом', d: 'Постоянный Голод' }, en: { n: 'Lithophage', d: 'Permanent Hunger' }, es: { n: 'Litófago', d: 'Hambre' }, de: { n: 'Lithophage', d: 'Hunger' }, fr: { n: 'Lithophage', d: 'Faim' }, uk: { n: 'Літафом', d: 'Голод' } },
+                { id: 'e4', icon: '🤮', pct: 20, group: 'nausea', ru: { n: 'Тошнотик', d: 'Постоянная Тошнота' }, en: { n: 'Nauseous', d: 'Permanent Nausea' }, es: { n: 'Nauseabundo', d: 'Náuseas' }, de: { n: 'Übel', d: 'Übelkeit' }, fr: { n: 'Nauséeux', d: 'Nausée' }, uk: { n: 'Нудотик', d: 'Нудота' } },
+                { id: 'e5', icon: '🐌', pct: 5, group: 'speed', ru: { n: 'Улитка', d: 'Постоянная Минус Скорость' }, en: { n: 'Snail', d: 'Permanent Slowness' }, es: { n: 'Caracol', d: 'Lentitud' }, de: { n: 'Schnecke', d: 'Langsamkeit' }, fr: { n: 'Escargot', d: 'Lenteur' }, uk: { n: 'Равлик', d: 'Мінус Швидкість' } },
+                { id: 'e6', icon: '🧦', pct: 10, group: 'gravity', ru: { n: 'Невесомость', d: 'Постоянное Плавное Падение' }, en: { n: 'Zero G', d: 'Permanent Slow Falling' }, es: { n: 'Gravedad Cero', d: 'Caída Lenta' }, de: { n: 'Schwerelos', d: 'Sanfter Fall' }, fr: { n: 'Apesanteur', d: 'Chute Lente' }, uk: { n: 'Невагомість', d: 'Повільне Падіння' } },
+                { id: 'e7', icon: '🌿', pct: 50, group: 'poison', ru: { n: 'Постоянная Боль', d: 'Постоянное Отравление' }, en: { n: 'Constant Pain', d: 'Permanent Poison' }, es: { n: 'Dolor Constante', d: 'Veneno' }, de: { n: 'Ständiger Schmerz', d: 'Gift' }, fr: { n: 'Douleur Constante', d: 'Poison' }, uk: { n: 'Постійний Біль', d: 'Отруєння' } },
+                { id: 'e8', icon: '⚡', pct: -50, group: 'speed', ru: { n: 'Супер Соник', d: 'Постоянная Скорость' }, en: { n: 'Super Sonic', d: 'Permanent Speed' }, es: { n: 'Super Sónico', d: 'Velocidad permanente' }, de: { n: 'Super Sonic', d: 'Dauerhafte Geschwindigkeit' }, fr: { n: 'Super Sonique', d: 'Vitesse permanente' }, uk: { n: 'Супер Сонік', d: 'Постійна швидкість' } },
+                { id: 'e9', icon: '🦥', pct: 15, group: 'fatigue', ru: { n: 'Ленивец', d: 'Постоянное Утомление' }, en: { n: 'Sloth', d: 'Permanent Fatigue' }, es: { n: 'Perezoso', d: 'Fatiga permanente' }, de: { n: 'Faultier', d: 'Dauerhafte Müdigkeit' }, fr: { n: 'Paresseux', d: 'Fatigue permanente' }, uk: { n: 'Лінивець', d: 'Постійна втома' } },
+                { id: 'e10', icon: '🍗', pct: -50, group: 'hunger', ru: { n: 'Спасибо, Я Не Голоден', d: 'Игрок На Протяжении Забега Не Голодает' }, en: { n: 'Thanks, I\'m Not Hungry', d: 'Player does not starve during the run' }, es: { n: 'Gracias, No Tengo Hambre', d: 'El jugador no pasa hambre durante la carrera' }, de: { n: 'Danke, Ich Bin Nicht Hungrig', d: 'Spieler hungert nicht während des Laufs' }, fr: { n: 'Merci, Je N\'ai Pas Faim', d: 'Le joueur ne meurt pas de faim pendant la course' }, uk: { n: 'Дякую, Я Не Голодний', d: 'Гравець не голодує протягом забігу' } }
             ]},
             { id: 'cat_spawn', key: 'spawn', color: 'var(--cat-spawn)', hex: '#ff6348', items: [
                 { id: 's1', icon: '💔', pct: 5, group: 'spawn', ru: { n: 'Митинг', d: 'Монстры x1' }, en: { n: 'Protest', d: 'Monster Spawn x1' }, es: { n: 'Protesta', d: 'Monstruos x1' }, de: { n: 'Protest', d: 'Monster x1' }, fr: { n: 'Manifestation', d: 'Monstres x1' }, uk: { n: 'Мітинг', d: 'Монстри x1' } },
                 { id: 's2', icon: '💀', pct: 15, group: 'spawn', ru: { n: 'Армагедон', d: 'Монстры x3' }, en: { n: 'Armageddon', d: 'Monster Spawn x3' }, es: { n: 'Armagedón', d: 'Monstruos x3' }, de: { n: 'Armageddon', d: 'Monster x3' }, fr: { n: 'Armageddon', d: 'Monstres x3' }, uk: { n: 'Армагеддон', d: 'Монстри x3' } },
-                { id: 's3', icon: '☠️', pct: 25, group: 'spawn', ru: { n: 'Апокалипсис', d: 'Монстры x5' }, en: { n: 'Apocalypse', d: 'Monster Spawn x5' }, es: { n: 'Apocalipsis', d: 'Monstruos x5' }, de: { n: 'Apokalypse', d: 'Monster x5' }, fr: { n: 'Apocalypse', d: 'Monstres x5' }, uk: { n: 'Апокаліпсис', d: 'Монстри x5' } }
+                { id: 's3', icon: '☠️', pct: 25, group: 'spawn', ru: { n: 'Апокалипсис', d: 'Монстры x5' }, en: { n: 'Apocalypse', d: 'Monster Spawn x5' }, es: { n: 'Apocalipsis', d: 'Monstruos x5' }, de: { n: 'Apokalypse', d: 'Monster x5' }, fr: { n: 'Apocalypse', d: 'Monstres x5' }, uk: { n: 'Апокаліпсис', d: 'Монстри x5' } },
+                { id: 's4', icon: '🚯', pct: -50, group: 'spawn', ru: { n: 'Никто Не Пришёл Ко Мне На Фан Встречу', d: 'Частота Появления Монстров 0' }, en: { n: 'No One Came', d: 'Monster spawn rate 0' }, es: { n: 'Nadie Vino', d: 'Frecuencia de monstruos 0' }, de: { n: 'Niemand kam', d: 'Monster Spawn 0' }, fr: { n: 'Personne n\'est venu', d: 'Taux de spawn 0' }, uk: { n: 'Ніхто не прийшов', d: 'Частота появи монстрів 0' } }
             ]},
             { id: 'cat_set', key: 'settings', color: 'var(--cat-settings)', hex: '#1e90ff', items: [
                 { id: 'st1', icon: '👁️', pct: 5, group: 'fov', ru: { n: 'Не Те Очки', d: 'FOV: 60' }, en: { n: 'Wrong Glasses', d: 'FOV: 60' }, es: { n: 'Gafas', d: 'FOV 60' }, de: { n: 'Falsche Brille', d: 'FOV 60' }, fr: { n: 'Mauvaises lunettes', d: 'FOV 60' }, uk: { n: 'Не Ті Окуляри', d: 'FOV 60' } },
@@ -546,13 +568,20 @@
                 { id: 'st9', icon: '🎞️', pct: 20, group: 'fps', ru: { n: 'Картошка', d: 'FPS 10' }, en: { n: 'Potato', d: 'FPS 10' }, es: { n: 'Patata', d: 'FPS 10' }, de: { n: 'Kartoffel', d: 'FPS 10' }, fr: { n: 'Patate', d: 'FPS 10' }, uk: { n: 'Картопля', d: 'FPS 10' } },
                 { id: 'st10', icon: '🐭', pct: 25, group: null, ru: { n: 'Ломка', d: 'Инверсия Мыши' }, en: { n: 'Withdrawal', d: 'Inverted Mouse' }, es: { n: 'Abstinencia', d: 'Ratón invertido' }, de: { n: 'Entzug', d: 'Maus invertiert' }, fr: { n: 'Sevrage', d: 'Souris Inversée' }, uk: { n: 'Ломка', d: 'Інверсія Миші' } },
                 { id: 'st11', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж Дамдома 1', d: 'Мин. Чувствительность' }, en: { n: 'Damdom 1', d: 'Min Sensitivity' }, es: { n: 'Damdom 1', d: 'Sens Min' }, de: { n: 'Damdom 1', d: 'Min Sens' }, fr: { n: 'Damdom 1', d: 'Sens Min' }, uk: { n: 'Челендж Дамдома 1', d: 'Мін. Чутливість' } },
-                { id: 'st12', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж Дамдома 2', d: 'Макс. Чувствительность' }, en: { n: 'Damdom 2', d: 'Max Sensitivity' }, es: { n: 'Damdom 2', d: 'Sens Max' }, de: { n: 'Damdom 2', d: 'Max Sens' }, fr: { n: 'Damdom 2', d: 'Sens Max' }, uk: { n: 'Челендж Дамдома 2', d: 'Макс. Чутливість' } }
+                { id: 'st12', icon: '🖱️', pct: 15, group: 'sens', ru: { n: 'Челледж Дамдома 2', d: 'Макс. Чувствительность' }, en: { n: 'Damdom 2', d: 'Max Sensitivity' }, es: { n: 'Damdom 2', d: 'Sens Max' }, de: { n: 'Damdom 2', d: 'Max Sens' }, fr: { n: 'Damdom 2', d: 'Sens Max' }, uk: { n: 'Челендж Дамдома 2', d: 'Макс. Чутливість' } },
+                { id: 'st13', icon: '📺', pct: 10, group: null, ru: { n: 'Старый Телик', d: 'Разрешение Майнкрафта Меняется На 640х480' }, en: { n: 'Old TV', d: 'Minecraft changes to 640x480' }, es: { n: 'Televisor Viejo', d: 'Minecraft cambia a 640x480' }, de: { n: 'Alter Fernseher', d: 'Minecraft wird auf 640x480 geändert' }, fr: { n: 'Vieux Télé', d: 'Minecraft passe à 640x480' }, uk: { n: 'Старий Телевізор', d: 'Minecraft змінюється на 640x480' } },
+                { id: 'st14', icon: '🖥️', pct: 5, group: null, ru: { n: 'Микро Gui', d: 'Интерфейс Майнкрафта Ставится На Уровень 1' }, en: { n: 'Micro GUI', d: 'Minecraft GUI set to level 1' }, es: { n: 'Micro GUI', d: 'Interfaz de Minecraft nivel 1' }, de: { n: 'Micro GUI', d: 'Minecraft GUI auf Level 1' }, fr: { n: 'Micro GUI', d: 'Interface Minecraft niveau 1' }, uk: { n: 'Мікро GUI', d: 'Інтерфейс Minecraft рівень 1' } },
+                { id: 'st15', icon: '🗣️', pct: 10, group: null, ru: { n: 'Диктор Озвучивает ВСЁ', d: 'Настройка "Диктор Озвучивает Всё" Включена По Умолчанию' }, en: { n: 'Announcer Speaks All', d: 'Narrator is enabled by default' }, es: { n: 'Narrador Habla Todo', d: 'Narrador activado por defecto' }, de: { n: 'Ansager Spricht Alles', d: 'Erzähler standardmäßig aktiviert' }, fr: { n: 'Annonceur Parle Tout', d: 'Narrateur activé par défaut' }, uk: { n: 'Диктор Озвучує ВСЕ', d: 'Оповідач увімкнено за замовчуванням' } },
+                { id: 'st16', icon: '🐇', pct: 10, group: null, ru: { n: 'Непослушный Кролик', d: 'Авто-Джамп  Включен По Умолчанию' }, en: { n: 'Disobedient Rabbit', d: 'Auto-jump enabled by default' }, es: { n: 'Conejo Desobediente', d: 'Auto-salto activado por defecto' }, de: { n: 'Ungehorsamer Hase', d: 'Auto-Sprung standardmäßig aktiviert' }, fr: { n: 'Lapin Désobéissant', d: 'Saut auto activé par défaut' }, uk: { n: 'Непослушний Кролик', d: 'Авто-джамп увімкнено за замовчуванням' } },
+                { id: 'st17', icon: '🔊', pct: 10, group: 'sound', ru: { n: 'БАССЫ', d: 'Максимальные Звуки' }, en: { n: 'BASSES', d: 'Maximum Sounds' }, es: { n: 'BASSES', d: 'Sonidos Máximos' }, de: { n: 'BASSES', d: 'Maximale Sounds' }, fr: { n: 'BASSES', d: 'Sons Maximums' }, uk: { n: 'БАСИ', d: 'Максимальні Звуки' } },
+                { id: 'st18', icon: '🔇', pct: 15, group: 'sound', ru: { n: 'Старушка', d: 'Без Звука' }, en: { n: 'Old Lady', d: 'No Sound' }, es: { n: 'Abuelita', d: 'Sin Sonido' }, de: { n: 'Oma', d: 'Kein Ton' }, fr: { n: 'Mamie', d: 'Sans Son' }, uk: { n: 'Бабуся', d: 'Без Звуку' } }
             ]},
             { id: 'cat_oth', key: 'other', color: 'var(--cat-other)', hex: '#eccc68', items: [
                 { id: 'o1', icon: '⏳', pct: 30, group: null, ru: { n: 'Поторопимся', d: 'Спидран 1.5ч' }, en: { n: 'Hurry Up', d: 'Speedrun 1.5h' }, es: { n: 'Date Prisa', d: 'Speedrun 1.5h' }, de: { n: 'Beeil dich', d: 'Speedrun 1.5h' }, fr: { n: 'Dépêche-toi', d: 'Speedrun 1.5h' }, uk: { n: 'Поквапимося', d: 'Спідран 1.5г' } },
                 { id: 'o2', icon: '📜', pct: 10, group: null, ru: { n: 'Кино', d: 'Боссы по порядку' }, en: { n: 'Movie', d: 'Bosses in Order' }, es: { n: 'Película', d: 'Jefes en orden' }, de: { n: 'Film', d: 'Bosse nach Reihe' }, fr: { n: 'Film', d: 'Boss dans l\'ordre' }, uk: { n: 'Кіно', d: 'Боси за порядком' } },
                 { id: 'o3', icon: '🗺️', pct: 25, group: null, ru: { n: 'Олд Форест', d: 'Без Карты' }, en: { n: 'Old Forest', d: 'No Map' }, es: { n: 'Bosque Antiguo', d: 'Sin mapa' }, de: { n: 'Alter Wald', d: 'Keine Karte' }, fr: { n: 'Vieille Forêt', d: 'Sans Carte' }, uk: { n: 'Олд Форест', d: 'Без Карти' } },
-                { id: 'o4', icon: '☮️', pct: 30, group: null, ru: { n: 'Пацифист', d: 'Без Убийств' }, en: { n: 'Pacifist', d: 'No Kills' }, es: { n: 'Pacifista', d: 'Sin Bajas' }, de: { n: 'Pazifist', d: 'Keine Kills' }, fr: { n: 'Pacifiste', d: 'Sans Kills' }, uk: { n: 'Пацифіст', d: 'Без Вбивств' } }
+                { id: 'o4', icon: '☮️', pct: 30, group: null, ru: { n: 'Пацифист', d: 'Без Убийств' }, en: { n: 'Pacifist', d: 'No Kills' }, es: { n: 'Pacifista', d: 'Sin Bajas' }, de: { n: 'Pazifist', d: 'Keine Kills' }, fr: { n: 'Pacifiste', d: 'Sans Kills' }, uk: { n: 'Пацифіст', d: 'Без Вбивств' } },
+                { id: 'o5', icon: '🐑', pct: 25, group: null, ru: { n: 'Ярость Барана Чиноби', d: 'У Вас Есть Таймер на 30 Минут, За Который Вы Должны Покормить Квестового Рама' }, en: { n: 'Ram Fury', d: 'Feed the quest ram in 30 minutes' }, es: { n: 'Furia del Carnero', d: 'Alimenta al carnero de la misión en 30 minutos' }, de: { n: 'Wut des Widders', d: 'Füttere das Quest-Schaf in 30 Minuten' }, fr: { n: 'Fureur du Bélier', d: 'Nourris le bélier de quête en 30 min' }, uk: { n: 'Лють барана', d: 'Нагодуй квестового барана за 30 хвилин' } }
             ]}
         ];
 
@@ -574,6 +603,10 @@
             if (savedLang) state.lang = savedLang;
             const savedPresets = localStorage.getItem('modifiers_presets');
             if (savedPresets) state.presets = JSON.parse(savedPresets);
+            if (state.presets['Current']) {
+                delete state.presets['Current'];
+                try { localStorage.setItem('modifiers_presets', JSON.stringify(state.presets)); } catch(e) {}
+            }
         } catch(e) {}
 
         rawData.forEach(cat => {
@@ -628,13 +661,13 @@
                 gain.gain.setValueAtTime(0.2, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
                 osc.start(now); osc.stop(now + 0.05);
-            } else if (type === 'deselect') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(300, now);
-                osc.frequency.exponentialRampToValueAtTime(50, now + 0.05);
-                gain.gain.setValueAtTime(0.1, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-                osc.start(now); osc.stop(now + 0.05);
+            } else if (type === 'spin') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.5);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                osc.start(now); osc.stop(now + 0.5);
             }
         }
 
@@ -774,7 +807,7 @@
             const select = document.getElementById('preset-select');
             const currentVal = select.value;
             const t = i18n[state.lang];
-            select.innerHTML = `<option value="">-- ${t.tSelectPreset} --</option>`;
+            select.innerHTML = '';
             for (let name in state.presets) {
                 const opt = document.createElement('option');
                 opt.value = name;
@@ -784,6 +817,10 @@
             if (state.presets[currentVal]) {
                 select.value = currentVal;
             }
+            const hasPresets = Object.keys(state.presets).length > 0;
+            select.style.display = hasPresets ? 'block' : 'none';
+            document.getElementById('btn-load-preset').style.display = hasPresets ? 'inline-flex' : 'none';
+            document.getElementById('btn-del-preset').style.display = hasPresets ? 'inline-flex' : 'none';
         }
 
         function updateAllUI() {
@@ -908,7 +945,7 @@
         function updateManualSummary() {
             let total = 0; els.manualSelected.innerHTML = '';
             for(let item of state.manualSelected.values()) {
-                total += item.pct;
+                total += Math.abs(item.pct);
                 const d = item[state.lang];
                 
                 const el = document.createElement('div');
@@ -921,7 +958,7 @@
                         <div class="selected-item-desc">${d.d}</div>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <div class="selected-item-pct">${item.pct}%</div>
+                        <div class="selected-item-pct">${item.pct < 0 ? `+${-item.pct}%` : `${item.pct}%`}</div>
                         <button class="manual-item-del" data-id="${item.id}">✖</button>
                     </div>
                 `;
@@ -1039,10 +1076,10 @@
                 ctx.rotate(start + slice/2);
                 ctx.textAlign = "right"; ctx.textBaseline = "middle";
                 ctx.fillStyle = "#ffffff"; 
-                ctx.font = "bold 20px Montserrat";
+                ctx.font = "bold 18px Montserrat";
                 ctx.shadowColor = "rgba(0,0,0,0.8)"; ctx.shadowBlur = 5;
                 
-                let text = `${mod[state.lang].n} (${dropChance}%)`;
+                let text = mod[state.lang].n;
                 ctx.fillText(text, r - 40, 0, r - 90);
                 ctx.restore();
             }
@@ -1050,6 +1087,8 @@
 
         els.spinBtn.addEventListener('click', () => {
             if (state.wheelPool.size === 0) return;
+            initAudio();
+            playSound('spin');
             els.spinBtn.disabled = true;
             
             const timeInput = parseFloat(els.timeInput.value);
@@ -1076,6 +1115,7 @@
             const normalizedRotation = currentRotation % 360;
             let winAngle = (360 - normalizedRotation) % 360;
             let winIndex = Math.floor(winAngle / sliceDegrees);
+            winIndex = winIndex % poolArr.length;
             
             state.currentWinner = poolArr[winIndex];
             showModal();
@@ -1088,8 +1128,6 @@
             
             document.getElementById('res-icon').textContent = mod.icon;
             document.getElementById('res-name').textContent = mod[state.lang].n;
-            document.getElementById('res-chance').textContent = `${t.chance} ${dropChance}%`;
-            
             document.getElementById('res-cat').textContent = t.cats[mod.catKey];
             document.getElementById('res-cat').style.color = mod.catHex;
             document.getElementById('res-desc').textContent = mod[state.lang].d;
