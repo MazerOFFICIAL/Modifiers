@@ -534,9 +534,7 @@
                 { id: 'h2', icon: '💕', pct: 5, group: 'health', ru: { n: 'Надкусанный', d: 'Максимальное Здоровье Игрока 8 Сердец' }, en: { n: 'Nibbled', d: 'Max Health 8 Hearts' }, es: { n: 'Mordisqueado', d: 'Vida máxima 8 Corazones' }, de: { n: 'Angefressen', d: 'Maximale Gesundheit 8 Herzen' }, fr: { n: 'Mordu', d: 'Santé max 8 cœurs' }, uk: { n: 'Надкусаний', d: 'Максимальне здоров\'я 8 сердець' } },
                 { id: 'h3', icon: '💕', pct: 15, group: 'health', ru: { n: 'Перри', d: 'Максимальное Здоровье Игрока 5 Сердец' }, en: { n: 'Parry', d: 'Max Health 5 Hearts' }, es: { n: 'Parry', d: 'Vida máxima 5 Corazones' }, de: { n: 'Parade', d: 'Maximale Gesundheit 5 Herzen' }, fr: { n: 'Parade', d: 'Santé max 5 cœurs' }, uk: { n: 'Перрі', d: 'Максимальне здоров\'я 5 сердець' } },
                 { id: 'h4', icon: '💕', pct: 30, group: 'health', ru: { n: 'Террария', d: 'Максимальное Здоровье Игрока 3 Сердца' }, en: { n: 'Terraria', d: 'Max Health 3 Hearts' }, es: { n: 'Terraria', d: 'Vida máxima 3 Corazones' }, de: { n: 'Terraria', d: 'Maximale Gesundheit 3 Herzen' }, fr: { n: 'Terraria', d: 'Santé max 3 cœurs' }, uk: { n: 'Террарія', d: 'Максимальне здоров\'я 3 серця' } },
-                { id: 'h5', icon: '💕', pct: 50, group: 'health', ru: { n: 'Последний Вздох', d: 'Максимальное Здоровье Игрока 1 Сердце' }, en: { n: 'Last Breath', d: 'Max Health 1 Heart' }, es: { n: 'Último Aliento', d: 'Vida máxima 1 Corazón' }, de: { n: 'Letzter Atemzug', d: 'Maximale Gesundheit 1 Herz' }, fr: { n: 'Dernier Souffle', d: 'Santé max 1 cœur' }, uk: { n: 'Останній подих', d: 'Максимальне здоров\'я 1 серце' } },
-                { id: 'h6', icon: '💪', pct: -25, group: 'health', ru: { n: 'Сильный', d: 'Максимальное Здоровье Игрока 15 Сердец' }, en: { n: 'Strong', d: 'Max Health 15 Hearts' }, es: { n: 'Fuerte', d: 'Vida máxima 15 Corazones' }, de: { n: 'Stark', d: 'Maximale Gesundheit 15 Herzen' }, fr: { n: 'Fort', d: 'Santé max 15 cœurs' }, uk: { n: 'Сильний', d: 'Максимальне здоров\'я 15 сердець' } },
-                { id: 'h7', icon: '🏋️', pct: -10, group: 'health', ru: { n: 'Тренированный', d: 'Максимальное Здоровье Игрока 12 Сердец' }, en: { n: 'Trained', d: 'Max Health 12 Hearts' }, es: { n: 'Entrenado', d: 'Vida máxima 12 Corazones' }, de: { n: 'Trainiert', d: 'Maximale Gesundheit 12 Herzen' }, fr: { n: 'Entraîné', d: 'Santé max 12 cœurs' }, uk: { n: 'Тренований', d: 'Максимальне здоров\'я 12 сердець' } }
+                { id: 'h5', icon: '💕', pct: 50, group: 'health', ru: { n: 'Последний Вздох', d: 'Максимальное Здоровье Игрока 1 Сердце' }, en: { n: 'Last Breath', d: 'Max Health 1 Heart' }, es: { n: 'Último Aliento', d: 'Vida máxima 1 Corazón' }, de: { n: 'Letzter Atemzug', d: 'Maximale Gesundheit 1 Herz' }, fr: { n: 'Dernier Souffle', d: 'Santé max 1 cœur' }, uk: { n: 'Останній подих', d: 'Максимальне здоров\'я 1 серце' } }
             ]},
             { id: 'cat_effects', key: 'effects', color: 'var(--cat-effects)', hex: '#2ed573', items: [
                 { id: 'e1', icon: '👀', pct: 20, group: 'vision', ru: { n: 'Крот', d: 'Постоянная Слепота' }, en: { n: 'Mole', d: 'Permanent Blindness' }, es: { n: 'Topo', d: 'Ceguera' }, de: { n: 'Maulwurf', d: 'Blindheit' }, fr: { n: 'Taupe', d: 'Cécité' }, uk: { n: 'Кріт', d: 'Постійна Сліпота' } },
@@ -945,7 +943,7 @@
         function updateManualSummary() {
             let total = 0; els.manualSelected.innerHTML = '';
             for(let item of state.manualSelected.values()) {
-                total += Math.abs(item.pct);
+                total += item.pct;
                 const d = item[state.lang];
                 
                 const el = document.createElement('div');
