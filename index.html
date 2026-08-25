@@ -376,6 +376,24 @@
             background: var(--gold);
         }
         .mod-item.disabled { opacity: 0.3; pointer-events: none; }
+        .mod-copy-btn {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            border: 1px solid var(--border2);
+            background: var(--surface2);
+            color: var(--text2);
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
+        }
+        .mod-copy-btn:hover { background: var(--gold-dim); color: var(--gold2); border-color: var(--border3); }
+        .mod-copy-btn:active { transform: scale(0.92); }
+        .mod-copy-btn.copied { background: var(--success-dim); color: var(--success2); border-color: var(--success); }
 
         .mod-icon { font-size: 20px; flex-shrink: 0; width: 28px; text-align: center; }
         .mod-text { flex: 1; min-width: 0; }
@@ -1042,7 +1060,7 @@
                 {id:'p5',icon:'🥩',pct:20,group:'diet',ru:{n:'Хищник',d:'Только мясо'},en:{n:'Carnivore',d:'Meat only'},es:{n:'Carnívoro',d:'Solo carne'},de:{n:'Fleischfresser',d:'Nur Fleisch'},fr:{n:'Carnivore',d:'Viande uniquement'},uk:{n:'Хижак',d:"Тільки м'ясо"}},
                 {id:'p6',icon:'🌱',pct:20,group:'diet',ru:{n:'Вегетарианец',d:'Только овощи/фрукты'},en:{n:'Vegetarian',d:'Vegetables/Fruits only'},es:{n:'Vegetariano',d:'Solo verduras'},de:{n:'Vegetarier',d:'Nur Gemüse'},fr:{n:'Végétarien',d:'Légumes uniquement'},uk:{n:'Вегетаріанець',d:'Тільки овочі/фрукти'}},
                 {id:'p7',icon:'🎃',pct:20,group:null,ru:{n:'Дурья Бошка',d:'Носит тыкву весь забег'},en:{n:'Pumpkin Head',d:'Wear a Pumpkin all run'},es:{n:'Cabeza de Calabaza',d:'Llevar calabaza'},de:{n:'Kürbiskopf',d:'Kürbis tragen'},fr:{n:'Tête de Citrouille',d:'Porter une citrouille'},uk:{n:'Гарбузова Голова',d:'Носить гарбуза весь забіг'}},
-                {id:'p8',icon:'🦶',pct:50,group:null,ru:{n:'Сломанные Ноги',d:'Нельзя прыгать'},en:{n:'Broken Legs',d:'No Jumping'},es:{n:'Piernas Rotas',d:'Sin saltar'},de:{n:'Gebrochene Beine',d:'Kein Springen'},fr:{n:'Jambes Cassées',d:'Pas de saut'},uk:{n:'Зламані Ноги',d:'Не можна стрибати'}}
+                {id:'p8',icon:'🦶',pct:50,group:null,cmd:'/attribute @s minecraft:generic.jump_strength base set 0',ru:{n:'Сломанные Ноги',d:'Нельзя прыгать'},en:{n:'Broken Legs',d:'No Jumping'},es:{n:'Piernas Rotas',d:'Sin saltar'},de:{n:'Gebrochene Beine',d:'Kein Springen'},fr:{n:'Jambes Cassées',d:'Pas de saut'},uk:{n:'Зламані Ноги',d:'Не можна стрибати'}}
             ]},
             { id:'cat_inv', key:'inventory', color:'var(--cat-inv)', hex:'#e67e22', items: [
                 {id:'i1',icon:'📦',pct:10,group:'inv_slots',ru:{n:'Склад',d:'18 слотов'},en:{n:'Storage',d:'18 Slots'},es:{n:'Almacén',d:'18 ranuras'},de:{n:'Lager',d:'18 Plätze'},fr:{n:'Stockage',d:'18 emplacements'},uk:{n:'Склад',d:'18 слотів'}},
@@ -1051,37 +1069,37 @@
                 {id:'i4',icon:'🖐️',pct:50,group:'inv_slots',ru:{n:'Однорукий',d:'1 слот'},en:{n:'One-Armed',d:'1 Slot'},es:{n:'Manco',d:'1 ranura'},de:{n:'Einarmig',d:'1 Platz'},fr:{n:'Manchot',d:'1 emplacement'},uk:{n:'Однорукий',d:'1 слот'}}
             ]},
             { id:'cat_rules', key:'rules', color:'var(--cat-rules)', hex:'#9b59b6', items: [
-                {id:'r1',icon:'❌',pct:15,group:null,ru:{n:'Ванила На То И Ванила',d:'Без сохранения инвентаря'},en:{n:'Vanilla is Vanilla',d:'Keep Inventory Off'},es:{n:'Vanilla es Vanilla',d:'Sin Keep Inv'},de:{n:'Vanilla ist Vanilla',d:'Kein Keep Inv'},fr:{n:"Vanilla c'est Vanilla",d:'Pas de Keep Inv'},uk:{n:'Ваніла Є Ваніла',d:'Без збереження інвентарю'}},
-                {id:'r2',icon:'🍔',pct:30,group:null,ru:{n:'Ранимый',d:'Без нат. регенерации'},en:{n:'Vulnerable',d:'No Nat. Regen'},es:{n:'Vulnerable',d:'Sin regen nat.'},de:{n:'Verwundbar',d:'Keine nat. Regen'},fr:{n:'Vulnérable',d:'Pas de régen nat.'},uk:{n:'Вразливий',d:'Без нат. регенерації'}},
+                {id:'r1',icon:'❌',pct:15,group:null,cmd:'/gamerule keepInventory false',ru:{n:'Ванила На То И Ванила',d:'Без сохранения инвентаря'},en:{n:'Vanilla is Vanilla',d:'Keep Inventory Off'},es:{n:'Vanilla es Vanilla',d:'Sin Keep Inv'},de:{n:'Vanilla ist Vanilla',d:'Kein Keep Inv'},fr:{n:"Vanilla c'est Vanilla",d:'Pas de Keep Inv'},uk:{n:'Ваніла Є Ваніла',d:'Без збереження інвентарю'}},
+                {id:'r2',icon:'🍔',pct:30,group:null,cmd:'/gamerule naturalRegeneration false',ru:{n:'Ранимый',d:'Без нат. регенерации'},en:{n:'Vulnerable',d:'No Nat. Regen'},es:{n:'Vulnerable',d:'Sin regen nat.'},de:{n:'Verwundbar',d:'Keine nat. Regen'},fr:{n:'Vulnérable',d:'Pas de régen nat.'},uk:{n:'Вразливий',d:'Без нат. регенерації'}},
                 {id:'r3',icon:'❤️',pct:30,group:null,ru:{n:'Последний Шанс',d:'Хардкор'},en:{n:'Last Chance',d:'Hardcore Mode'},es:{n:'Última Oportunidad',d:'Hardcore'},de:{n:'Letzte Chance',d:'Hardcore'},fr:{n:'Dernière Chance',d:'Hardcore'},uk:{n:'Останній Шанс',d:'Хардкор'}},
                 {id:'r4',icon:'🎛️',pct:15,group:null,ru:{n:'Потеряшка',d:'Без F3 панели'},en:{n:'Lost',d:'No F3 Screen'},es:{n:'Perdido',d:'Sin F3'},de:{n:'Verloren',d:'Kein F3'},fr:{n:'Perdu',d:'Sans F3'},uk:{n:'Загублений',d:'Без F3'}},
                 {id:'r5',icon:'📸',pct:20,group:null,ru:{n:'ГТА 67',d:'Только от 3-го лица'},en:{n:'GTA 67',d:'3rd Person Only'},es:{n:'GTA 67',d:'3ra Persona'},de:{n:'GTA 67',d:'3. Person'},fr:{n:'GTA 67',d:'3ème Personne'},uk:{n:'ГТА 67',d:'Тільки від 3-ї особи'}},
-                {id:'r6',icon:'⏰',pct:-50,group:null,ru:{n:'Время Впядь',d:'Игровое время x100'},en:{n:'Time Warp',d:'Game time x100'},es:{n:'Tiempo Atrás',d:'Tiempo x100'},de:{n:'Zeitfalle',d:'Spielzeit x100'},fr:{n:'Retour dans le temps',d:'Temps x100'},uk:{n:'Час у зворотньому',d:'Ігровий час x100'}}
+                {id:'r6',icon:'⏰',pct:-50,group:null,cmd:'/gamerule randomTickSpeed 300',ru:{n:'Время Впядь',d:'Игровое время x100'},en:{n:'Time Warp',d:'Game time x100'},es:{n:'Tiempo Atrás',d:'Tiempo x100'},de:{n:'Zeitfalle',d:'Spielzeit x100'},fr:{n:'Retour dans le temps',d:'Temps x100'},uk:{n:'Час у зворотньому',d:'Ігровий час x100'}}
             ]},
             { id:'cat_health', key:'health', color:'var(--cat-health)', hex:'#e91e8c', items: [
-                {id:'h1',icon:'💕',pct:-50,group:'health',ru:{n:'Упитанный',d:'Макс. здоровье 20 сердец'},en:{n:'Well-Fed',d:'Max Health 20 Hearts'},es:{n:'Bien Alimentado',d:'Vida máx 20'},de:{n:'Gut genährt',d:'Max 20 Herzen'},fr:{n:'Bien Nourri',d:'Santé max 20'},uk:{n:'Ситий',d:'Макс. 20 сердець'}},
-                {id:'h2',icon:'💕',pct:5,group:'health',ru:{n:'Надкусанный',d:'Макс. здоровье 8 сердец'},en:{n:'Nibbled',d:'Max Health 8 Hearts'},es:{n:'Mordisqueado',d:'Vida máx 8'},de:{n:'Angefressen',d:'Max 8 Herzen'},fr:{n:'Mordu',d:'Santé max 8'},uk:{n:'Надкусаний',d:'Макс. 8 сердець'}},
-                {id:'h3',icon:'💕',pct:15,group:'health',ru:{n:'Перри',d:'Макс. здоровье 5 сердец'},en:{n:'Parry',d:'Max Health 5 Hearts'},es:{n:'Parry',d:'Vida máx 5'},de:{n:'Parade',d:'Max 5 Herzen'},fr:{n:'Parade',d:'Santé max 5'},uk:{n:'Перрі',d:'Макс. 5 сердець'}},
-                {id:'h4',icon:'💕',pct:30,group:'health',ru:{n:'Террария',d:'Макс. здоровье 3 сердца'},en:{n:'Terraria',d:'Max Health 3 Hearts'},es:{n:'Terraria',d:'Vida máx 3'},de:{n:'Terraria',d:'Max 3 Herzen'},fr:{n:'Terraria',d:'Santé max 3'},uk:{n:'Террарія',d:'Макс. 3 серця'}},
-                {id:'h5',icon:'💕',pct:50,group:'health',ru:{n:'Последний Вздох',d:'Макс. здоровье 1 сердце'},en:{n:'Last Breath',d:'Max Health 1 Heart'},es:{n:'Último Aliento',d:'Vida máx 1'},de:{n:'Letzter Atemzug',d:'Max 1 Herz'},fr:{n:'Dernier Souffle',d:'Santé max 1'},uk:{n:'Останній подих',d:'Макс. 1 серце'}}
+                {id:'h1',icon:'💕',pct:-50,group:'health',cmd:'/attribute @s minecraft:generic.max_health base set 40\n/effect give @s minecraft:health_boost infinite 0 true',ru:{n:'Упитанный',d:'Макс. здоровье 20 сердец'},en:{n:'Well-Fed',d:'Max Health 20 Hearts'},es:{n:'Bien Alimentado',d:'Vida máx 20'},de:{n:'Gut genährt',d:'Max 20 Herzen'},fr:{n:'Bien Nourri',d:'Santé max 20'},uk:{n:'Ситий',d:'Макс. 20 сердець'}},
+                {id:'h2',icon:'💕',pct:5,group:'health',cmd:'/attribute @s minecraft:generic.max_health base set 16',ru:{n:'Надкусанный',d:'Макс. здоровье 8 сердец'},en:{n:'Nibbled',d:'Max Health 8 Hearts'},es:{n:'Mordisqueado',d:'Vida máx 8'},de:{n:'Angefressen',d:'Max 8 Herzen'},fr:{n:'Mordu',d:'Santé max 8'},uk:{n:'Надкусаний',d:'Макс. 8 сердець'}},
+                {id:'h3',icon:'💕',pct:15,group:'health',cmd:'/attribute @s minecraft:generic.max_health base set 10',ru:{n:'Перри',d:'Макс. здоровье 5 сердец'},en:{n:'Parry',d:'Max Health 5 Hearts'},es:{n:'Parry',d:'Vida máx 5'},de:{n:'Parade',d:'Max 5 Herzen'},fr:{n:'Parade',d:'Santé max 5'},uk:{n:'Перрі',d:'Макс. 5 сердець'}},
+                {id:'h4',icon:'💕',pct:30,group:'health',cmd:'/attribute @s minecraft:generic.max_health base set 6',ru:{n:'Террария',d:'Макс. здоровье 3 сердца'},en:{n:'Terraria',d:'Max Health 3 Hearts'},es:{n:'Terraria',d:'Vida máx 3'},de:{n:'Terraria',d:'Max 3 Herzen'},fr:{n:'Terraria',d:'Santé max 3'},uk:{n:'Террарія',d:'Макс. 3 серця'}},
+                {id:'h5',icon:'💕',pct:50,group:'health',cmd:'/attribute @s minecraft:generic.max_health base set 2',ru:{n:'Последний Вздох',d:'Макс. здоровье 1 сердце'},en:{n:'Last Breath',d:'Max Health 1 Heart'},es:{n:'Último Aliento',d:'Vida máx 1'},de:{n:'Letzter Atemzug',d:'Max 1 Herz'},fr:{n:'Dernier Souffle',d:'Santé max 1'},uk:{n:'Останній подих',d:'Макс. 1 серце'}}
             ]},
             { id:'cat_effects', key:'effects', color:'var(--cat-effects)', hex:'#1abc9c', items: [
-                {id:'e1',icon:'👀',pct:20,group:'vision',ru:{n:'Крот',d:'Постоянная слепота'},en:{n:'Mole',d:'Permanent Blindness'},es:{n:'Topo',d:'Ceguera'},de:{n:'Maulwurf',d:'Blindheit'},fr:{n:'Taupe',d:'Cécité'},uk:{n:'Кріт',d:'Постійна сліпота'}},
-                {id:'e2',icon:'📉',pct:30,group:'strength',ru:{n:'Пропускал День Качалочки',d:'Постоянная слабость'},en:{n:'Skipped Leg Day',d:'Permanent Weakness'},es:{n:'Día de piernas',d:'Debilidad'},de:{n:'Leg Day übersprungen',d:'Schwäche'},fr:{n:'Jour des jambes sauté',d:'Faiblesse'},uk:{n:'Пропускав День Ніг',d:'Слабкість'}},
-                {id:'e3',icon:'🍽️',pct:35,group:'hunger',ru:{n:'Литафом',d:'Постоянный голод'},en:{n:'Lithophage',d:'Permanent Hunger'},es:{n:'Litófago',d:'Hambre'},de:{n:'Lithophage',d:'Hunger'},fr:{n:'Lithophage',d:'Faim'},uk:{n:'Літафом',d:'Голод'}},
-                {id:'e4',icon:'🤮',pct:20,group:'nausea',ru:{n:'Тошнотик',d:'Постоянная тошнота'},en:{n:'Nauseous',d:'Permanent Nausea'},es:{n:'Nauseabundo',d:'Náuseas'},de:{n:'Übel',d:'Übelkeit'},fr:{n:'Nauséeux',d:'Nausée'},uk:{n:'Нудотик',d:'Нудота'}},
-                {id:'e5',icon:'🐌',pct:5,group:'speed',ru:{n:'Улитка',d:'Постоянное замедление'},en:{n:'Snail',d:'Permanent Slowness'},es:{n:'Caracol',d:'Lentitud'},de:{n:'Schnecke',d:'Langsamkeit'},fr:{n:'Escargot',d:'Lenteur'},uk:{n:'Равлик',d:'Мінус швидкість'}},
-                {id:'e6',icon:'🧦',pct:10,group:'gravity',ru:{n:'Невесомость',d:'Постоянное плавное падение'},en:{n:'Zero G',d:'Permanent Slow Falling'},es:{n:'Gravedad Cero',d:'Caída Lenta'},de:{n:'Schwerelos',d:'Sanfter Fall'},fr:{n:'Apesanteur',d:'Chute Lente'},uk:{n:'Невагомість',d:'Повільне падіння'}},
-                {id:'e7',icon:'🌿',pct:50,group:'poison',ru:{n:'Постоянная Боль',d:'Постоянное отравление'},en:{n:'Constant Pain',d:'Permanent Poison'},es:{n:'Dolor Constante',d:'Veneno'},de:{n:'Ständiger Schmerz',d:'Gift'},fr:{n:'Douleur Constante',d:'Poison'},uk:{n:'Постійний Біль',d:'Отруєння'}},
-                {id:'e8',icon:'⚡',pct:-50,group:'speed',ru:{n:'Супер Соник',d:'Постоянная скорость'},en:{n:'Super Sonic',d:'Permanent Speed'},es:{n:'Super Sónico',d:'Velocidad'},de:{n:'Super Sonic',d:'Geschwindigkeit'},fr:{n:'Super Sonique',d:'Vitesse'},uk:{n:'Супер Сонік',d:'Постійна швидкість'}},
-                {id:'e9',icon:'🦥',pct:15,group:'fatigue',ru:{n:'Ленивец',d:'Постоянная усталость'},en:{n:'Sloth',d:'Permanent Fatigue'},es:{n:'Perezoso',d:'Fatiga'},de:{n:'Faultier',d:'Müdigkeit'},fr:{n:'Paresseux',d:'Fatigue'},uk:{n:'Лінивець',d:'Постійна втома'}},
-                {id:'e10',icon:'🍗',pct:-50,group:'hunger',ru:{n:'Спасибо, Я Не Голоден',d:'Игрок не голодает во время забега'},en:{n:"Thanks, I'm Not Hungry",d:'Player does not starve'},es:{n:'Gracias, No Tengo Hambre',d:'Sin hambre'},de:{n:'Danke, Ich Bin Nicht Hungrig',d:'Kein Hunger'},fr:{n:"Merci, Je N'ai Pas Faim",d:'Pas de faim'},uk:{n:'Дякую, Я Не Голодний',d:'Гравець не голодує'}}
+                {id:'e1',icon:'👀',pct:20,group:'vision',cmd:'/effect give @s minecraft:blindness infinite 0 true',ru:{n:'Крот',d:'Постоянная слепота'},en:{n:'Mole',d:'Permanent Blindness'},es:{n:'Topo',d:'Ceguera'},de:{n:'Maulwurf',d:'Blindheit'},fr:{n:'Taupe',d:'Cécité'},uk:{n:'Кріт',d:'Постійна сліпота'}},
+                {id:'e2',icon:'📉',pct:30,group:'strength',cmd:'/effect give @s minecraft:weakness infinite 0 true',ru:{n:'Пропускал День Качалочки',d:'Постоянная слабость'},en:{n:'Skipped Leg Day',d:'Permanent Weakness'},es:{n:'Día de piernas',d:'Debilidad'},de:{n:'Leg Day übersprungen',d:'Schwäche'},fr:{n:'Jour des jambes sauté',d:'Faiblesse'},uk:{n:'Пропускав День Ніг',d:'Слабкість'}},
+                {id:'e3',icon:'🍽️',pct:35,group:'hunger',cmd:'/effect give @s minecraft:hunger infinite 0 true',ru:{n:'Литафом',d:'Постоянный голод'},en:{n:'Lithophage',d:'Permanent Hunger'},es:{n:'Litófago',d:'Hambre'},de:{n:'Lithophage',d:'Hunger'},fr:{n:'Lithophage',d:'Faim'},uk:{n:'Літафом',d:'Голод'}},
+                {id:'e4',icon:'🤮',pct:20,group:'nausea',cmd:'/effect give @s minecraft:nausea infinite 0 true',ru:{n:'Тошнотик',d:'Постоянная тошнота'},en:{n:'Nauseous',d:'Permanent Nausea'},es:{n:'Nauseabundo',d:'Náuseas'},de:{n:'Übel',d:'Übelkeit'},fr:{n:'Nauséeux',d:'Nausée'},uk:{n:'Нудотик',d:'Нудота'}},
+                {id:'e5',icon:'🐌',pct:5,group:'speed',cmd:'/effect give @s minecraft:slowness infinite 0 true',ru:{n:'Улитка',d:'Постоянное замедление'},en:{n:'Snail',d:'Permanent Slowness'},es:{n:'Caracol',d:'Lentitud'},de:{n:'Schnecke',d:'Langsamkeit'},fr:{n:'Escargot',d:'Lenteur'},uk:{n:'Равлик',d:'Мінус швидкість'}},
+                {id:'e6',icon:'🧦',pct:10,group:'gravity',cmd:'/effect give @s minecraft:slow_falling infinite 0 true',ru:{n:'Невесомость',d:'Постоянное плавное падение'},en:{n:'Zero G',d:'Permanent Slow Falling'},es:{n:'Gravedad Cero',d:'Caída Lenta'},de:{n:'Schwerelos',d:'Sanfter Fall'},fr:{n:'Apesanteur',d:'Chute Lente'},uk:{n:'Невагомість',d:'Повільне падіння'}},
+                {id:'e7',icon:'🌿',pct:50,group:'poison',cmd:'/effect give @s minecraft:poison infinite 0 true',ru:{n:'Постоянная Боль',d:'Постоянное отравление'},en:{n:'Constant Pain',d:'Permanent Poison'},es:{n:'Dolor Constante',d:'Veneno'},de:{n:'Ständiger Schmerz',d:'Gift'},fr:{n:'Douleur Constante',d:'Poison'},uk:{n:'Постійний Біль',d:'Отруєння'}},
+                {id:'e8',icon:'⚡',pct:-50,group:'speed',cmd:'/effect give @s minecraft:speed infinite 0 true',ru:{n:'Супер Соник',d:'Постоянная скорость'},en:{n:'Super Sonic',d:'Permanent Speed'},es:{n:'Super Sónico',d:'Velocidad'},de:{n:'Super Sonic',d:'Geschwindigkeit'},fr:{n:'Super Sonique',d:'Vitesse'},uk:{n:'Супер Сонік',d:'Постійна швидкість'}},
+                {id:'e9',icon:'🦥',pct:15,group:'fatigue',cmd:'/effect give @s minecraft:mining_fatigue infinite 0 true',ru:{n:'Ленивец',d:'Постоянная усталость'},en:{n:'Sloth',d:'Permanent Fatigue'},es:{n:'Perezoso',d:'Fatiga'},de:{n:'Faultier',d:'Müdigkeit'},fr:{n:'Paresseux',d:'Fatigue'},uk:{n:'Лінивець',d:'Постійна втома'}},
+                {id:'e10',icon:'🍗',pct:-50,group:'hunger',cmd:'/effect give @s minecraft:saturation infinite 255 true',ru:{n:'Спасибо, Я Не Голоден',d:'Игрок не голодает во время забега'},en:{n:"Thanks, I'm Not Hungry",d:'Player does not starve'},es:{n:'Gracias, No Tengo Hambre',d:'Sin hambre'},de:{n:'Danke, Ich Bin Nicht Hungrig',d:'Kein Hunger'},fr:{n:"Merci, Je N'ai Pas Faim",d:'Pas de faim'},uk:{n:'Дякую, Я Не Голодний',d:'Гравець не голодує'}}
             ]},
             { id:'cat_spawn', key:'spawn', color:'var(--cat-spawn)', hex:'#e74c3c', items: [
-                {id:'s1',icon:'💔',pct:5,group:'spawn',ru:{n:'Митинг',d:'Монстры x1'},en:{n:'Protest',d:'Monster Spawn x1'},es:{n:'Protesta',d:'Monstruos x1'},de:{n:'Protest',d:'Monster x1'},fr:{n:'Manifestation',d:'Monstres x1'},uk:{n:'Мітинг',d:'Монстри x1'}},
-                {id:'s2',icon:'💀',pct:15,group:'spawn',ru:{n:'Армагедон',d:'Монстры x3'},en:{n:'Armageddon',d:'Monster Spawn x3'},es:{n:'Armagedón',d:'Monstruos x3'},de:{n:'Armageddon',d:'Monster x3'},fr:{n:'Armageddon',d:'Monstres x3'},uk:{n:'Армагеддон',d:'Монстри x3'}},
-                {id:'s3',icon:'☠️',pct:25,group:'spawn',ru:{n:'Апокалипсис',d:'Монстры x5'},en:{n:'Apocalypse',d:'Monster Spawn x5'},es:{n:'Apocalipsis',d:'Monstruos x5'},de:{n:'Apokalypse',d:'Monster x5'},fr:{n:'Apocalypse',d:'Monstres x5'},uk:{n:'Апокаліпсис',d:'Монстри x5'}},
-                {id:'s4',icon:'🚯',pct:-50,group:'spawn',ru:{n:'Никто Не Пришёл',d:'Частота появления монстров 0'},en:{n:'No One Came',d:'Monster spawn rate 0'},es:{n:'Nadie Vino',d:'Spawn 0'},de:{n:'Niemand kam',d:'Spawn 0'},fr:{n:"Personne n'est venu",d:'Spawn 0'},uk:{n:'Ніхто не прийшов',d:'Частота монстрів 0'}}
+                {id:'s1',icon:'💔',pct:5,group:'spawn',cmd:'/gamerule mobGriefing true\n/gamerule doMobSpawning true',ru:{n:'Митинг',d:'Монстры x1'},en:{n:'Protest',d:'Monster Spawn x1'},es:{n:'Protesta',d:'Monstruos x1'},de:{n:'Protest',d:'Monster x1'},fr:{n:'Manifestation',d:'Monstres x1'},uk:{n:'Мітинг',d:'Монстри x1'}},
+                {id:'s2',icon:'💀',pct:15,group:'spawn',cmd:'/gamerule doMobSpawning true\n/gamerule mobGriefing true',ru:{n:'Армагедон',d:'Монстры x3'},en:{n:'Armageddon',d:'Monster Spawn x3'},es:{n:'Armagedón',d:'Monstruos x3'},de:{n:'Armageddon',d:'Monster x3'},fr:{n:'Armageddon',d:'Monstres x3'},uk:{n:'Армагеддон',d:'Монстри x3'}},
+                {id:'s3',icon:'☠️',pct:25,group:'spawn',cmd:'/gamerule doMobSpawning true\n/gamerule mobGriefing true',ru:{n:'Апокалипсис',d:'Монстры x5'},en:{n:'Apocalypse',d:'Monster Spawn x5'},es:{n:'Apocalipsis',d:'Monstruos x5'},de:{n:'Apokalypse',d:'Monster x5'},fr:{n:'Apocalypse',d:'Monstres x5'},uk:{n:'Апокаліпсис',d:'Монстри x5'}},
+                {id:'s4',icon:'🚯',pct:-50,group:'spawn',cmd:'/gamerule doMobSpawning false',ru:{n:'Никто Не Пришёл',d:'Частота появления монстров 0'},en:{n:'No One Came',d:'Monster spawn rate 0'},es:{n:'Nadie Vino',d:'Spawn 0'},de:{n:'Niemand kam',d:'Spawn 0'},fr:{n:"Personne n'est venu",d:'Spawn 0'},uk:{n:'Ніхто не прийшов',d:'Частота монстрів 0'}}
             ]},
             { id:'cat_set', key:'settings', color:'var(--cat-settings)', hex:'#3498db', items: [
                 {id:'st1',icon:'👁️',pct:5,group:'fov',ru:{n:'Не Те Очки',d:'FOV: 60'},en:{n:'Wrong Glasses',d:'FOV: 60'},es:{n:'Gafas',d:'FOV 60'},de:{n:'Falsche Brille',d:'FOV 60'},fr:{n:'Mauvaises lunettes',d:'FOV 60'},uk:{n:'Не Ті Окуляри',d:'FOV 60'}},
@@ -1336,7 +1354,14 @@
                     el.dataset.id = item.id;
                     el.dataset.group = item.group || '';
                     const d = item[state.lang];
-                    el.innerHTML = `<span class="mod-icon">${item.icon}</span><div class="mod-text"><div class="mod-name">${d.n}</div><div class="mod-desc">${d.d}</div></div><span class="mod-pct">${item.pct}%</span>`;
+                    el.innerHTML = `<span class="mod-icon">${item.icon}</span><div class="mod-text"><div class="mod-name">${d.n}</div><div class="mod-desc">${d.d}</div></div><span class="mod-pct">${item.pct}%</span>${item.cmd?'<button type="button" class="mod-copy-btn" title="Copy command">📋</button>':''}`;
+                    if(item.cmd) {
+                        const copyBtn = el.querySelector('.mod-copy-btn');
+                        copyBtn.addEventListener('click', ev => {
+                            ev.stopPropagation();
+                            copyModCommand(item.cmd, copyBtn);
+                        });
+                    }
                     el.addEventListener('click', () => {
                         initAudio();
                         if(state.manualSelected.has(item.id)) {
@@ -1363,6 +1388,37 @@
                 cont.appendChild(card);
             });
             updateManualSummary(); checkConflicts();
+        }
+
+        function copyModCommand(cmd, btnEl) {
+            const done = ok => {
+                if(!btnEl) return;
+                const original = btnEl.textContent;
+                btnEl.textContent = ok ? '✅' : '⚠️';
+                btnEl.classList.toggle('copied', ok);
+                setTimeout(() => { btnEl.textContent = original; btnEl.classList.remove('copied'); }, 1200);
+            };
+            if(navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(cmd).then(() => done(true)).catch(() => fallbackCopy(cmd, done));
+            } else {
+                fallbackCopy(cmd, done);
+            }
+        }
+
+        function fallbackCopy(text, cb) {
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.focus(); ta.select();
+                const ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+                cb(ok);
+            } catch(e) {
+                cb(false);
+            }
         }
 
         function checkConflicts() {
